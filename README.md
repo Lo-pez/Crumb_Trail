@@ -16,7 +16,7 @@ An app for reviewing grocery store products.
    - **Mobile:** Mobile first experience (Reading reviews on the go), Camera used.
    - **Story:** Allows users to read reviews on grocery products to ensure they're buying something that's the right fit for them.
    - **Market:** Anyone that buys groceries and would like to know more about a product before buying it.
-   - **Habit:** Users can review grocery products they buy for "points", which will give them higher levels and review perks. Users can be notified when an item is currently at a great deal by other users.
+   - **Habit:** Users can review grocery products they buy for "points", which will give them higher levels and "review perks" (These perks still need to be defined). Users can be notified when an item is currently at a great deal by other users.
    - **Scope:** The smaller scope is an app to review products and view products reviews. The larger scope includes being notified of discounts and deals by other users, and being able to see where those deals are on the google maps sdk.
 
 ## Product Spec
