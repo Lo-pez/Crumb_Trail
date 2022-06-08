@@ -11,7 +11,6 @@
 An app for reviewing grocery store products.
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
    - **Category:** Food / Social
    - **Mobile:** Mobile first experience (Reading reviews on the go), Camera used.
    - **Story:** Allows users to read reviews on grocery products to ensure they're buying something that's the right fit for them.
