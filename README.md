@@ -15,8 +15,8 @@ An app for reviewing grocery store products.
    - **Mobile:** Mobile first experience (Reading reviews on the go), Camera used.
    - **Story:** Allows users to read reviews on grocery products to ensure they're buying something that's the right fit for them.
    - **Market:** Anyone that buys groceries and would like to know more about a product before buying it.
-   - **Habit:** Users can review grocery products they buy for "points", which will give them higher levels and "review perks" (These perks still need to be defined). Users can be notified when an item is currently at a great deal by other users.
-   - **Scope:** The smaller scope is an app to review products and view products reviews. The larger scope includes being notified of discounts and deals by other users, and being able to see where those deals are on the google maps sdk.
+   - **Habit:** Users can see new reviews on their favorite grocery store products every day. Users will be notified when a discount is available at stores they select by other users. A potential add on is implementing a points system that gives an arbitrary rank if many users upvote your discount markers or reviews. Users can be given special points/badges for reveiwing previously unreviewed products. 
+   - **Scope:** The smaller scope is an app to review products and view products reviews, as well as being able to see discounts and deals marked by other users on stores near you (Or favorite stores). The larger scope includes a social aspect where users can follow each other (Be notified when another user posts a review/discount, view others review/discount score). This larger scope will need to consider users data privacy.
 
 ## Product Spec
 
@@ -27,40 +27,49 @@ An app for reviewing grocery store products.
 * User can post a new photo to their feed
 * User can create a new account
 * User can login
+* User can scan items
+* User can view a feed of reviews
+* User can see a google maps screen
+* User can see latest/nearest deals posted by other users on google map screen
+* User can see a store page with all its products and respective reviews
+
+**Optional Nice-to-have Stories**
 * User can search for other users
 * User can view profiles
 * User can follow/unfollow another user
-* User can scan items
-* User can view a feed of reviews
-
-**Optional Nice-to-have Stories**
-
 * User can leave comments on reviews
-* User can view the google maps api and see stores
-* User can see deals on the google maps api
-* Users can mark deals on the google maps api
+
 
 ### 2. Screen Archetypes
 
+**Required Must-have Archetypes**
 * Registration screen
    * User can register for the app 
 * Login Screen
    * User can login
-* Profile Screen
-   * User can view others or their own profiles
+* Self Profile Screen
+   * User can view their favorite reviews, stores, and products
 * Review Screen
    * User can view reviews for any product they click on
 * Review Stream Screen
    * User can view a stream of reviews for a certain product
 * Product Stream Screen
    * Users can see a stream of products that match their search results
-* User Review Screen
-   * Users can see a stream of users that match their search results (If they search with an @ before the text)
 * Creation screen
-   * User can create new reviews or reply to others (Compose) 
+   * User can create new reviews 
 * Search
-   * User can search for other users, products
-   * User can follow/unfollow another user
+   * User can search for other products
+   * User can search for stores 
+* Maps Screen
+   * User can see stores as well as an average review of their products next to their icon
+**Optional Nice-to-have Archetypes**
+* User Review Screen
+   * Users can see a stream of users that match their search results (If they search with an @ before the query)
+* Compose Screen
+   * User can leave comments on reviews 
+* Profile Screen (Other users)
+   * User can view others favorite reviews, stores, and products, as well as follow/unfollow from this screen
+
 
 ### 3. Navigation
 
@@ -78,7 +87,6 @@ An app for reviewing grocery store products.
   => Home
 * Profile Screen
   => Self reviews
-  => View who the user is following
   => View self liked products
   => View self liked reviews 
 * Review Stream Screen
@@ -92,3 +100,6 @@ An app for reviewing grocery store products.
 * Search
   => Product Stream
   => User Stream
+  => Store Stream
+* Maps
+  =>  Individual stores
