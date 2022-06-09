@@ -26,12 +26,18 @@ An app for reviewing grocery store products.
 
 * User can post a new photo to their feed
 * User can create a new account
+* User can view their favorite reviews, stores, and products
 * User can login
+* User can view a stream of products
+* User can click on a product and a feed of reviews for it 
 * User can scan items
 * User can view a feed of reviews
-* User can see a google maps screen
+* User can view a detailed review 
+* User can view reviews for a branded product
+* User can see stores (Using google maps SDK) as well as an average review of their products next to their icon
 * User can see latest/nearest deals posted by other users on google map screen
 * User can see a store page with all its products and respective reviews
+* User can leave comments on reviews 
 
 **Optional Nice-to-have Stories**
 * User can search for other users
@@ -43,30 +49,36 @@ An app for reviewing grocery store products.
 ### 2. Screen Archetypes
 
 **Required Must-have Archetypes**
+* Home Screen
+   * View highest ratest reviews 
+   * View highlighted products
+   * View nearby deals 
 * Registration screen
-   * User can register for the app 
+   * User can create a new account 
 * Login Screen
    * User can login
-* Self Profile Screen
+* Profile Screen
    * User can view their favorite reviews, stores, and products
-* Review Screen
-   * User can view reviews for any product they click on
-* Review Stream Screen
+* Stream Screen
    * User can view a stream of reviews for a certain product
-* Product Stream Screen
    * Users can see a stream of products that match their search results
+   * User can see a stream of stores
+* Detailed Review Screen
+   * User can view a detailed review 
+   * User can leave comments on reviews 
+* Detailed Product Screen
+   * User can view reviews for a branded product
+* Detailed Store Screen
+   * User can view reviews for a stores products 
 * Creation screen
    * User can create new reviews 
 * Search
    * User can search for other products
    * User can search for stores 
 * Maps Screen
-   * User can see stores as well as an average review of their products next to their icon
-**Optional Nice-to-have Archetypes**
+   * User can see stores (Using google maps SDK) as well as an average review of their products next to their icon/name
 * User Review Screen
-   * Users can see a stream of users that match their search results (If they search with an @ before the query)
-* Compose Screen
-   * User can leave comments on reviews 
+   * Users can see a stream of users that match their search results (If they search with an @ before the search query)
 * Profile Screen (Other users)
    * User can view others favorite reviews, stores, and products, as well as follow/unfollow from this screen
 
@@ -75,31 +87,32 @@ An app for reviewing grocery store products.
 
 **Tab Navigation** (Tab to Screen)
 
-  * View product/review stream
-  * Search function (For reviews, users, and products)
-  * View self profile
+  * Home Screen
+  * Stream Screen
+  * Maps Screen
+  * View profile
 
 **Flow Navigation** (Screen to Screen)
 
 * Registration Screen
-  => Home
+  => Home Screen
 * Login Screen
-  => Home
+  => Home Screen
 * Profile Screen
   => Self reviews
   => View self liked products
   => View self liked reviews 
-* Review Stream Screen
-  => Click on a review to see a more detailed version of it
+* Stream Screen
+  => Detailed Review Screen
+  => Detailed Product Screen
+  => Detailed Store Screen
 * Product Stream Screen
   => Click on a product to see the Review Stream for it 
 * User Stream Screen
   => Click of a profile to see a more detailed version of it
 * Creation screen
-  => Home (After review is posted)
-* Search
-  => Product Stream
-  => User Stream
-  => Store Stream
+  => Home Screen(After review is posted)
 * Maps
-  =>  Individual stores
+  => Detailed Store Screen
+* Home Screen
+  => Detailed Review Screen
