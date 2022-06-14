@@ -120,3 +120,4 @@ An app for reviewing grocery store products.
 ### 4. Wireframe
 
 <img src="crumb_trail_wireframe.png" width=600>
+<img src="crumb_trail_wireframe_2.png" width=600>
