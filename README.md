@@ -116,3 +116,8 @@ An app for reviewing grocery store products.
   => Detailed Store Screen
 * Home Screen
   => Detailed Review Screen
+  
+### 4. Wireframe
+
+<img src="crumb_trail_wireframe.png" width=600>
+
