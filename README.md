@@ -124,47 +124,33 @@ An app for reviewing grocery store products.
 ## Schema 
 ### Models
 #### Review
-   | Property      | Type     | Description | Required 
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user's review (default field) |[X]
-   | author        | Pointer to User| review author |[X]
-   | image         | File     | image that user posts alongside a review |[]
-   | body       | String   | body for a users review |[]
-   | commentsCount | Number   | number of comments that have been posted to a review |[X]
-   | food | Pointer to Food   | food being reviewed |[X] 
-   | edited | Boolean | marker for if a review has been edited | [X]
-   | likesCount    | Number   | number of likes for a review |[X]
-   | rating    | Number   | Rating a user leaves on their review |[X]
-   | createdAt     | DateTime | date when review is created (default field) |[X]
-   | updatedAt     | DateTime | date when review is last updated (default field) |[X]
+   | Property      | Type     | Description | Required |
+   | ------------- | -------- | ------------| ---------|
+   | objectId      | String   | unique id for the user's review (default field) |[X]|
+   | author        | Pointer to User| review author |[X]|
+   | image         | File     | image that user posts alongside a review |[]|
+   | body          | String   | body for a users review |[]|
+   | commentsCount | Number   | number of comments that have been posted to a review |[X]|
+   | fdcId         | String   | fdcId for food being reviewed |[X]|
+   | edited        | Boolean  | marker for if a review has been edited |[X]|
+   | likesCount    | Number   | number of likes for a review |[X]|
+   | rating        | Number   | Rating a user leaves on their review |[X]|
+   | createdAt     | DateTime | date when review is created (default field) |[X]|
+   | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
 #### Profile
    | Property      | Type     | Description | Required |
-   | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user's profile |[X] 
-   | username      | String   | unique username for a profile |[X] 
-   | emailVerified      | String   | users verified email |[X]
-   | password      | String   | users password |[X]
-   | profileImage         | File   | profile image for an account |[]
-   | aboutBody       | String   | body for a users about section |[]
-   | reviewsCount | Number   | number of reviews a user has posted |[X]
-   | likesCount    | Number   | number of likes a poster has on all of their reviews |[X]
-   | ratingAverage    | Number   | Average rating a user leaves on reviews (Private) |[X]
-   | createdAt     | DateTime | date when user created their profile (default field) |[X]
-   | updatedAt     | DateTime | date when user updated their profile (default field) |[X]
-#### Food Item
-| Property      | Type     | Description | Required |
-| ------------- | -------- | ------------|
-| objectId      | String   | unique id for the food item |[X] 
-| username      | String   | unique username for a profile |[X] 
-| emailVerified      | String   | users verified email |[X]
-| password      | String   | users password |[X]
-| profileImage         | File   | profile image for an account |[]
-| aboutBody       | String   | body for a users about section |[]
-| reviewsCount | Number   | number of reviews a user has posted |[X]
-| likesCount    | Number   | number of likes a poster has on all of their reviews |[X]
-| ratingAverage    | Number   | Average rating a user leaves on reviews (Private) |[X]
-| createdAt     | DateTime | date when user created their profile (default field) |[X]
-| updatedAt     | DateTime | date when user updated their profile (default field) |[X]
+   | ------------- | -------- | ------------| ---------|
+   | objectId      | String   | unique id for the user's profile |[X]|
+   | username      | String   | unique username for a profile |[X]|
+   | emailVerified | String   | users verified email |[X]|
+   | password      | String   | users password |[X]|
+   | profileImage  | File     | profile image for an account |[]|
+   | aboutBody     | String   | body for a users about section |[]|
+   | reviewsCount  | Number   | number of reviews a user has posted |[X]|
+   | likesCount    | Number   | number of likes a poster has on all of their reviews |[X]|
+   | ratingAverage | Number   | Average rating a user leaves on reviews (Private) |[X]|
+   | createdAt     | DateTime | date when user created their profile (default field) |[X]|
+   | updatedAt     | DateTime | date when user updated their profile (default field) |[X]|
 ### Networking
 #### List of network requests by screen
 
