@@ -122,10 +122,29 @@ An app for reviewing grocery store products.
 <img src="crumb_trail_wireframe_2.png" width=600>
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### Review
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user's review (default field) |
+   | author        | Pointer to User| review author |
+   | image         | File     | image that user posts |
+   | body       | String   | body for a users review |
+   | commentsCount | Number   | number of comments that have been posted to a review |
+   | likesCount    | Number   | number of likes for a review |
+   | rating    | Number   | Rating a user leaves on their review |
+   | createdAt     | DateTime | date when review is created (default field) |
+   | updatedAt     | DateTime | date when review is last updated (default field) |
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+#### List of network requests by screen
+
+#### [OPTIONAL:] Existing API Endpoints
+##### An API Of Ice And Fire
+- Base URL - [https://api.nal.usda.gov/fdc/v1](https://api.nal.usda.gov/fdc/v1)
+
+   HTTP Verb | Endpoint | Description
+   ----------|----------|------------
+    `GET`    | /food/{fdcId} | Fetches details for one food item by FDC ID
+    `GET`    | /foods | Fetches details for multiple food items using input FDC IDs
+    `GET`    | /foods/list | Returns a paged list of foods, in the 'abridged' format
+    `GET`    | /foods/search | Returns a list of foods that matched search (query) keywords
