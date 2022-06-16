@@ -130,10 +130,10 @@ An app for reviewing grocery store products.
    | author        | Pointer to User| review author |[X]|
    | image         | File     | image that user posts alongside a review |[]|
    | body          | String   | body for a users review |[]|
-   | commentsCount | Number   | number of comments that have been posted to a review |[X]|
+<!--    | commentsCount | Number   | number of comments that have been posted to a review |[X]| -->
    | fdcId         | String   | fdcId for food being reviewed |[X]|
    | edited        | Boolean  | marker for if a review has been edited |[X]|
-   | likesCount    | Number   | number of likes for a review |[X]|
+<!--    | likesCount    | Number   | number of likes for a review |[X]| -->
    | rating        | Number   | Rating a user leaves on their review |[X]|
    | createdAt     | DateTime | date when review is created (default field) |[X]|
    | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
@@ -155,12 +155,23 @@ An app for reviewing grocery store products.
 #### List of network requests by screen
 
 #### [OPTIONAL:] Existing API Endpoints
-##### An API Of Ice And Fire
+##### FDA Food API
 - Base URL - [https://api.nal.usda.gov/fdc/v1](https://api.nal.usda.gov/fdc/v1)
 
    HTTP Verb | Endpoint | Description
    ----------|----------|------------
-    `GET`    | /food/{fdcId} | Fetches details for one food item by FDC ID
-    `GET`    | /foods | Fetches details for multiple food items using input FDC IDs
-    `GET`    | /foods/list | Returns a paged list of foods, in the 'abridged' format
-    `GET`    | /foods/search | Returns a list of foods that matched search (query) keywords
+    `GET`    | /food/{fdcId} | Fetches details for one food item by FDC ID |
+    `GET`    | /foods | Fetches details for multiple food items using input FDC IDs |
+    `GET`    | /foods/list | Returns a paged list of foods, in the 'abridged' format |
+    `GET`    | /foods/search | Returns a list of foods that matched search (query) keywords |
+    
+ ##### Google Maps API
+- Base URL - [https://maps.googleapis.com/maps/api/place](https://maps.googleapis.com/maps/api/place/)
+
+   HTTP Verb | Endpoint | Description
+   ----------|----------|------------
+    `GET`    | /findplacefromtext/output?parameters | Finds a place matching input paramenters |
+    `GET`    | /nearbysearch/output?parameters | Returns places within a specified area |
+    `GET`    | /foods/list | Returns a paged list of foods, in the 'abridged' format |
+    `GET`    | /foods/search | Returns a list of foods that matched search (query) keywords |
+
