@@ -123,22 +123,6 @@ An app for reviewing grocery store products.
 
 ## Schema 
 ### Models
--- Post -> Review -> Comment
-#### Post (Review, Comment)
-   | Property      | Type     | Description | Required |
-   | ------------- | -------- | ------------| ---------|
-   | objectId      | String   | unique id for the user's review (default field) |[X]|
-   | parentPost    | Pointer to Post| post being replied to |[X]|
-   | parentUser    | Pointer to User| user being replied to |[X]|
-   | author        | Pointer to User| post author |[X]|
-   | body          | String   | body for a users post |[]|
-   | commentsCount | Number   | number of comments that have been added to a post |[X]|
-   | likesCount    | Number   | number of likes for a review |[X]| 
-   | fdcId         | String   | fdcId for food being reviewed |[X]|
-   | edited        | Boolean  | marker if a post has been edited |[X]|
-   | rating        | Number   | Rating a user leaves on their review |[X]|
-   | createdAt     | DateTime | date when review is created (default field) |[X]|
-   | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
 #### Review
    | Property      | Type     | Description | Required |
    | ------------- | -------- | ------------| ---------|
