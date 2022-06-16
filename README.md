@@ -141,7 +141,7 @@ An app for reviewing grocery store products.
    | Property      | Type     | Description | Required |
    | ------------- | -------- | ------------| ---------|
    | objectId      | String   | unique id for the comment |[X]|
-   | postOwner     | Pointer to User| user being replied to |[X]|
+   | parentPost     | Pointer to Post| post being replied to |[X]|
    | review        | Pointer to Review| review being replied to |[X]|
    | user          | Pointer to User| review author |[X]|
    | reviewBody     | String   | body for a comment on a review |[]|
