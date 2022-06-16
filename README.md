@@ -137,7 +137,7 @@ An app for reviewing grocery store products.
    | rating        | Number   | Rating a user leaves on their review |[X]|
    | createdAt     | DateTime | date when review is created (default field) |[X]|
    | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
-#### Profile
+#### User
    | Property      | Type     | Description | Required |
    | ------------- | -------- | ------------| ---------|
    | objectId      | String   | unique id for the user's profile |[X]|
