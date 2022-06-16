@@ -116,8 +116,16 @@ An app for reviewing grocery store products.
   => Detailed Store Screen
 * Home Screen
   => Detailed Review Screen
-  
-### 4. Wireframe
 
+## Wireframes
 <img src="crumb_trail_wireframe.png" width=600>
 <img src="crumb_trail_wireframe_2.png" width=600>
+
+## Schema 
+[This section will be completed in Unit 9]
+### Models
+[Add table of models]
+### Networking
+- [Add list of network requests by screen ]
+- [Create basic snippets for each Parse network request]
+- [OPTIONAL: List endpoints if using existing API such as Yelp]
