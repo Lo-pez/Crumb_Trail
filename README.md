@@ -153,6 +153,22 @@ An app for reviewing grocery store products.
    | updatedAt     | DateTime | date when user updated their profile (default field) |[X]|
 ### Networking
 #### List of network requests by screen
+   - Home Feed Screen
+      - (Read/GET) Query all nearby grocery stores
+      - (Read/GET) Review of the day
+   - Review Stream
+      - (Create/POST) Create a new like on a review
+      - (Delete) Delete existing like
+      - (Create/POST) Create a new comment on a review
+      - (Delete) Delete existing comment
+   - Create Review Screen
+      - (Create/POST) Create a new review object
+   - Profile Screen
+      - (Read/GET) Query logged in user object
+      - (Update/PUT) Update user profile image
+      - (Read/GET) All reviews posted by logged in user
+      - (Read/GET) Users total likes
+      - (Read/GET) Users total reviews
 
 #### [OPTIONAL:] Existing API Endpoints
 ##### FDA Food API
