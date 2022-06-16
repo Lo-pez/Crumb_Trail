@@ -123,6 +123,22 @@ An app for reviewing grocery store products.
 
 ## Schema 
 ### Models
+-- Post -> Review -> Comment
+#### Post (Review, Comment)
+   | Property      | Type     | Description | Required |
+   | ------------- | -------- | ------------| ---------|
+   | objectId      | String   | unique id for the user's review (default field) |[X]|
+   | parentPost    | Pointer to Post| post being replied to |[X]|
+   | parentUser    | Pointer to User| user being replied to |[X]|
+   | author        | Pointer to User| post author |[X]|
+   | body          | String   | body for a users post |[]|
+   | commentsCount | Number   | number of comments that have been added to a post |[X]|
+   | likesCount    | Number   | number of likes for a review |[X]| 
+   | fdcId         | String   | fdcId for food being reviewed |[X]|
+   | edited        | Boolean  | marker if a post has been edited |[X]|
+   | rating        | Number   | Rating a user leaves on their review |[X]|
+   | createdAt     | DateTime | date when review is created (default field) |[X]|
+   | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
 #### Review
    | Property      | Type     | Description | Required |
    | ------------- | -------- | ------------| ---------|
@@ -130,13 +146,37 @@ An app for reviewing grocery store products.
    | author        | Pointer to User| review author |[X]|
    | image         | File     | image that user posts alongside a review |[]|
    | body          | String   | body for a users review |[]|
-<!--    | commentsCount | Number   | number of comments that have been posted to a review |[X]| -->
+   | commentsCount | Number   | number of comments that have been posted to a review |[X]|
    | fdcId         | String   | fdcId for food being reviewed |[X]|
    | edited        | Boolean  | marker for if a review has been edited |[X]|
-<!--    | likesCount    | Number   | number of likes for a review |[X]| -->
+   | likesCount    | Number   | number of likes for a review |[X]| 
    | rating        | Number   | Rating a user leaves on their review |[X]|
    | createdAt     | DateTime | date when review is created (default field) |[X]|
    | updatedAt     | DateTime | date when review is last updated (default field) |[X]|
+#### Comment
+   | Property      | Type     | Description | Required |
+   | ------------- | -------- | ------------| ---------|
+   | objectId      | String   | unique id for the comment |[X]|
+   | postOwner     | Pointer to User| user being replied to |[X]|
+   | review        | Pointer to Review| review being replied to |[X]|
+   | user          | Pointer to User| review author |[X]|
+   | reviewBody     | String   | body for a comment on a review |[]|
+   | likesCount    | Number   | number of likes a poster has on all of their reviews |[X]|
+   | commentsCount    | Number   | number of comments on a comment |[X]|
+   | createdAt     | DateTime | date when user created their profile (default field) |[X]|
+   | updatedAt     | DateTime | date when user updated their profile (default field) |[X]|
+#### Like
+   | Property      | Type     | Description | Required |
+   | ------------- | -------- | ------------| ---------|
+   | objectId      | String   | unique id for the like |[X]|
+   | postOwner     | Pointer to User| user whose review/comment is being liked |[X]|
+   | review        | Pointer to Review| review being replied to |[X]|
+   | user          | Pointer to User| review author |[X]|
+   | reviewBody     | String   | body for a comment on a review |[]|
+   | likesCount    | Number   | number of likes a poster has on all of their reviews |[X]|
+   | commentsCount    | Number   | number of comments on a comment |[X]|
+   | createdAt     | DateTime | date when user created their profile (default field) |[X]|
+   | updatedAt     | DateTime | date when user updated their profile (default field) |[X]|
 #### User
    | Property      | Type     | Description | Required |
    | ------------- | -------- | ------------| ---------|
