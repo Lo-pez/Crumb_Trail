@@ -29,7 +29,7 @@ An app for reviewing grocery store products.
 * User can view their favorite reviews, stores, and products
 * User can login
 * User can view a stream of products
-* User can click on a product and a feed of reviews for it 
+* User can click on a product and see a feed of reviews for it 
 * User can scan items
 * User can view a feed of reviews
 * User can view a detailed review 
