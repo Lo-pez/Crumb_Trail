@@ -16,7 +16,7 @@ public class SplashActivity extends AppCompatActivity {
 
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
             startActivity(intent);
             finish();
         }, 0); // TODO: For debugging purposes delay is set to 0, change to 3000 for v1
