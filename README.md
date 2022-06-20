@@ -154,11 +154,9 @@ An app for reviewing grocery store products.
    | ------------- | -------- | ------------| ---------|
    | objectId      | String   | unique id for the like |[X]|
    | postOwner     | Pointer to User| user whose review/comment is being liked |[X]|
-   | review        | Pointer to Review| review being replied to |[X]|
+   | review        | Pointer to Review| review being liked |[X]|
    | user          | Pointer to User| review author |[X]|
-   | reviewBody     | String   | body for a comment on a review |[]|
    | likesCount    | Number   | number of likes a poster has on all of their reviews |[X]|
-   | commentsCount    | Number   | number of comments on a comment |[X]|
    | createdAt     | DateTime | date when user created their profile (default field) |[X]|
    | updatedAt     | DateTime | date when user updated their profile (default field) |[X]|
 #### User
