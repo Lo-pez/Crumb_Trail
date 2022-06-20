@@ -2,8 +2,9 @@ package com.example.crumbtrail.data.model;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
-public class User extends ParseObject {
+public class User extends ParseUser {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_EMAIL_VERIFIED = "emailVerified";
@@ -75,6 +76,7 @@ public class User extends ParseObject {
             float average = (oldTotal + newAverage) / getReviewsCount() + 1;
             put(KEY_RATING_AVERAGE, null);
 
+            // TODO: Make sure logic is correct for each review calculation
             // When adding a review, a new average must be calculated
             // When removing a review, a new average must be calculated
             // When updated a review, a new average must be calculated (if average is different)

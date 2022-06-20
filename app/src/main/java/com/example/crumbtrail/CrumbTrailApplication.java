@@ -30,7 +30,6 @@ public class CrumbTrailApplication extends Application {
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
         ParseObject.registerSubclass(Comment.class);
-        ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Review.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("LFrQVXmbxrtLMUHLwxEyW7ZprEQvbl8v34JXR9xc") // should correspond to Application Id env variable
