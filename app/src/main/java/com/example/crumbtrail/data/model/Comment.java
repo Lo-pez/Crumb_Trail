@@ -2,6 +2,7 @@ package com.example.crumbtrail.data.model;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,12 @@ public class Comment extends ParseObject {
     public static final String KEY_LIKES = "likes";
     public static final String KEY_BODY = "body";
 
-    public void setLikedBy(List<User> newLikeBy) {
+    public void setLikedBy(List<ParseUser> newLikeBy) {
         put(KEY_LIKES, newLikeBy);
     }
 
-    public List<User> getLikedBy() {
-        List<User> likedBy = getList(KEY_LIKES);
+    public List<ParseUser> getLikedBy() {
+        List<ParseUser> likedBy = getList(KEY_LIKES);
         if (likedBy == null) {
             return new ArrayList<>();
         }
@@ -38,12 +39,12 @@ public class Comment extends ParseObject {
         put(KEY_BODY, body);
     }
 
-    public User getUser() {
-        return (User) getParseObject(KEY_AUTHOR);
+    public ParseUser getParseUser() {
+        return (ParseUser) getParseObject(KEY_AUTHOR);
     }
 
-    public void setUser(User User) {
-        put(KEY_AUTHOR, User);
+    public void setParseUser(ParseUser ParseUser) {
+        put(KEY_AUTHOR, ParseUser);
     }
 
     public Review getReview(){

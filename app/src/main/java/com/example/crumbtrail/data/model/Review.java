@@ -5,6 +5,7 @@ import android.util.Log;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,12 +45,12 @@ public class Review extends ParseObject {
         put(KEY_RATING, rating);
     }
 
-    public User getUser() {
-        return (User) getParseObject(KEY_AUTHOR);
+    public ParseUser getParseUser() {
+        return (ParseUser) getParseObject(KEY_AUTHOR);
     }
 
-    public void setUser(User User) {
-        put(KEY_AUTHOR, User);
+    public void setParseUser(ParseUser ParseUser) {
+        put(KEY_AUTHOR, ParseUser);
     }
 
     public ParseFile getImage(){
@@ -72,12 +73,12 @@ public class Review extends ParseObject {
         return comments;
     }
 
-    public void setLikedBy(List<User> newLikeBy) {
+    public void setLikedBy(List<ParseUser> newLikeBy) {
         put(KEY_LIKES, newLikeBy);
     }
 
-    public List<User> getLikedBy() {
-        List<User> likedBy = getList(KEY_LIKES);
+    public List<ParseUser> getLikedBy() {
+        List<ParseUser> likedBy = getList(KEY_LIKES);
         if (likedBy == null) {
             return new ArrayList<>();
         }
