@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.crumbtrail.data.model.User;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputEditText;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -31,29 +32,31 @@ public class SignUpActivity extends AppCompatActivity {
     private TextInputEditText password;
     private TextInputEditText passwordagain;
     private ProgressDialog progressDialog;
+    private GoogleSignInAccount googleSignInAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        username = findViewById(R.id.username);
+        back = findViewById(R.id.back);
+        signUp = findViewById(R.id.signup);
+        password = findViewById(R.id.password);
+        passwordagain = findViewById(R.id.passwordagain);
+
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("google", false)) {
-            signUp(intent.getStringExtra("username"), intent.getStringExtra("password"));
+        if (intent != null) {
+            googleSignInAccount = intent.getParcelableExtra("account");
+            if (googleSignInAccount != null)
+                username.setText(googleSignInAccount.getDisplayName());
         }
 
         progressDialog = new ProgressDialog(SignUpActivity.this);
 
-        back = findViewById(R.id.back);
-        signUp = findViewById(R.id.signup);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        passwordagain = findViewById(R.id.passwordagain);
-
-
         signUp.setOnClickListener(v -> {
             if (password.getText().toString().equals(passwordagain.getText().toString()) && !TextUtils.isEmpty(username.getText().toString()))
-                signUp(username.getText().toString(), password.getText().toString());
+                signUp(username.getText().toString(), password.getText().toString(), googleSignInAccount);
             else
                 Toast.makeText(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
         });
@@ -62,12 +65,18 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void signUp(String username, String password) {
+    private void signUp(String username, String password, GoogleSignInAccount account) {
         progressDialog.show();
         ParseUser user = new ParseUser();
         // Set the user's username and password, which can be obtained by a forms
-        user.setUsername(username);
-        user.setPassword(password);
+        if (account != null) {
+            user.setUsername(account.getDisplayName());
+            user.setPassword(account.getIdToken());
+        }
+        else {
+            user.setUsername(username);
+            user.setPassword(password);
+        }
         user.signUpInBackground(e -> {
             progressDialog.dismiss();
             if (e == null) {
@@ -79,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    //TODO: Find a way to abstract showAlert
+    // TODO: Find a way to abstract showAlert
     private void showAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this)
                 .setTitle(title)
