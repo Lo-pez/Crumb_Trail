@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.crumbtrail.data.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -34,6 +36,11 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        Intent intent = getIntent();
+        if (intent.getBooleanExtra("google", false)) {
+            signUp(intent.getStringExtra("username"), intent.getStringExtra("password"));
+        }
 
         progressDialog = new ProgressDialog(SignUpActivity.this);
 
@@ -89,6 +96,11 @@ public class SignUpActivity extends AppCompatActivity {
                 });
         AlertDialog ok = builder.create();
         ok.show();
+    }
+
+    private void goMainActivity() {
+        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }

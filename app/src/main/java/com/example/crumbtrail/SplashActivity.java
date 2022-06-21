@@ -13,10 +13,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
 
-
+        // Letter color: #ffdf2b
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, 0); // TODO: For debugging purposes delay is set to 0, change to 3000 for v1
