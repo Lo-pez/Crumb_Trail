@@ -69,26 +69,36 @@ public class LoginActivity extends AppCompatActivity {
     private void login(String username, String password) {
         progressDialog.show();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        // TODO: Add checks to prevent breaking when user clicks sign in accidentally
         if (account != null) {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
-            query.whereEqualTo("username", username);
+            query.whereEqualTo("username", account.getEmail());
 
             query.countInBackground(new CountCallback(){
-
                 @Override
                 public void done(int count, ParseException e) {
                     if (e == null) {
                         if(count==0){
-                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                            startActivity(intent);
+                            if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
+                            if (account.getIdToken() == null) Log.i(TAG, "Token is null");
+                            ParseUser.logInInBackground(account.getEmail(), account.getIdToken(), (parseUser, parseException) -> {
+                                progressDialog.dismiss();
+                                if (parseUser != null) {
+                                    showAlert("Successful Login", "Welcome back " + username + " !");
+                                } else {
+                                    ParseUser.logOut();
+                                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                                }
+                            });
+//                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+//                            intent.putExtra("account", account);
+//                            startActivity(intent);
                         }
                     }
                 }
 
             });
         }
-
-
         ParseUser.logInInBackground(username, password, (parseUser, e) -> {
             progressDialog.dismiss();
             if (parseUser != null) {
@@ -127,8 +137,9 @@ public class LoginActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
+        if (account != null && ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
     }
@@ -159,8 +170,9 @@ public class LoginActivity extends AppCompatActivity {
 
             // Signed in successfully, show authenticated UI.
 //            login(account.getDisplayName(), account.getId());
-            progressDialog.show();
-            goMainActivity();
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+            intent.putExtra("account", account);
+            startActivity(intent);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
