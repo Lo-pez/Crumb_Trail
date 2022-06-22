@@ -4,31 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <TextView
-        android:id="@+id/foodNameTextView"
+        android:id="@+id/brandNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/foodNutritionTextView"
+        app:layout_constraintBottom_toTopOf="@+id/foodCategoryTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/foodNutritionTextView"
+        android:id="@+id/foodCategoryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/foodFactTextView"
+        app:layout_constraintBottom_toTopOf="@+id/brandNameTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodNameTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/foodDescriptionTextView" />
 
     <TextView
-        android:id="@+id/foodFactTextView"
+        android:id="@+id/foodDescriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="1dp"
@@ -36,5 +35,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/foodNutritionTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/foodCategoryTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

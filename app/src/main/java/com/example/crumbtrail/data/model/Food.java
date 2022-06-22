@@ -1,8 +1,17 @@
 package com.example.crumbtrail.data.model;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Food {
+    private static final String TAG = "Food";
     private long fdcID;
     private String description;
     private String lowercaseDescription;
@@ -63,4 +72,19 @@ public class Food {
 
     public double getScore() { return score; }
     public void setScore(double value) { this.score = value; }
+
+    public Food(JSONObject food) throws JSONException {
+        Log.i(TAG, food.toString());
+        brandName = food.getString("brandName");
+        foodCategory = food.getString("foodCategory");
+        description = food.getString("description");
+    }
+
+    public static List<Food> fromJsonArray(JSONArray foodJsonArray) throws JSONException {
+        List<Food> foods = new ArrayList<>();
+        for (int i = 0; i < foodJsonArray.length(); ++i) {
+            foods.add(new Food(foodJsonArray.getJSONObject(i)));
+        }
+        return foods;
+    }
 }
