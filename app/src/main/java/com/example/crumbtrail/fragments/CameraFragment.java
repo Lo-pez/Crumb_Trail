@@ -13,9 +13,13 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.crumbtrail.R;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -45,7 +49,33 @@ public class CameraFragment extends Fragment {
 
         previewView = view.findViewById(R.id.previewView);
 
+        ImageButton btnSubmit = view.findViewById(R.id.btnSubmit);
+
+        EditText etSearch = view.findViewById(R.id.etSearch);
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (etSearch.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                    newInstance(etSearch.getText().toString()).show(getChildFragmentManager(), SearchFragment.TAG);
+            }
+        });
+
         checkCameraProviderAvailability();
+    }
+
+    public static SearchFragment newInstance(String query) {
+        SearchFragment f = new SearchFragment();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        f.setArguments(args);
+
+        return f;
     }
 
     void checkCameraProviderAvailability() {
