@@ -18,6 +18,9 @@
         android:theme="@style/Theme.CrumbTrail"
         tools:targetApi="31">
         <activity
+            android:name=".FoodReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity

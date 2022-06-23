@@ -78,6 +78,7 @@ public class Food {
         brandName = food.getString("brandName");
         foodCategory = food.getString("foodCategory");
         description = food.getString("description");
+        fdcID = food.getLong("fdcId");
     }
 
     public static List<Food> fromJsonArray(JSONArray foodJsonArray) throws JSONException {

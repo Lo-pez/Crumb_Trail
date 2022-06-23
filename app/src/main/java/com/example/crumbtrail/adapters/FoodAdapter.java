@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.crumbtrail.FoodReviewActivity;
 import com.example.crumbtrail.MainActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Food;
@@ -26,6 +28,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     TextView brandNameTv;
     TextView foodCategoryTv;
     TextView foodDescriptionTv;
+    ConstraintLayout clFood;
 
     public FoodAdapter(Context context, List<Food> Foods) {
         this.context = context;
@@ -63,6 +66,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             brandNameTv = itemView.findViewById(R.id.brandNameTextView);
             foodCategoryTv = itemView.findViewById(R.id.foodCategoryTextView);
             foodDescriptionTv = itemView.findViewById(R.id.foodDescriptionTextView);
+            clFood = itemView.findViewById(R.id.clFood);
 
             // itemView's onclick listener
             itemView.setOnClickListener(this);
@@ -73,6 +77,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             brandNameTv.setText(Food.getBrandName());
             foodCategoryTv.setText(Food.getFoodCategory());
             foodDescriptionTv.setText(Food.getDescription());
+            clFood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, FoodReviewActivity.class);
+                    intent.putExtra("fdcId", Food.getFDCID());
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override
