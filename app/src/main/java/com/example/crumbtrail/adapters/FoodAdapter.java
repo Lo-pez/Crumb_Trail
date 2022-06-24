@@ -3,6 +3,7 @@ package com.example.crumbtrail.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +82,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, FoodReviewActivity.class);
-                    intent.putExtra("fdcId", Food.getFDCID());
+                    intent.putExtra("FDCID", Food.getFDCID());
                     context.startActivity(intent);
                 }
             });

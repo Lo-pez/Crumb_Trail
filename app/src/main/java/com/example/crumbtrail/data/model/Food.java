@@ -5,6 +5,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
