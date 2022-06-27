@@ -52,7 +52,7 @@ public class CameraFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        previewView = view.findViewById(R.id.previewView);
+        previewView = view.findViewById(R.id.viewFinder);
 
         ImageButton btnSubmit = view.findViewById(R.id.btnSubmit);
 
