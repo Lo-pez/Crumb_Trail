@@ -36,9 +36,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     Button shareBtn;
     TextView favoriteCountTv;
 
-    public ReviewAdapter(Context context, List<Food> Foods) {
+    public ReviewAdapter(Context context, List<Review> reviews) {
         this.context = context;
-        this.Foods = Foods;
+        this.Reviews = reviews;
     }
 
     // Usually involves inflating a layout from XML and returning the holder
