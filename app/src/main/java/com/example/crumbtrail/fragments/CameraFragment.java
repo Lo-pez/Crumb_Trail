@@ -1,13 +1,27 @@
 package com.example.crumbtrail.fragments;
 
+import static android.content.Context.CAMERA_SERVICE;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
+import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -17,25 +31,56 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.crumbtrail.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.Detector;
+
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.TextRecognizer;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class CameraFragment extends Fragment {
+public class CameraFragment extends Fragment implements ImageAnalysis.Analyzer{
     public static final String TAG = "CameraFragment";
     public static final int requestCode = 100;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
+    SurfaceView cameraView;
+    CameraSource cameraSource;
+    TextView textView;
+    final int RequestCameraPermissionID = 1001;
+
+    @Override
+    public void analyze(ImageProxy imageProxy) {
+        @SuppressLint("UnsafeOptInUsageError") Image mediaImage = imageProxy.getImage();
+        if (mediaImage != null) {
+            InputImage image =
+                    InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
+            // Pass image to an ML Kit Vision API
+            // ...
+        }
+    }
+
 
     public CameraFragment() {
         // Required empty public constructor
@@ -51,8 +96,7 @@ public class CameraFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        previewView = view.findViewById(R.id.viewFinder);
+        previewView = view.findViewById(R.id.previewView);
 
         ImageButton btnSubmit = view.findViewById(R.id.btnSubmit);
 
