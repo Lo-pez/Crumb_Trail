@@ -81,7 +81,9 @@ public class Food {
 
     public Food(JSONObject food) throws JSONException {
         Log.i(TAG, food.toString());
-        brandName = food.getString("brandName");
+        if (!food.getString("brandName").equals("")) {
+            brandName = food.getString("brandName");
+        }
         foodCategory = food.getString("foodCategory");
         description = food.getString("description");
         fdcID = food.getLong("fdcId");

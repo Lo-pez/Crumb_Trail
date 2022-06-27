@@ -19,6 +19,7 @@ import com.example.crumbtrail.FoodReviewActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.parceler.Parcels;
 
@@ -30,11 +31,21 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     List<Review> Reviews;
     TextView userNameTv;
     TextView reviewBodyTv;
-    Button commentBtn;
+    FloatingActionButton commentBtn;
+    FloatingActionButton favoriteBtn;
+    FloatingActionButton shareBtn;
     EditText composeEt;
-    Button favoriteBtn;
-    Button shareBtn;
     TextView favoriteCountTv;
+
+    public void clear() {
+        Reviews.clear();
+        notifyDataSetChanged();
+    }
+
+    public void addAll(List<Review> list) {
+        Reviews.addAll(list);
+        notifyDataSetChanged();
+    }
 
     public ReviewAdapter(Context context, List<Review> reviews) {
         this.context = context;
@@ -83,7 +94,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         }
 
         public void bind(Review review) {
-            userNameTv.setText(review.getAuthor().getUsername());
+            userNameTv.setText(review.getUser().getUsername());
             reviewBodyTv.setText(review.getBody());
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

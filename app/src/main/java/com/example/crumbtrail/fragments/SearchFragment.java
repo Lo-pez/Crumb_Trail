@@ -39,7 +39,7 @@ public class SearchFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         String mQuery = getArguments().getString("query");
         FOOD_URL = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=%s" , getString(R.string.food_api_key)) + "&query=" + mQuery + "&dataType=Branded&pageSize=3&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc";
-
+        Log.i(TAG, FOOD_URL);
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_search, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
@@ -61,7 +61,7 @@ public class SearchFragment extends DialogFragment {
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
                     foods.addAll(Food.fromJsonArray(results));
-                    foodAdapter.notifyDataSetChanged();
+                    foodAdapter.notifyItemRangeChanged(0, Food.fromJsonArray(results).size());
                     Log.i(TAG, "foods: " + foods.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit JSON exception", e);
@@ -70,7 +70,7 @@ public class SearchFragment extends DialogFragment {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure");
+                Log.d(TAG, "onFailure" + throwable);
             }
         });
 

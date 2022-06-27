@@ -13,7 +13,7 @@ import java.util.List;
 
 @ParseClassName("Review")
 public class Review extends ParseObject {
-    public static final String KEY_AUTHOR = "author";
+    public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_LIKES = "likes";
     public static final String KEY_BODY = "body";
@@ -25,9 +25,14 @@ public class Review extends ParseObject {
         return getString(KEY_BODY);
     }
 
-    public ParseUser getAuthor() {
-        return getParseUser(KEY_AUTHOR);
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
     }
+
+    public void setUser(ParseUser parseUser) {
+        put(KEY_USER, parseUser);
+    }
+
 
     public void setBody(String body) {
         put(KEY_BODY, body);
@@ -49,13 +54,13 @@ public class Review extends ParseObject {
         put(KEY_RATING, rating);
     }
 
-    public ParseUser getParseUser() {
-        return (ParseUser) getParseObject(KEY_AUTHOR);
-    }
+//    public ParseUser getParseUser() {
+//        return (ParseUser) getParseObject(KEY_AUTHOR);
+//    }
 
-    public void setParseUser(ParseUser ParseUser) {
-        put(KEY_AUTHOR, ParseUser);
-    }
+//    public void setParseUser(ParseUser ParseUser) {
+//        put(KEY_AUTHOR, ParseUser);
+//    }
 
     public ParseFile getImage(){
         return getParseFile(KEY_IMAGE);

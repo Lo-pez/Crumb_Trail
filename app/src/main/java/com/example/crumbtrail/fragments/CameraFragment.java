@@ -57,14 +57,14 @@ public class CameraFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (etSearch.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Do not search an empty query!",Toast.LENGTH_SHORT).show();
                     return;
                 }
                     newInstance(etSearch.getText().toString()).show(getChildFragmentManager(), SearchFragment.TAG);
             }
         });
 
-        checkCameraProviderAvailability();
+//        checkCameraProviderAvailability();
     }
 
     public static SearchFragment newInstance(String query) {

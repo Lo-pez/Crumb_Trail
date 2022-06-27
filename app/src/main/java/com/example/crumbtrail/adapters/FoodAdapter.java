@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.crumbtrail.FoodReviewActivity;
 import com.example.crumbtrail.MainActivity;
 import com.example.crumbtrail.R;
+import com.example.crumbtrail.ReviewFeedActivity;
 import com.example.crumbtrail.data.model.Food;
 
 import org.parceler.Parcels;
@@ -83,7 +84,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             clFood.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, FoodReviewActivity.class);
+                    Intent intent = new Intent(context, ReviewFeedActivity.class);
                     intent.putExtra("Food", Parcels.wrap(food));
                     context.startActivity(intent);
                 }
