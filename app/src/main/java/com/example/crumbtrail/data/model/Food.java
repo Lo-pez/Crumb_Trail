@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Food {
     private static final String TAG = "Food";
     private long fdcID;
@@ -73,6 +74,10 @@ public class Food {
 
     public double getScore() { return score; }
     public void setScore(double value) { this.score = value; }
+
+    // empty constructor needed by the Parceler library
+    public Food() {
+    }
 
     public Food(JSONObject food) throws JSONException {
         Log.i(TAG, food.toString());

@@ -20,6 +20,8 @@ import com.example.crumbtrail.MainActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Food;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
@@ -74,15 +76,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
         }
 
-        public void bind(Food Food) {
-            brandNameTv.setText(Food.getBrandName());
-            foodCategoryTv.setText(Food.getFoodCategory());
-            foodDescriptionTv.setText(Food.getDescription());
+        public void bind(Food food) {
+            brandNameTv.setText(food.getBrandName());
+            foodCategoryTv.setText(food.getFoodCategory());
+            foodDescriptionTv.setText(food.getDescription());
             clFood.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, FoodReviewActivity.class);
-                    intent.putExtra("FDCID", Food.getFDCID());
+                    intent.putExtra("Food", Parcels.wrap(food));
                     context.startActivity(intent);
                 }
             });

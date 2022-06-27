@@ -25,6 +25,10 @@ public class Review extends ParseObject {
         return getString(KEY_BODY);
     }
 
+    public ParseUser getAuthor() {
+        return getParseUser(KEY_AUTHOR);
+    }
+
     public void setBody(String body) {
         put(KEY_BODY, body);
     }

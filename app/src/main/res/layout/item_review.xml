@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraintLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="#F5F8FA">
+
+    <TextView
+        android:id="@+id/userNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="#14171A"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="rpandey923" />
+
+    <TextView
+        android:id="@+id/reviewBodyTv"
+        android:layout_width="183dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:autoLink="all"
+        android:textColor="#14171A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTv"
+        tools:text="Hello this is my sample tweet" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/commentBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#F5F8FA"
+        android:clickable="true"
+        android:contentDescription="@string/comment"
+        android:focusable="true"
+        android:outlineProvider="none"
+        android:textColor="#14171A"
+        app:backgroundTint="#F5F8FA"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/favoriteBtn"
+        app:srcCompat="@drawable/camera" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/favoriteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#F5F8FA"
+        android:clickable="true"
+        android:contentDescription="@string/like"
+        android:focusable="true"
+        android:outlineProvider="none"
+        android:textColor="#14171A"
+        app:backgroundTint="#F5F8FA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/shareBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="#F5F8FA"
+        android:clickable="true"
+        android:contentDescription="@string/share"
+        android:focusable="true"
+        android:outlineProvider="none"
+        android:textColor="#14171A"
+        app:backgroundTint="#F5F8FA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/favoriteCountTv"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
+        app:srcCompat="@android:drawable/ic_menu_share" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#E2E2E4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clCompose" />
+
+    <TextView
+        android:id="@+id/favoriteCountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/shareBtn"
+        app:layout_constraintStart_toEndOf="@+id/commentBtn"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
+        tools:text="8213" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCompose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteCountTv"
+        tools:visibility="visible">
+
+        <EditText
+            android:id="@+id/etCompose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/leave_a_comment"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:textColor="#14171A"
+            android:visibility="visible"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#14171A"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etCompose"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

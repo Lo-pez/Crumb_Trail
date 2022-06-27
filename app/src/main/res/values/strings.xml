@@ -4,4 +4,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_for_food">Search for food...</string>
+    <string name="leave_a_comment">Leave a comment</string>
+    <string name="share_button">share button</string>
+    <string name="like">like</string>
+    <string name="share">share</string>
+    <string name="comment">comment</string>
+    <string name="user_image">user_image</string>
 </resources>
