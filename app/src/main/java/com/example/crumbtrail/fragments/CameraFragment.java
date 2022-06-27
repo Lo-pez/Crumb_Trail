@@ -45,41 +45,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.crumbtrail.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.vision.CameraSource;
-import com.google.android.gms.vision.Detector;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import com.google.mlkit.vision.common.InputImage;
-import com.google.mlkit.vision.text.TextRecognizer;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-public class CameraFragment extends Fragment implements ImageAnalysis.Analyzer{
+public class CameraFragment extends Fragment {
     public static final String TAG = "CameraFragment";
     public static final int requestCode = 100;
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
-    SurfaceView cameraView;
-    CameraSource cameraSource;
-    TextView textView;
     final int RequestCameraPermissionID = 1001;
-
-    @Override
-    public void analyze(ImageProxy imageProxy) {
-        @SuppressLint("UnsafeOptInUsageError") Image mediaImage = imageProxy.getImage();
-        if (mediaImage != null) {
-            InputImage image =
-                    InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
-            // Pass image to an ML Kit Vision API
-            // ...
-        }
-    }
 
 
     public CameraFragment() {
