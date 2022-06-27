@@ -43,9 +43,8 @@
         android:outlineProvider="none"
         android:textColor="#14171A"
         app:backgroundTint="#F5F8FA"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/favoriteBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
         app:srcCompat="@drawable/camera" />
 
 
@@ -61,6 +60,7 @@
         android:outlineProvider="none"
         android:textColor="#14171A"
         app:backgroundTint="#F5F8FA"
+        app:layout_constraintEnd_toStartOf="@+id/favoriteCountTv"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
         app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -77,7 +77,7 @@
         android:outlineProvider="none"
         android:textColor="#14171A"
         app:backgroundTint="#F5F8FA"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/commentBtn"
         app:layout_constraintStart_toEndOf="@+id/favoriteCountTv"
         app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
         app:srcCompat="@android:drawable/ic_menu_share" />
@@ -97,8 +97,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:text="@string/_8213"
         app:layout_constraintEnd_toStartOf="@+id/shareBtn"
-        app:layout_constraintStart_toEndOf="@+id/commentBtn"
+        app:layout_constraintStart_toEndOf="@+id/favoriteBtn"
         app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
         tools:text="8213" />
 
@@ -135,6 +136,7 @@
             android:layout_height="wrap_content"
             android:textColor="#14171A"
             android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etCompose"
             tools:visibility="visible" />
