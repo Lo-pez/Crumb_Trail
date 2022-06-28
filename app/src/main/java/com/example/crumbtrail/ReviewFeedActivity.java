@@ -1,13 +1,19 @@
 package com.example.crumbtrail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Review;
@@ -34,6 +40,14 @@ public class ReviewFeedActivity extends AppCompatActivity{
         setContentView(view);
         setUpSwipeContainer();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow(); // in Activity's onCreate() for instance
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
         rvReviews = binding.reviewsRv;
         linearLayoutManager = new LinearLayoutManager(this);
         rvReviews.setLayoutManager(linearLayoutManager);
@@ -46,6 +60,14 @@ public class ReviewFeedActivity extends AppCompatActivity{
         setUpEndlessScrolling();
 
         // initialize the array that will hold Reviews and create a ReviewsAdapter
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     private void setUpEndlessScrolling() {
