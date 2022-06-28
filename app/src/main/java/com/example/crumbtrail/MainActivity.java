@@ -16,6 +16,7 @@ import com.example.crumbtrail.databinding.ActivityMainBinding;
 import com.example.crumbtrail.fragments.CameraFragment;
 import com.example.crumbtrail.fragments.HomeFragment;
 import com.example.crumbtrail.fragments.ProfileFragment;
+import com.example.crumbtrail.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.ParseUser;
 
@@ -55,8 +56,11 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new ProfileFragment();
                     break;
                 case R.id.action_camera:
-                default:
                     fragment = new CameraFragment();
+                    break;
+                case R.id.action_search:
+                default:
+                    fragment = new SearchFragment();
                     break;
             }
             fragmentManager.beginTransaction().replace(R.id.mainActivityFl, fragment).commit();

@@ -1,47 +1,23 @@
 package com.example.crumbtrail.fragments;
 
-import static android.content.Context.CAMERA_SERVICE;
-
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.pm.PackageManager;
-import android.graphics.Point;
-import android.graphics.Rect;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraCharacteristics;
-import android.hardware.camera2.CameraManager;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 
-import android.util.Log;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.view.LayoutInflater;
-import android.view.Surface;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.crumbtrail.R;
@@ -74,33 +50,7 @@ public class CameraFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         previewView = view.findViewById(R.id.previewView);
 
-        ImageButton submitSearchBtn = view.findViewById(R.id.submitSearchBtn);
-
-        EditText searchBarEt = view.findViewById(R.id.searchBarEt);
-
-        submitSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (searchBarEt.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(),"Do not search an empty query!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                    newInstance(searchBarEt.getText().toString()).show(getChildFragmentManager(), SearchFragment.TAG);
-            }
-        });
-
         checkCameraProviderAvailability();
-    }
-
-    public static SearchFragment newInstance(String query) {
-        SearchFragment f = new SearchFragment();
-
-        // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putString("query", query);
-        f.setArguments(args);
-
-        return f;
     }
 
     void checkCameraProviderAvailability() {

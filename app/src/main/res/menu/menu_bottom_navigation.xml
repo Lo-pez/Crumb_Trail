@@ -16,6 +16,11 @@
         android:title=""
         app:showAsAction="always" />
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_vector_search_stroke"
+        android:title=""
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_profile"
         android:icon="@drawable/profile"
         android:title=""

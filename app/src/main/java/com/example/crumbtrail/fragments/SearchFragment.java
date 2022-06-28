@@ -1,80 +1,65 @@
 package com.example.crumbtrail.fragments;
 
-import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.crumbtrail.R;
-import com.example.crumbtrail.adapters.FoodAdapter;
-import com.example.crumbtrail.data.model.Food;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+public class SearchFragment extends Fragment {
+    public static final String TAG = "SearchFragment";
+    public static final int requestCode = 100;
+    final int RequestCameraPermissionID = 1001;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import okhttp3.Headers;
+    public SearchFragment() {
+        // Required empty public constructor
+    }
 
-public class SearchFragment extends DialogFragment {
-    public String FOOD_URL;
-    List<Food> foods;
-    private LinearLayoutManager linearLayoutManager;
-
-    @NonNull
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        String mQuery = getArguments().getString("query");
-        FOOD_URL = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=%s" , getString(R.string.food_api_key)) + "&query=" + mQuery + "&dataType=Branded&pageSize=3&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc";
-        Log.i(TAG, FOOD_URL);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_search, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view);
-        RecyclerView foodRv = view.findViewById(R.id.foodRv);
-        foods = new ArrayList<>();
-        linearLayoutManager = new LinearLayoutManager(getContext());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_search, container, false);
+    }
 
-        foodRv.setLayoutManager(linearLayoutManager);
-        FoodAdapter foodAdapter = new FoodAdapter(getContext(), foods);
-        foodRv.setAdapter(foodAdapter);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(FOOD_URL, new JsonHttpResponseHandler() {
+        ImageButton submitSearchBtn = view.findViewById(R.id.submitSearchBtn);
+
+        EditText searchBarEt = view.findViewById(R.id.searchBarEt);
+
+        submitSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
-                try {
-                    JSONArray results = jsonObject.getJSONArray("foods");
-                    Log.i(TAG, "Results: " + results.toString());
-                    foods.addAll(Food.fromJsonArray(results));
-                    foodAdapter.notifyItemRangeChanged(0, Food.fromJsonArray(results).size());
-                    Log.i(TAG, "foods: " + foods.size());
-                } catch (JSONException e) {
-                    Log.e(TAG, "Hit JSON exception", e);
+            public void onClick(View v) {
+                if (searchBarEt.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(),"Do not search an empty query!",Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.d(TAG, "onFailure" + throwable);
+                newInstance(searchBarEt.getText().toString()).show(getChildFragmentManager(), SearchResultsFragment.TAG);
             }
         });
-
-        return builder.create();
     }
-    public static String TAG = "SearchFragment";
+
+    public static SearchResultsFragment newInstance(String query) {
+        SearchResultsFragment f = new SearchResultsFragment();
+
+        // Supply num input as an argument.
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        f.setArguments(args);
+
+        return f;
+    }
+
 }
