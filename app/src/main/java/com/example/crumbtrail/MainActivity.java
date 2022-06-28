@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final int requestCode = 100;
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView mainBottomNav;
     private ActivityMainBinding binding;
 
     @Override
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpBottomViewNavigation() {
-        bottomNavigationView = binding.bottomNavigation;
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        mainBottomNav = binding.mainBottomNav;
+        mainBottomNav.setOnNavigationItemSelectedListener(item -> {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.action_home:
@@ -59,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new CameraFragment();
                     break;
             }
-            fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.mainActivityFl, fragment).commit();
             return true;
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_camera);
+        mainBottomNav.setSelectedItemId(R.id.action_camera);
     }
 }

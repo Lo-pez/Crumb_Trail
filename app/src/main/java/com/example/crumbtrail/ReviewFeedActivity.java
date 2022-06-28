@@ -34,7 +34,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         setContentView(view);
         setUpSwipeContainer();
 
-        rvReviews = binding.rvReviews;
+        rvReviews = binding.reviewsRv;
         linearLayoutManager = new LinearLayoutManager(this);
         rvReviews.setLayoutManager(linearLayoutManager);
         allReviews = new ArrayList<>();
@@ -69,7 +69,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
     }
 
     private void setUpSwipeContainer() {
-        swipeContainer = (SwipeRefreshLayout) binding.swipeContainer;
+        swipeContainer = (SwipeRefreshLayout) binding.reviewSwipeContainer;
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
             // Your code to refresh the list here.

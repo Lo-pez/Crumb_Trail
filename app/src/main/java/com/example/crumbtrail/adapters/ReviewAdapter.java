@@ -83,7 +83,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             userNameTv = itemView.findViewById(R.id.userNameTv);
             reviewBodyTv = itemView.findViewById(R.id.reviewBodyTv);
             commentBtn = itemView.findViewById(R.id.commentBtn);
-            composeEt = itemView.findViewById(R.id.etCompose);
+            composeEt = itemView.findViewById(R.id.composeEt);
             favoriteBtn = itemView.findViewById(R.id.favoriteBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
             favoriteCountTv = itemView.findViewById(R.id.favoriteCountTv);

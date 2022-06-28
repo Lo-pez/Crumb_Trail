@@ -43,13 +43,13 @@ public class SearchFragment extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_search, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
-        RecyclerView rvFood = view.findViewById(R.id.rvFood);
+        RecyclerView foodRv = view.findViewById(R.id.foodRv);
         foods = new ArrayList<>();
         linearLayoutManager = new LinearLayoutManager(getContext());
 
-        rvFood.setLayoutManager(linearLayoutManager);
+        foodRv.setLayoutManager(linearLayoutManager);
         FoodAdapter foodAdapter = new FoodAdapter(getContext(), foods);
-        rvFood.setAdapter(foodAdapter);
+        foodRv.setAdapter(foodAdapter);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(FOOD_URL, new JsonHttpResponseHandler() {

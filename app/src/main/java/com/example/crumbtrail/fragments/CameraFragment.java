@@ -74,18 +74,18 @@ public class CameraFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         previewView = view.findViewById(R.id.previewView);
 
-        ImageButton btnSubmit = view.findViewById(R.id.btnSubmit);
+        ImageButton submitSearchBtn = view.findViewById(R.id.submitSearchBtn);
 
-        EditText etSearch = view.findViewById(R.id.etSearch);
+        EditText searchBarEt = view.findViewById(R.id.searchBarEt);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
+        submitSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (etSearch.getText().toString().equals("")) {
+                if (searchBarEt.getText().toString().equals("")) {
                     Toast.makeText(getActivity(),"Do not search an empty query!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                    newInstance(etSearch.getText().toString()).show(getChildFragmentManager(), SearchFragment.TAG);
+                    newInstance(searchBarEt.getText().toString()).show(getChildFragmentManager(), SearchFragment.TAG);
             }
         });
 

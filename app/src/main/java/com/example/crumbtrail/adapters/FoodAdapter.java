@@ -32,7 +32,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     TextView brandNameTv;
     TextView foodCategoryTv;
     TextView foodDescriptionTv;
-    ConstraintLayout clFood;
+    ConstraintLayout foodItemCl;
 
     public FoodAdapter(Context context, List<Food> Foods) {
         this.context = context;
@@ -67,10 +67,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ViewHolder (@NonNull View itemView) {
             super(itemView);
-            brandNameTv = itemView.findViewById(R.id.brandNameTextView);
-            foodCategoryTv = itemView.findViewById(R.id.foodCategoryTextView);
-            foodDescriptionTv = itemView.findViewById(R.id.foodDescriptionTextView);
-            clFood = itemView.findViewById(R.id.clFood);
+            brandNameTv = itemView.findViewById(R.id.brandNameTv);
+            foodCategoryTv = itemView.findViewById(R.id.foodCategoryTv);
+            foodDescriptionTv = itemView.findViewById(R.id.foodDescriptionTv);
+            foodItemCl = itemView.findViewById(R.id.foodItemCl);
 
             // itemView's onclick listener
             itemView.setOnClickListener(this);
@@ -81,7 +81,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             brandNameTv.setText(food.getBrandName());
             foodCategoryTv.setText(food.getFoodCategory());
             foodDescriptionTv.setText(food.getDescription());
-            clFood.setOnClickListener(new View.OnClickListener() {
+            foodItemCl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ReviewFeedActivity.class);
