@@ -43,7 +43,7 @@ public class Review extends ParseObject {
     }
 
     public void setFCDId(Long fcdId) {
-        put(KEY_FCDID, fcdId);
+        put(KEY_FCDID, String.valueOf(fcdId));
     }
 
     public Float getRating() {
