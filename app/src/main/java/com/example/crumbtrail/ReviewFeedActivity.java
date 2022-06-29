@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.crumbtrail.adapters.ReviewAdapter;
@@ -34,6 +35,7 @@ import java.util.Objects;
 
 public class ReviewFeedActivity extends AppCompatActivity{
     public static final String TAG = "FeedActivity";
+    private static final int REQUEST_CODE = 42;
     protected ReviewAdapter adapter;
     protected List<Review> allReviews;
     private ActivityReviewFeedBinding binding;
@@ -72,6 +74,20 @@ public class ReviewFeedActivity extends AppCompatActivity{
         rvReviews.setAdapter(adapter);
         Log.i(TAG, fdcId.toString());
         queryReviews(food);
+
+        FloatingActionButton btnOpenReview = binding.btnOpenReview;
+
+        btnOpenReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.btnOpenReview) {
+                    // Compose icon has been selected
+                    // Navigate to the compose activity
+                    Intent intent = new Intent(ReviewFeedActivity.this, ComposeActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE);
+                }
+            }
+        });
 
         setUpEndlessScrolling(food);
     }

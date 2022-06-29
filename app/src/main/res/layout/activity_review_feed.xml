@@ -16,6 +16,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnOpenReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/ic_vector_write"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:maxImageSize="48dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
             <include
                 android:id="@+id/include"
                 layout="@layout/toolbar_main"
@@ -28,10 +42,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/reviewsRv"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_centerInParent="true"
-                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
