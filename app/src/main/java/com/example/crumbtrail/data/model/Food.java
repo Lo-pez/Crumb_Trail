@@ -30,8 +30,8 @@ public class Food {
     private String allHighlightFields;
     private double score;
 
-    public long getFDCID() { return fdcID; }
-    public void setFDCID(long value) { this.fdcID = value; }
+    public long getFCDID() { return fdcID; }
+    public void setFCDID(long value) { this.fdcID = value; }
 
     public String getDescription() { return description; }
     public void setDescription(String value) { this.description = value; }

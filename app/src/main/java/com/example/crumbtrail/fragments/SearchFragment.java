@@ -87,7 +87,7 @@ public class SearchFragment extends Fragment {
                     queryFDC(searchNameQuery);
                     Log.i(TAG, foods.toString());
                 };
-                handler.postDelayed(runnable, 750);
+                handler.postDelayed(runnable, 750); // TODO: Reduce delay in prod
 
                 return false;
             }

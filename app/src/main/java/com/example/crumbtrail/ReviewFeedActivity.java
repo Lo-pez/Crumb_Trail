@@ -20,6 +20,9 @@ import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
@@ -51,7 +54,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         Food food = Parcels.unwrap(intent.getParcelableExtra("Food"));
-        Long fdcId = food.getFDCID();
+        Long fdcId = food.getFCDID();
         Objects.requireNonNull(getSupportActionBar()).setTitle(fdcId.toString());
 
 
@@ -120,7 +123,17 @@ public class ReviewFeedActivity extends AppCompatActivity{
         // specify what type of data we want to query - Review.class
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
         // include data referred by user key
-        query.whereEqualTo(Review.KEY_FCDID, food.getFDCID());
+//        query.findInBackground(new FindCallback<Review>() {
+//            @Override
+//            public void done(List<Review> objects, ParseException e) {
+//                for (int i = 0; i < objects.size(); ++i) {
+//                    if (objects.get(i).getFCDId().equals(food.getFDCID()))
+//                        allReviews.add(0, objects.get(i));
+//                }
+//            }
+//        });
+//        ParseObject obj = ParseObject.createWithoutData(Review.KEY_FCDID, String.valueOf(food.getFDCID()));
+        query.whereEqualTo(Review.KEY_FCDID, String.valueOf(food.getFCDID()));
         query.include(Review.KEY_FCDID);
         query.include(Review.KEY_USER);
         // order Reviews by creation date (newest first)

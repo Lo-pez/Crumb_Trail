@@ -19,7 +19,7 @@ public class Review extends ParseObject {
     public static final String KEY_BODY = "body";
     public static final String KEY_COMMENTS = "comments";
     public static final String KEY_RATING = "rating";
-    public static final String KEY_FCDID = "fcdID";
+    public static final String KEY_FCDID = "fcdId";
 
     public String getBody() {
         return getString(KEY_BODY);
