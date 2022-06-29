@@ -20,6 +20,7 @@ import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -46,16 +47,16 @@ public class ReviewFeedActivity extends AppCompatActivity{
         binding = ActivityReviewFeedBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        setUpSwipeContainer();
+        Intent intent = getIntent();
+        Food food = Parcels.unwrap(intent.getParcelableExtra("Food"));
+        setUpSwipeContainer(food);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.include);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
-        Food food = Parcels.unwrap(intent.getParcelableExtra("Food"));
         Long fdcId = food.getFCDID();
-        Objects.requireNonNull(getSupportActionBar()).setTitle(fdcId.toString());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(food.getBrandName());
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -73,8 +74,6 @@ public class ReviewFeedActivity extends AppCompatActivity{
         queryReviews(food);
 
         setUpEndlessScrolling(food);
-
-        // initialize the array that will hold Reviews and create a ReviewsAdapter
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -101,7 +100,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         rvReviews.addOnScrollListener(scrollListener);
     }
 
-    private void setUpSwipeContainer() {
+    private void setUpSwipeContainer(Food food) {
         swipeContainer = (SwipeRefreshLayout) binding.reviewSwipeContainer;
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
@@ -109,7 +108,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             adapter.clear();
-            queryReviews(null);
+            queryReviews(food);
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,

@@ -36,6 +36,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     FloatingActionButton shareBtn;
     EditText composeEt;
     TextView favoriteCountTv;
+    ConstraintLayout composeCl;
 
     public void clear() {
         Reviews.clear();
@@ -87,6 +88,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             favoriteBtn = itemView.findViewById(R.id.favoriteBtn);
             shareBtn = itemView.findViewById(R.id.shareBtn);
             favoriteCountTv = itemView.findViewById(R.id.favoriteCountTv);
+            composeCl = itemView.findViewById(R.id.composeCl);
 
             // itemView's onclick listener
             itemView.setOnClickListener(this);
@@ -99,7 +101,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             commentBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                        if (composeCl.getVisibility() == View.VISIBLE) {
+                            composeCl.setVisibility(View.GONE);
+                        }
+                        else { composeCl.setVisibility(View.VISIBLE); }
                 }
             });
             favoriteBtn.setOnClickListener(new View.OnClickListener() {

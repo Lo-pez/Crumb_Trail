@@ -90,7 +90,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clCompose" />
+        app:layout_constraintTop_toBottomOf="@+id/composeCl" />
 
     <TextView
         android:id="@+id/favoriteCountTv"
@@ -104,14 +104,14 @@
         tools:text="8213" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clCompose"
+        android:id="@+id/composeCl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/favoriteCountTv"
+        app:layout_constraintTop_toBottomOf="@+id/shareBtn"
         tools:visibility="visible">
 
         <EditText
@@ -126,9 +126,11 @@
             app:counterEnabled="true"
             app:counterMaxLength="10"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:autofillHints="" />
 
         <Button
             android:id="@+id/reviewBtn"
