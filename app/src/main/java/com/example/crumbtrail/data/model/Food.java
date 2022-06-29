@@ -80,12 +80,10 @@ public class Food {
     }
 
     public Food(JSONObject food) throws JSONException {
-        if (!food.isNull(brandName))
-            brandName = food.getString("brandName");
-        if (!food.isNull(foodCategory))
-            foodCategory = food.getString("foodCategory");
-        if (!food.isNull(description))
-            description = food.getString("description");
+//        if (!food.isNull(brandName))
+        brandName = food.getString("brandOwner");
+        foodCategory = food.getString("foodCategory");
+        description = food.getString("description");
         fdcID = food.getLong("fdcId");
     }
 

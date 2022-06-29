@@ -67,9 +67,9 @@ public class ReviewFeedActivity extends AppCompatActivity{
         adapter = new ReviewAdapter(this, allReviews);
         rvReviews.setAdapter(adapter);
         Log.i(TAG, fdcId.toString());
-        queryReviews(fdcId);
+        queryReviews(food);
 
-        setUpEndlessScrolling(fdcId);
+        setUpEndlessScrolling(food);
 
         // initialize the array that will hold Reviews and create a ReviewsAdapter
     }
@@ -82,7 +82,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         return true;
     }
 
-    private void setUpEndlessScrolling(Long fdcId) {
+    private void setUpEndlessScrolling(Food food) {
         // Retain an instance so that you can call `resetState()` for fresh searches
         // Triggered only when new data needs to be appended to the list
         // Add whatever code is needed to append new items to the bottom of the list
@@ -91,7 +91,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                queryReviews(fdcId);
+                queryReviews(food);
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -116,16 +116,13 @@ public class ReviewFeedActivity extends AppCompatActivity{
     }
 
 
-    private void queryReviews(Long fdcId) {
+    private void queryReviews(Food food) {
         // specify what type of data we want to query - Review.class
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
         // include data referred by user key
+        query.whereEqualTo(Review.KEY_FCDID, food.getFDCID());
         query.include(Review.KEY_FCDID);
         query.include(Review.KEY_USER);
-        if (fdcId != null)
-            query.whereEqualTo(Review.KEY_FCDID, fdcId.toString());
-        // limit query to latest 20 items
-        query.setLimit(20);
         // order Reviews by creation date (newest first)
         query.addDescendingOrder("createdAt");
         // start an asynchronous call for Reviews

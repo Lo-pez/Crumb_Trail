@@ -53,9 +53,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d("FoodAdapter", "onBindViewHolder" + position);
         // Get the Food at the passed in position
-        Food Food = Foods.get(position);
+        Food food = Foods.get(position);
         // Bind the Food data into the VH
-        holder.bind(Food);
+        holder.bind(food);
     }
 
     // Returns the total count of items in the list
