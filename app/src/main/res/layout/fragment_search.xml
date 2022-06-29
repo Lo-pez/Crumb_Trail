@@ -9,33 +9,57 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cameraFragmentFl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@id/cameraFragmentFl"
         android:layout_gravity="top">
 
-        <EditText
-            android:id="@+id/searchBarEt"
+<!--        <EditText-->
+<!--            android:id="@+id/searchBarEt"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:autofillHints="@string/search_for_food"-->
+<!--            android:hint="@string/search_for_food"-->
+<!--            android:inputType="textAutoComplete"-->
+<!--            android:minHeight="48dp"-->
+<!--            android:selectAllOnFocus="true"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/submitSearchBtn"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/submitSearchBtn"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_gravity="start"-->
+<!--            android:background="@drawable/camera"-->
+<!--            android:enabled="true"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/searchBarEt"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/searchBarEt" />-->
+        <SearchView
             android:layout_width="0dp"
+            android:id="@+id/searchView"
             android:layout_height="wrap_content"
-            android:autofillHints="@string/search_for_food"
-            android:hint="@string/search_for_food"
-            android:inputType="textAutoComplete"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toStartOf="@id/submitSearchBtn"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/submitSearchBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="start"
-            android:background="@drawable/camera"
-            android:enabled="true"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRv"
+            android:layout_width="409dp"
+            android:layout_height="681dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/searchBarEt"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
