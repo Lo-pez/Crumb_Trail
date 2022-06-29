@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,12 +17,16 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.crumbtrail.adapters.ReviewAdapter;
+import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
 import com.parse.ParseQuery;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ReviewFeedActivity extends AppCompatActivity{
     public static final String TAG = "FeedActivity";
@@ -40,8 +45,15 @@ public class ReviewFeedActivity extends AppCompatActivity{
         setContentView(view);
         setUpSwipeContainer();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.include);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
+        Intent intent = getIntent();
+        Food food = Parcels.unwrap(intent.getParcelableExtra("Food"));
+        Long fdcId = food.getFDCID();
+        Objects.requireNonNull(getSupportActionBar()).setTitle(fdcId.toString());
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow(); // in Activity's onCreate() for instance
@@ -54,10 +66,10 @@ public class ReviewFeedActivity extends AppCompatActivity{
         allReviews = new ArrayList<>();
         adapter = new ReviewAdapter(this, allReviews);
         rvReviews.setAdapter(adapter);
+        Log.i(TAG, fdcId.toString());
+        queryReviews(fdcId);
 
-        queryReviews(null);
-
-        setUpEndlessScrolling();
+        setUpEndlessScrolling(fdcId);
 
         // initialize the array that will hold Reviews and create a ReviewsAdapter
     }
@@ -70,7 +82,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         return true;
     }
 
-    private void setUpEndlessScrolling() {
+    private void setUpEndlessScrolling(Long fdcId) {
         // Retain an instance so that you can call `resetState()` for fresh searches
         // Triggered only when new data needs to be appended to the list
         // Add whatever code is needed to append new items to the bottom of the list
@@ -79,15 +91,11 @@ public class ReviewFeedActivity extends AppCompatActivity{
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi();
+                queryReviews(fdcId);
             }
         };
         // Adds the scroll listener to RecyclerView
         rvReviews.addOnScrollListener(scrollListener);
-    }
-
-    public void loadNextDataFromApi() {
-        queryReviews(allReviews.get(allReviews.size() - 1).getObjectId());
     }
 
     private void setUpSwipeContainer() {
@@ -108,12 +116,14 @@ public class ReviewFeedActivity extends AppCompatActivity{
     }
 
 
-    private void queryReviews(String maxId) {
+    private void queryReviews(Long fdcId) {
         // specify what type of data we want to query - Review.class
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
         // include data referred by user key
         query.include(Review.KEY_FCDID);
         query.include(Review.KEY_USER);
+        if (fdcId != null)
+            query.whereEqualTo(Review.KEY_FCDID, fdcId.toString());
         // limit query to latest 20 items
         query.setLimit(20);
         // order Reviews by creation date (newest first)

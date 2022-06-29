@@ -119,15 +119,4 @@ public class SearchFragment extends Fragment {
             }
         });
     }
-
-    public static SearchResultsFragment newInstance(String query) {
-        SearchResultsFragment f = new SearchResultsFragment();
-
-        // Supply num input as an argument.
-        Bundle args = new Bundle();
-        args.putString("query", query);
-        f.setArguments(args);
-
-        return f;
-    }
 }

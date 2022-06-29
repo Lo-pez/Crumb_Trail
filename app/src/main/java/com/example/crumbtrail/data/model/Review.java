@@ -19,7 +19,7 @@ public class Review extends ParseObject {
     public static final String KEY_BODY = "body";
     public static final String KEY_COMMENTS = "comments";
     public static final String KEY_RATING = "rating";
-    public static final String KEY_FCDID = "fcdId";
+    public static final String KEY_FCDID = "fcdID";
 
     public String getBody() {
         return getString(KEY_BODY);
@@ -38,11 +38,11 @@ public class Review extends ParseObject {
         put(KEY_BODY, body);
     }
 
-    public String getFCDId() {
-        return getString(KEY_FCDID);
+    public Long getFCDId() {
+        return getLong(KEY_FCDID);
     }
 
-    public void setFCDId(String fcdId) {
+    public void setFCDId(Long fcdId) {
         put(KEY_FCDID, fcdId);
     }
 
