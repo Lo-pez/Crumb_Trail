@@ -59,7 +59,6 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setUpSwipeContainer(view);
         SearchView searchView = view.findViewById(R.id.searchView);
 
         RecyclerView searchRv = view.findViewById(R.id.searchRv);
@@ -83,6 +82,7 @@ public class SearchFragment extends Fragment {
                 runnable = () -> {
                     String searchNameQuery = searchView.getQuery().toString();
                     Log.i(TAG, searchNameQuery);
+                    setUpSwipeContainer(view);
                     queryFDC(searchNameQuery);
                     Log.i(TAG, foods.toString());
                 };
@@ -101,7 +101,6 @@ public class SearchFragment extends Fragment {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             foodAdapter.clear();
-            queryFDC(null);
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
