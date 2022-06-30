@@ -38,12 +38,11 @@ public class SearchFragment extends Fragment {
     public static final String TAG = "SearchFragment";
     public static final int requestCode = 100;
     final int RequestCameraPermissionID = 1001;
-    private LinearLayoutManager linearLayoutManager;
-    private Handler handler = new Handler();
+    private SwipeRefreshLayout swipeContainer;
+    private final Handler handler = new Handler();
     private Runnable runnable;
     protected FoodAdapter foodAdapter;
     protected List<Food> foods;
-    private RecyclerView searchRv;
 
 
     public SearchFragment() {
@@ -60,11 +59,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setUpSwipeContainer(view);
         SearchView searchView = view.findViewById(R.id.searchView);
 
-        searchRv = view.findViewById(R.id.searchRv);
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView searchRv = view.findViewById(R.id.searchRv);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         searchRv.setLayoutManager(linearLayoutManager);
         foods = new ArrayList<>();
         foodAdapter = new FoodAdapter(getContext(), foods);
@@ -94,6 +93,23 @@ public class SearchFragment extends Fragment {
         });
     }
 
+    private void setUpSwipeContainer(View v) {
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(() -> {
+            // Your code to refresh the list here.
+            // Make sure you call swipeContainer.setRefreshing(false)
+            // once the network request has completed successfully.
+            foodAdapter.clear();
+            queryFDC(null);
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+    }
+
     public void queryFDC(String mQuery) {
         String FOOD_URL = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=%s" , requireContext().getString(R.string.food_api_key) ) + "&query=" + mQuery + "&dataType=Branded&sortBy=dataType.keyword&sortOrder=asc";
         Log.i(TAG, FOOD_URL);
@@ -108,7 +124,8 @@ public class SearchFragment extends Fragment {
                     Log.i(TAG, "Results: " + results.toString());
                     foods.addAll(Food.fromJsonArray(results));
                     Log.i(TAG, "foods: " + foods.size());
-                    foodAdapter.notifyItemRangeChanged(0, foods.size());
+                    foodAdapter.notifyDataSetChanged();
+                    swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit JSON exception", e);
                 }

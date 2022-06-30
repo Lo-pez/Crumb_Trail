@@ -64,6 +64,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         return Foods.size();
     }
 
+    public void clear() {
+        Foods.clear();
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ViewHolder (@NonNull View itemView) {
             super(itemView);
