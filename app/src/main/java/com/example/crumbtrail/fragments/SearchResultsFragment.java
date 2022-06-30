@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import okhttp3.Headers;
 
@@ -38,8 +39,8 @@ public class SearchResultsFragment extends DialogFragment {
         String mQuery = getArguments().getString("query");
         FOOD_URL = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=%s" , getString(R.string.food_api_key)) + "&query=" + mQuery + "&dataType=Branded&pageSize=3&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc";
         Log.i(TAG, FOOD_URL);
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_search_results, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = requireActivity().getLayoutInflater().inflate(R.layout.fragment_search_results, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         builder.setView(view);
         RecyclerView foodRv = view.findViewById(R.id.foodRv);
         foods = new ArrayList<>();

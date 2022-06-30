@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         SignInButton btnGoogleSignIn = findViewById(R.id.sign_in_button);
 
 
-        login.setOnClickListener(v -> login(username.getText().toString(), password.getText().toString()));
+        login.setOnClickListener(v -> login(Objects.requireNonNull(username.getText()).toString(), Objects.requireNonNull(password.getText()).toString()));
         Objects.requireNonNull(btnGoogleSignIn).setOnClickListener(v -> {
             if (v.getId() == R.id.sign_in_button) {
                 signIn();

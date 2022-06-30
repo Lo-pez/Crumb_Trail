@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomViewNavigation();
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void setUpBottomViewNavigation() {
         mainBottomNav = binding.mainBottomNav;
         mainBottomNav.setOnNavigationItemSelectedListener(item -> {

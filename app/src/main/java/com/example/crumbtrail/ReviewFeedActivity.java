@@ -57,7 +57,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        Long fdcId = food.getFCDID();
+        long fdcId = food.getFCDID();
         Objects.requireNonNull(getSupportActionBar()).setTitle(food.getBrandName());
 
 
@@ -72,7 +72,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         allReviews = new ArrayList<>();
         adapter = new ReviewAdapter(this, allReviews);
         rvReviews.setAdapter(adapter);
-        Log.i(TAG, fdcId.toString());
+        Log.i(TAG, Long.toString(fdcId));
         queryReviews(food);
 
         FloatingActionButton btnOpenReview = binding.btnOpenReview;
