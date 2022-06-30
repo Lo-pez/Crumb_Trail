@@ -28,9 +28,9 @@ An app for reviewing grocery store products.
 * User can view their favorite reviews, stores, and products
 * User can login
 * User can view a stream of products
-* User can click on a product and see a feed of reviews for it **
+* User can click on a product and see a feed of reviews for it 
 * User can scan items
-* User can view a feed of reviews**
+* User can view a feed of reviews
 * User can view a detailed review 
 * User can view reviews for a branded product
 * User can see stores (Using google maps SDK) as well as an average review of their products next to their icon
