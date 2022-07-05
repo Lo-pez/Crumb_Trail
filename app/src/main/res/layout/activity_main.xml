@@ -13,11 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/mainBottomNav" />
-<!--    <FrameLayout-->
-<!--        android:id="@+id/mainActivityFl"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_above="@id/mainBottomNav" />-->
 
     <ProgressBar
         android:id="@+id/mainLoadingBarPb"
@@ -27,7 +22,6 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainBottomNav"

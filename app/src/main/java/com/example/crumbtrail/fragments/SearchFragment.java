@@ -89,8 +89,9 @@ public class SearchFragment extends Fragment {
                     foods.clear();
                     foodAdapter.clear();
                     queryFDC(searchNameQuery);
+                    //TODO: Add something for empty results
                 };
-                handler.postDelayed(runnable, 400); // TODO: Reduce delay in prod
+                handler.postDelayed(runnable, 1000);
 
                 return false;
             }
@@ -127,6 +128,8 @@ public class SearchFragment extends Fragment {
                 try {
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
+                    foods.clear();
+                    foodAdapter.clear();
                     foods.addAll(Food.fromJsonArray(results));
                     Log.i(TAG, "foods: " + foods.size());
                     foodAdapter.notifyDataSetChanged();
