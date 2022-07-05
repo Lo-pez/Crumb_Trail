@@ -33,7 +33,6 @@ public class CameraFragment extends Fragment {
     private PreviewView previewView;
     final int RequestCameraPermissionID = 1001;
 
-
     public CameraFragment() {
         // Required empty public constructor
     }
