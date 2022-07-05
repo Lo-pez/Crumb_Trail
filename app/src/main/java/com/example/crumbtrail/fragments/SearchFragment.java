@@ -42,6 +42,7 @@ public class SearchFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private final Handler handler = new Handler();
     private Runnable runnable;
+    private SearchView searchView;
     protected FoodAdapter foodAdapter;
     protected List<Food> foods;
 
@@ -60,7 +61,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
         setUpSwipeContainer(view);
 
         RecyclerView searchRv = view.findViewById(R.id.searchRv);
@@ -104,7 +105,7 @@ public class SearchFragment extends Fragment {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             foodAdapter.clear();
-            queryFDC("");
+            queryFDC(searchView.getQuery().toString());
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
