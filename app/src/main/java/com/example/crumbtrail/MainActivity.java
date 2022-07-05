@@ -1,34 +1,30 @@
 package com.example.crumbtrail;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.example.crumbtrail.adapters.FragmentPageAdapter;
 import com.example.crumbtrail.databinding.ActivityMainBinding;
-import com.example.crumbtrail.fragments.CameraFragment;
-import com.example.crumbtrail.fragments.HomeFragment;
-import com.example.crumbtrail.fragments.ProfileFragment;
-import com.example.crumbtrail.fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.parse.ParseUser;
 
+// import statements
+
+/**
+ * @author      Diego López Ramos diegolopezramos@fb.com
+ * @version     0.1
+ * @since       0.1
+ */
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final int requestCode = 100;
-    final FragmentManager fragmentManager = getSupportFragmentManager();
     private ViewPager viewPager;
     private BottomNavigationView mainBottomNav;
     private ActivityMainBinding binding;
@@ -40,14 +36,28 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        getCameraPermission();
+        setUpViewPager();
+        setUpBottomViewNavigation();
+    }
+
+    /**
+     * Gets permission to use the camera from the user if
+     * the permission is not already given. This is necessary
+     * for the camera fragment.
+     */
+    private void getCameraPermission() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA}, requestCode);
         }
-
-        viewPager = (ViewPager)findViewById(R.id.viewPager);
+    }
+    /**
+     * Sets up the viewpager and connects it to the bottom view navigation.
+     */
+    private void setUpViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setCurrentItem(1); //Setting first screen to camera
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -76,19 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        // Create an adapter that
-        // knows which fragment should
-        // be shown on each page
         FragmentPageAdapter adapter = new FragmentPageAdapter(getSupportFragmentManager());
-
-        // Set the adapter onto
-        // the view pager
         viewPager.setAdapter(adapter);
-
-        setUpBottomViewNavigation();
     }
 
+    /**
+     * Sets up bottom view navigation. When user clicks a menu item
+     * the viewPager's current item is changed to that item.
+     */
     @SuppressLint("NonConstantResourceId")
     private void setUpBottomViewNavigation() {
         mainBottomNav = binding.mainBottomNav;
