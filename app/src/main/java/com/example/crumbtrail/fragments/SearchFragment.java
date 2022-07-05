@@ -1,5 +1,6 @@
 package com.example.crumbtrail.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -60,6 +61,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SearchView searchView = view.findViewById(R.id.searchView);
+        setUpSwipeContainer(view);
 
         RecyclerView searchRv = view.findViewById(R.id.searchRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -82,11 +84,12 @@ public class SearchFragment extends Fragment {
                 runnable = () -> {
                     String searchNameQuery = searchView.getQuery().toString();
                     Log.i(TAG, searchNameQuery);
-                    setUpSwipeContainer(view);
+//                    setUpSwipeContainer(view);
+                    foods.clear();
+                    foodAdapter.clear();
                     queryFDC(searchNameQuery);
-                    Log.i(TAG, foods.toString());
                 };
-                handler.postDelayed(runnable, 750); // TODO: Reduce delay in prod
+                handler.postDelayed(runnable, 400); // TODO: Reduce delay in prod
 
                 return false;
             }
@@ -101,6 +104,7 @@ public class SearchFragment extends Fragment {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             foodAdapter.clear();
+            queryFDC("");
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -114,6 +118,7 @@ public class SearchFragment extends Fragment {
         Log.i(TAG, FOOD_URL);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(FOOD_URL, new JsonHttpResponseHandler() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
