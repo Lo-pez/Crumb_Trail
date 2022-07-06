@@ -1,6 +1,5 @@
 package com.example.crumbtrail.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -38,17 +37,23 @@ import okhttp3.Headers;
 public class SearchFragment extends Fragment {
     public static final String TAG = "SearchFragment";
     public static final int requestCode = 100;
+    private static String pQuery;
     final int RequestCameraPermissionID = 1001;
     private SwipeRefreshLayout swipeContainer;
+    private boolean outOfFocus;
+    private RecyclerView searchRv;
     private final Handler handler = new Handler();
     private Runnable runnable;
-    private SearchView searchView;
     protected FoodAdapter foodAdapter;
     protected List<Food> foods;
 
 
     public SearchFragment() {
         // Required empty public constructor
+    }
+
+    public static void setQuery(String s) {
+        pQuery = s;
     }
 
     @Override
@@ -61,20 +66,23 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchView = view.findViewById(R.id.searchView);
-        setUpSwipeContainer(view);
+        SearchView searchView = view.findViewById(R.id.searchView);
 
-        RecyclerView searchRv = view.findViewById(R.id.searchRv);
+        searchRv = view.findViewById(R.id.searchRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         searchRv.setLayoutManager(linearLayoutManager);
         foods = new ArrayList<>();
         foodAdapter = new FoodAdapter(getContext(), foods);
         searchRv.setAdapter(foodAdapter);
 
+        setUpSwipeContainer(view);
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                Log.i(TAG, query);
+                return true;
             }
 
             @Override
@@ -85,13 +93,13 @@ public class SearchFragment extends Fragment {
                 runnable = () -> {
                     String searchNameQuery = searchView.getQuery().toString();
                     Log.i(TAG, searchNameQuery);
-//                    setUpSwipeContainer(view);
                     foods.clear();
                     foodAdapter.clear();
+                    searchRv.getRecycledViewPool().clear();
                     queryFDC(searchNameQuery);
-                    //TODO: Add something for empty results
+                    Log.i(TAG, foods.toString());
                 };
-                handler.postDelayed(runnable, 1000);
+                handler.postDelayed(runnable, 750); // TODO: Reduce delay in prod
 
                 return false;
             }
@@ -106,7 +114,6 @@ public class SearchFragment extends Fragment {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             foodAdapter.clear();
-            queryFDC(searchView.getQuery().toString());
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -120,16 +127,17 @@ public class SearchFragment extends Fragment {
         Log.i(TAG, FOOD_URL);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(FOOD_URL, new JsonHttpResponseHandler() {
-            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
+                    if (outOfFocus) return;
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
                     foods.clear();
                     foodAdapter.clear();
+                    searchRv.getRecycledViewPool().clear(); // Clearing RV cache
                     foods.addAll(Food.fromJsonArray(results));
                     Log.i(TAG, "foods: " + foods.size());
                     foodAdapter.notifyDataSetChanged();
@@ -143,5 +151,17 @@ public class SearchFragment extends Fragment {
                 Log.d(TAG, "onFailure" + throwable);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        outOfFocus = false;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        outOfFocus = true;
     }
 }

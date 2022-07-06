@@ -19,15 +19,20 @@ package com.example.crumbtrail.textdetector;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.crumbtrail.MainActivity;
+import com.example.crumbtrail.fragments.CameraFragment;
+import com.example.crumbtrail.fragments.SearchFragment;
 import com.example.crumbtrail.graphic.GraphicOverlay;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.Text.Element;
@@ -36,7 +41,9 @@ import com.google.mlkit.vision.text.Text.TextBlock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Graphic instance for rendering TextBlock position, size, and ID within an associated graphic
@@ -58,8 +65,10 @@ public class TextGraphic extends GraphicOverlay.Graphic{
   private final Text text;
   private final Boolean shouldGroupTextInBlocks;
   private final Boolean showLanguageTag;
-  private final List<RectF> rectangles;
 
+  private final Map<RectF, String> rectangles;
+
+  @SuppressLint("ClickableViewAccessibility")
   TextGraphic(
       GraphicOverlay overlay, Text text, boolean shouldGroupTextInBlocks, boolean showLanguageTag) {
     super(overlay);
@@ -67,7 +76,7 @@ public class TextGraphic extends GraphicOverlay.Graphic{
     this.shouldGroupTextInBlocks = shouldGroupTextInBlocks;
     this.showLanguageTag = showLanguageTag;
 
-    rectangles = new ArrayList<>();
+    rectangles = new HashMap<RectF, String>();
 
     rectPaint = new Paint();
     rectPaint.setColor(MARKER_COLOR);
@@ -81,6 +90,29 @@ public class TextGraphic extends GraphicOverlay.Graphic{
     labelPaint = new Paint();
     labelPaint.setColor(MARKER_COLOR);
     labelPaint.setStyle(Paint.Style.FILL);
+
+    overlay.setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        float touchX = event.getX();
+        float touchY = event.getY();
+        if (event.getAction() == (0)) {
+          System.out.println("Touching down!");
+          for (RectF rect : rectangles.keySet()) {
+            if (rect.contains(touchX, touchY)) {
+              System.out.println("Touched Rectangle, start activity. " + rectangles.get(rect));
+              SearchFragment.setQuery(rectangles.get(rect));
+              MainActivity.viewPager.setCurrentItem(2);
+            }
+          }
+        } else if (event.getAction() == (1)) {
+          System.out.println("Touching up!");
+        } else if (event.getAction() == (2)) {
+          System.out.println("Sliding your finger around on the screen.");
+        }
+        return true;
+      }
+    });
     // Redraw the overlay, as this graphic has been added.
     postInvalidate();
   }
@@ -138,6 +170,7 @@ public class TextGraphic extends GraphicOverlay.Graphic{
     rect.right = max(x0, x1);
     rect.top = translateY(rect.top);
     rect.bottom = translateY(rect.bottom);
+    rectangles.put(rect, text);
     canvas.drawRect(rect, rectPaint);
     float textWidth = textPaint.measureText(text);
     canvas.drawRect(
@@ -148,6 +181,5 @@ public class TextGraphic extends GraphicOverlay.Graphic{
         labelPaint);
     // Renders the text at the bottom of the box.
     canvas.drawText(text, rect.left, rect.top - STROKE_WIDTH, textPaint);
-    rectangles.add(rect);
   }
 }

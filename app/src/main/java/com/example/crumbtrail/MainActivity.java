@@ -26,7 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final int requestCode = 100;
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
     private BottomNavigationView mainBottomNav;
     private ActivityMainBinding binding;
 
