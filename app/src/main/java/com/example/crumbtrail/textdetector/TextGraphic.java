@@ -22,8 +22,11 @@ import static java.lang.Math.min;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.example.crumbtrail.graphic.GraphicOverlay;
 import com.google.mlkit.vision.text.Text;
@@ -31,13 +34,15 @@ import com.google.mlkit.vision.text.Text.Element;
 import com.google.mlkit.vision.text.Text.Line;
 import com.google.mlkit.vision.text.Text.TextBlock;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Graphic instance for rendering TextBlock position, size, and ID within an associated graphic
  * overlay view.
  */
-public class TextGraphic extends GraphicOverlay.Graphic {
+public class TextGraphic extends GraphicOverlay.Graphic{
 
   private static final String TAG = "TextGraphic";
   private static final String TEXT_WITH_LANGUAGE_TAG_FORMAT = "%s:%s";
@@ -53,14 +58,16 @@ public class TextGraphic extends GraphicOverlay.Graphic {
   private final Text text;
   private final Boolean shouldGroupTextInBlocks;
   private final Boolean showLanguageTag;
+  private final List<RectF> rectangles;
 
   TextGraphic(
       GraphicOverlay overlay, Text text, boolean shouldGroupTextInBlocks, boolean showLanguageTag) {
     super(overlay);
-
     this.text = text;
     this.shouldGroupTextInBlocks = shouldGroupTextInBlocks;
     this.showLanguageTag = showLanguageTag;
+
+    rectangles = new ArrayList<>();
 
     rectPaint = new Paint();
     rectPaint.setColor(MARKER_COLOR);
@@ -141,5 +148,6 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         labelPaint);
     // Renders the text at the bottom of the box.
     canvas.drawText(text, rect.left, rect.top - STROKE_WIDTH, textPaint);
+    rectangles.add(rect);
   }
 }

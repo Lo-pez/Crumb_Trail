@@ -41,7 +41,6 @@ public class CameraFragment extends Fragment
     public static final String TAG = "CameraFragment";
     private PreviewView previewView;
 
-
     public CameraFragment() {
         // Required empty public constructor
     }
