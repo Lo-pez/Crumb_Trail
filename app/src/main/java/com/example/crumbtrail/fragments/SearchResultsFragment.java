@@ -59,8 +59,9 @@ public class SearchResultsFragment extends DialogFragment {
                 try {
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
+                    foods.clear();
                     foods.addAll(Food.fromJsonArray(results));
-                    foodAdapter.notifyItemRangeChanged(0, Food.fromJsonArray(results).size());
+                    foodAdapter.notifyDataSetChanged();
                     Log.i(TAG, "foods: " + foods.size());
                 } catch (JSONException e) {
                     Log.e(TAG, "Hit JSON exception", e);

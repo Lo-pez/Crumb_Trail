@@ -1,5 +1,6 @@
 package com.example.crumbtrail.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class SearchFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private final Handler handler = new Handler();
     private Runnable runnable;
+    private SearchView searchView;
     protected FoodAdapter foodAdapter;
     protected List<Food> foods;
 
@@ -59,7 +61,8 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
+        setUpSwipeContainer(view);
 
         RecyclerView searchRv = view.findViewById(R.id.searchRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -82,11 +85,13 @@ public class SearchFragment extends Fragment {
                 runnable = () -> {
                     String searchNameQuery = searchView.getQuery().toString();
                     Log.i(TAG, searchNameQuery);
-                    setUpSwipeContainer(view);
+//                    setUpSwipeContainer(view);
+                    foods.clear();
+                    foodAdapter.clear();
                     queryFDC(searchNameQuery);
-                    Log.i(TAG, foods.toString());
+                    //TODO: Add something for empty results
                 };
-                handler.postDelayed(runnable, 750); // TODO: Reduce delay in prod
+                handler.postDelayed(runnable, 1000);
 
                 return false;
             }
@@ -101,6 +106,7 @@ public class SearchFragment extends Fragment {
             // Make sure you call swipeContainer.setRefreshing(false)
             // once the network request has completed successfully.
             foodAdapter.clear();
+            queryFDC(searchView.getQuery().toString());
         });
         // Configure the refreshing colors
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -114,6 +120,7 @@ public class SearchFragment extends Fragment {
         Log.i(TAG, FOOD_URL);
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(FOOD_URL, new JsonHttpResponseHandler() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -121,6 +128,8 @@ public class SearchFragment extends Fragment {
                 try {
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
+                    foods.clear();
+                    foodAdapter.clear();
                     foods.addAll(Food.fromJsonArray(results));
                     Log.i(TAG, "foods: " + foods.size());
                     foodAdapter.notifyDataSetChanged();

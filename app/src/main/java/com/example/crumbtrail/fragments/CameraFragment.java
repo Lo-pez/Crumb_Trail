@@ -1,45 +1,37 @@
 package com.example.crumbtrail.fragments;
 
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.camera.core.Camera;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.crumbtrail.camera.CameraSource;
-import com.example.crumbtrail.camera.CameraSourcePreview;
-import com.example.crumbtrail.graphic.GraphicOverlay;
 import com.example.crumbtrail.R;
 
-import com.example.crumbtrail.textdetector.TextRecognitionProcessor;
-import com.google.mlkit.vision.text.Text;
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+import com.google.common.util.concurrent.ListenableFuture;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class CameraFragment extends Fragment
-        implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
-    private static final String TEXT_RECOGNITION_LATIN = "Text Recognition Latin";
-
-    private CameraSource cameraSource = null;
-    private CameraSourcePreview preview;
-    private GraphicOverlay graphicOverlay;
-    private String selectedModel = TEXT_RECOGNITION_LATIN;
+public class CameraFragment extends Fragment {
     public static final String TAG = "CameraFragment";
+    public static final int requestCode = 100;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
+    final int RequestCameraPermissionID = 1001;
 
     public CameraFragment() {
         // Required empty public constructor
@@ -55,142 +47,35 @@ public class CameraFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        previewView = view.findViewById(R.id.previewView);
 
-        preview = view.findViewById(R.id.preview_view);
-
-        if (preview == null) {
-            Log.d(TAG, "Preview is null");
-        }
-        graphicOverlay = view.findViewById(R.id.graphic_overlay);
-        if (graphicOverlay == null) {
-            Log.d(TAG, "graphicOverlay is null");
-        }
-
-        List<String> options = new ArrayList<>();
-        options.add(TEXT_RECOGNITION_LATIN);
-
-        createCameraSource(selectedModel);
-
+        checkCameraProviderAvailability();
     }
 
-    @Override
-    public synchronized void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        selectedModel = parent.getItemAtPosition(pos).toString();
-        Log.d(TAG, "Selected model: " + selectedModel);
-        preview.stop();
-        createCameraSource(selectedModel);
-        startCameraSource();
-    }
+    void checkCameraProviderAvailability() {
+        cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Do nothing.
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        Log.d(TAG, "Set facing");
-        if (cameraSource != null) {
-            if (isChecked) {
-                cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
-            } else {
-                cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
-            }
-        }
-        preview.stop();
-        startCameraSource();
-    }
-
-    private void createCameraSource(String model) {
-        // If there's no existing cameraSource, create one.
-        if (cameraSource == null) {
-            cameraSource = new CameraSource(getActivity(), graphicOverlay); //TODO: Make sure this is correct
-        }
-
-        try {
-            switch (model) {
-                case TEXT_RECOGNITION_LATIN:
-                    Log.i(TAG, "Using on-device Text recognition Processor for Latin.");
-                    cameraSource.setMachineLearningFrameProcessor(
-                            new TextRecognitionProcessor(getContext(), new TextRecognizerOptions.Builder().build()));
-                    break;
-            }
-        } catch (RuntimeException e) {
-            Log.e(TAG, "Can not create image processor: " + model, e);
-            Toast.makeText(
-                            getContext(),
-                            "Can not create image processor: " + e.getMessage(),
-                            Toast.LENGTH_LONG)
-                    .show();
-        }
-    }
-
-    /**
-     * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
-     */
-    private void startCameraSource() {
-        if (cameraSource != null) {
+        cameraProviderFuture.addListener(() -> {
             try {
-                if (preview == null) {
-                    Log.d(TAG, "resume: Preview is null");
-                }
-                if (graphicOverlay == null) {
-                    Log.d(TAG, "resume: graphOverlay is null");
-                }
-                preview.start(cameraSource, graphicOverlay);
-            } catch (IOException e) {
-                Log.e(TAG, "Unable to start camera source.", e);
-                cameraSource.release();
-                cameraSource = null;
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+                bindPreview(cameraProvider);
+            } catch (ExecutionException | InterruptedException e) {
+                // No errors need to be handled for this Future.
+                // This should never be reached.
             }
-        }
+        }, ContextCompat.getMainExecutor(getContext()));
     }
 
-    private void processTextBlock(Text result) {
-        // [START mlkit_process_text_block]
-        String resultText = result.getText();
-        for (Text.TextBlock block : result.getTextBlocks()) {
-            String blockText = block.getText();
-            Point[] blockCornerPoints = block.getCornerPoints();
-            Rect blockFrame = block.getBoundingBox();
-            for (Text.Line line : block.getLines()) {
-                String lineText = line.getText();
-                Point[] lineCornerPoints = line.getCornerPoints();
-                Rect lineFrame = line.getBoundingBox();
-                for (Text.Element element : line.getElements()) {
-                    String elementText = element.getText();
-                    Point[] elementCornerPoints = element.getCornerPoints();
-                    Rect elementFrame = element.getBoundingBox();
-                }
-            }
-        }
-        // [END mlkit_process_text_block]
-    }
+    void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
+        Preview preview = new Preview.Builder()
+                .build();
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-        createCameraSource(selectedModel);
-        startCameraSource();
-    }
+        CameraSelector cameraSelector = new CameraSelector.Builder()
+                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                .build();
 
-    /** Stops the camera. */
-    @Override
-    public void onPause() {
-        super.onPause();
-        preview.stop();
-    }
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (cameraSource != null) {
-            cameraSource.release();
-        }
+        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
     }
 }
