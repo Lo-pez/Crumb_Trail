@@ -19,10 +19,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.adapters.FoodAdapter;
-import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Food;
-import com.example.crumbtrail.data.model.Review;
-import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,18 +27,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.Headers;
 
 public class SearchFragment extends Fragment {
     public static final String TAG = "SearchFragment";
-    public static final int requestCode = 100;
-    private static String pQuery;
-    final int RequestCameraPermissionID = 1001;
+    private static SearchView searchView;
     private SwipeRefreshLayout swipeContainer;
-    private boolean outOfFocus;
-    private RecyclerView searchRv;
+    public static RecyclerView searchRv;
     private final Handler handler = new Handler();
     private Runnable runnable;
     protected FoodAdapter foodAdapter;
@@ -53,7 +46,7 @@ public class SearchFragment extends Fragment {
     }
 
     public static void setQuery(String s) {
-        pQuery = s;
+        searchView.setQuery(s, true);
     }
 
     @Override
@@ -66,7 +59,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
 
         searchRv = view.findViewById(R.id.searchRv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -76,12 +69,13 @@ public class SearchFragment extends Fragment {
         searchRv.setAdapter(foodAdapter);
 
         setUpSwipeContainer(view);
-
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i(TAG, query);
+                foods.clear();
+                foodAdapter.clear();
+                searchRv.getRecycledViewPool().clear();
+                queryFDC(query);
                 return true;
             }
 
@@ -132,7 +126,6 @@ public class SearchFragment extends Fragment {
                 Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
                 try {
-                    if (outOfFocus) return;
                     JSONArray results = jsonObject.getJSONArray("foods");
                     Log.i(TAG, "Results: " + results.toString());
                     foods.clear();
@@ -156,12 +149,10 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        outOfFocus = false;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        outOfFocus = true;
     }
 }

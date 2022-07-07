@@ -23,15 +23,12 @@ import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.example.crumbtrail.MainActivity;
-import com.example.crumbtrail.fragments.CameraFragment;
 import com.example.crumbtrail.fragments.SearchFragment;
 import com.example.crumbtrail.graphic.GraphicOverlay;
 import com.google.mlkit.vision.text.Text;
@@ -39,17 +36,15 @@ import com.google.mlkit.vision.text.Text.Element;
 import com.google.mlkit.vision.text.Text.Line;
 import com.google.mlkit.vision.text.Text.TextBlock;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Graphic instance for rendering TextBlock position, size, and ID within an associated graphic
  * overlay view.
  */
-public class TextGraphic extends GraphicOverlay.Graphic{
+public class TextGraphic extends GraphicOverlay.Graphic {
 
   private static final String TAG = "TextGraphic";
   private static final String TEXT_WITH_LANGUAGE_TAG_FORMAT = "%s:%s";
@@ -90,7 +85,6 @@ public class TextGraphic extends GraphicOverlay.Graphic{
     labelPaint = new Paint();
     labelPaint.setColor(MARKER_COLOR);
     labelPaint.setStyle(Paint.Style.FILL);
-
     overlay.setOnTouchListener(new View.OnTouchListener() {
       @Override
       public boolean onTouch(View v, MotionEvent event) {
@@ -100,9 +94,8 @@ public class TextGraphic extends GraphicOverlay.Graphic{
           System.out.println("Touching down!");
           for (RectF rect : rectangles.keySet()) {
             if (rect.contains(touchX, touchY)) {
-              System.out.println("Touched Rectangle, start activity. " + rectangles.get(rect));
-              SearchFragment.setQuery(rectangles.get(rect));
               MainActivity.viewPager.setCurrentItem(2);
+              SearchFragment.setQuery(rectangles.get(rect));
             }
           }
         } else if (event.getAction() == (1)) {

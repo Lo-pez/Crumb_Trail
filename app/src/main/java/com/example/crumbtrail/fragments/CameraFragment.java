@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.camera.view.PreviewView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -105,7 +104,7 @@ public class CameraFragment extends Fragment
     private void createCameraSource(String model) {
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
-            cameraSource = new CameraSource(getActivity(), graphicOverlay); //TODO: Make sure this is correct
+            cameraSource = new CameraSource(getActivity(), graphicOverlay);
         }
 
         try {
@@ -183,6 +182,7 @@ public class CameraFragment extends Fragment
     public void onPause() {
         super.onPause();
         preview.stop();
+        cameraSource.stop();
     }
 
     @Override
