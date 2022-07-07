@@ -35,6 +35,12 @@ android {
     }
 }
 
+ext {
+    googlePlayVersion = "17.0.0"
+    nav_version = "2.3.5"
+    camerax_version = "1.1.0-beta01"
+}
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -60,11 +66,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
     // Navigation library
-    def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    def camerax_version = "1.1.0-beta01"
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
@@ -113,4 +117,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'com.google.android.gms:play-services-mlkit-text-recognition:18.0.0'
-}
+
+    // Google maps
+    implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
+    }
