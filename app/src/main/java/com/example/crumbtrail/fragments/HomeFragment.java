@@ -41,6 +41,7 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -96,12 +97,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         queryMapMarkers();
 
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
     }
 
     @Override
@@ -109,6 +111,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         map = googleMap;
         if (map != null) {
             // Map is ready
+            // Add a new latitude in the midwest and move to it
+            LatLng UnitedStates = new LatLng(38.20888835170237 , -101.71670772135258);
+            map.moveCamera(CameraUpdateFactory.newLatLng(UnitedStates));
+            //zoom to position with level 5
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(UnitedStates, 5);
+            googleMap.animateCamera(cameraUpdate);
             Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
             map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
