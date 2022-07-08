@@ -22,10 +22,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.crumbtrail.ComposeActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.adapters.CustomWindowAdapter;
+import com.example.crumbtrail.data.model.Food;
+import com.example.crumbtrail.data.model.MapMarker;
+import com.example.crumbtrail.data.model.Review;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -45,8 +50,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
@@ -59,6 +68,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private long FASTEST_INTERVAL = 5000; /* 5 secs */
     private FusedLocationProviderClient fusedLocationClient;
     private final static String KEY_LOCATION = "location";
+    private List<MapMarker> allMarkers;
 
 
     public HomeFragment() {
@@ -76,11 +86,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        allMarkers = new ArrayList<>();
+
         if (savedInstanceState != null && savedInstanceState.keySet().contains(KEY_LOCATION)) {
             // Since KEY_LOCATION was found in the Bundle, we can be sure that mCurrentLocation
             // is not null.
             mCurrentLocation = savedInstanceState.getParcelable(KEY_LOCATION);
         }
+
+        queryMapMarkers();
 
         mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
@@ -93,9 +107,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-//        googleMap.addMarker(new MarkerOptions()
-//                .position(new LatLng(0, 0))
-//                .title("Marker"));
         if (map != null) {
             // Map is ready
             Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
@@ -109,6 +120,30 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         } else {
             Toast.makeText(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void addMarkersFromBackend() {
+        Log.i(TAG, String.valueOf(allMarkers.size()));
+        for (MapMarker mapMarker : allMarkers) {
+            BitmapDescriptor defaultMarker = BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+            String title = mapMarker.getName();
+            String food = mapMarker.getFood();
+            String discount = mapMarker.getDiscount();
+            // Creates and adds marker to the map
+            LatLng latLng = new LatLng(mapMarker.getLocation().getLatitude(), mapMarker.getLocation().getLongitude());
+            Marker marker = map.addMarker(new MarkerOptions().position(latLng)
+                    .title(title).snippet(food).snippet(discount).icon(defaultMarker));
+
+            marker.setDraggable(false);
+
+            // Animate marker using drop effect
+            // --> Call the dropPinEffect method here
+            dropPinEffect(marker);
+        }
+    }
+
+    private void removeOldMarkersFromBackend() {
     }
 
     private void showAlertDialogForPoint(final LatLng latLng) {
@@ -130,11 +165,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         // Extract content from alert dialog
                         String title = ((EditText) alertDialog.findViewById(R.id.etTitle))
                                 .getText().toString();
-                        String snippet = ((EditText) alertDialog.findViewById(R.id.etSnippet))
+                        String food = ((EditText) alertDialog.findViewById(R.id.etFood))
+                                .getText().toString();
+                        String discount = ((EditText) alertDialog.findViewById(R.id.etDiscount))
                                 .getText().toString();
                         // Creates and adds marker to the map
                         Marker marker = map.addMarker(new MarkerOptions().position(latLng)
-                                .title(title).snippet(snippet).icon(defaultMarker));
+                                .title(title).snippet(food).snippet(discount).icon(defaultMarker));
+
+                        createMarker(title, food, discount, latLng);
 
                         marker.setDraggable(true);
 
@@ -151,6 +190,22 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
         alertDialog.show();
+    }
+
+    private void createMarker(String title, String food, String discount, LatLng latLng) {
+        MapMarker mapMarker = new MapMarker();
+        mapMarker.setDiscount(discount);
+        mapMarker.setName(title);
+        mapMarker.setFood(food);
+        ParseGeoPoint parseGeoPoint = new ParseGeoPoint(latLng.latitude, latLng.longitude);
+        mapMarker.setLocation(parseGeoPoint);
+        mapMarker.saveInBackground(e -> {
+            if (e != null) {
+                Log.e(TAG, "Error while saving new map marker!", e);
+                Toast.makeText(getActivity(), "Error while saving!", Toast.LENGTH_SHORT).show();
+            }
+            Log.i(TAG, "MapMarker save was successful!");
+        });
     }
 
     private void dropPinEffect(final Marker marker) {
@@ -256,5 +311,28 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     }
                 },
                 Looper.myLooper());
+    }
+
+    private void queryMapMarkers() {
+        ParseQuery<MapMarker> query = ParseQuery.getQuery(MapMarker.class);
+        query.include(MapMarker.KEY_LOCATION);
+        // order MapMarkers by creation date (newest first)
+        query.addDescendingOrder("createdAt");
+        query.findInBackground((mapMarkers, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting MapMarkers", e);
+                return;
+            }
+
+            // for debugging purposes let's print every Review description to logcat
+            for (MapMarker mapMarker : mapMarkers) {
+                Log.i(TAG, "MapMaker: " + mapMarker.getLocation());
+            }
+
+            // save received MapMarkers
+            allMarkers.addAll(mapMarkers);
+            addMarkersFromBackend();
+            removeOldMarkersFromBackend();
+        });
     }
 }

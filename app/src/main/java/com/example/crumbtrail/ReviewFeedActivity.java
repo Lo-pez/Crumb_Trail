@@ -138,17 +138,6 @@ public class ReviewFeedActivity extends AppCompatActivity{
     private void queryReviews(Food food) {
         // specify what type of data we want to query - Review.class
         ParseQuery<Review> query = ParseQuery.getQuery(Review.class);
-        // include data referred by user key
-//        query.findInBackground(new FindCallback<Review>() {
-//            @Override
-//            public void done(List<Review> objects, ParseException e) {
-//                for (int i = 0; i < objects.size(); ++i) {
-//                    if (objects.get(i).getFCDId().equals(food.getFDCID()))
-//                        allReviews.add(0, objects.get(i));
-//                }
-//            }
-//        });
-//        ParseObject obj = ParseObject.createWithoutData(Review.KEY_FCDID, String.valueOf(food.getFDCID()));
         query.whereEqualTo(Review.KEY_FCDID, String.valueOf(food.getFCDID()));
         query.include(Review.KEY_FCDID);
         query.include(Review.KEY_USER);

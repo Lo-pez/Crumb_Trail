@@ -30,7 +30,7 @@ public class ComposeActivity extends AppCompatActivity {
     public static final int MAX_REVIEW_LENGTH = 200;
 
     EditText etComposeScr;
-    Button btnTweet;
+    Button btnReview;
     RatingBar ratingBar;
 
 
@@ -46,13 +46,13 @@ public class ComposeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Food food = Parcels.unwrap(intent.getParcelableExtra("food"));
 
-        btnTweet = binding.btnReview;
+        btnReview = binding.btnReview;
         etComposeScr = binding.etComposeScr;
         ratingBar = binding.ratingBar;
 
         etComposeScr.setText(food.getBrandName());
 
-        btnTweet.setOnClickListener(new View.OnClickListener() {
+        btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String reviewContent = etComposeScr.getText().toString();

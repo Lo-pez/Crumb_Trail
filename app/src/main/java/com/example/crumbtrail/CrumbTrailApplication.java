@@ -3,6 +3,7 @@ package com.example.crumbtrail;
 import android.app.Application;
 
 import com.example.crumbtrail.data.model.Comment;
+import com.example.crumbtrail.data.model.MapMarker;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.data.model.User;
 import com.parse.Parse;
@@ -31,6 +32,7 @@ public class CrumbTrailApplication extends Application {
         // any network interceptors must be added with the Configuration Builder given this syntax
         ParseObject.registerSubclass(Comment.class);
         ParseObject.registerSubclass(Review.class);
+        ParseObject.registerSubclass(MapMarker.class);
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("LFrQVXmbxrtLMUHLwxEyW7ZprEQvbl8v34JXR9xc") // should correspond to Application Id env variable
                 .clientKey("2S8qeKUrk9xjc2qRF6xhZnDHz908omjppAs7Vux4")  // should correspond to Client key env variable
