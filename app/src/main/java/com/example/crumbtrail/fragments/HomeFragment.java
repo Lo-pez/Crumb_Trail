@@ -4,6 +4,7 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -51,11 +52,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
@@ -152,6 +157,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     }
 
     private void removeOldMarkersFromBackend() {
+        Date today = new Date();
+        int hours = 24;
+        int time = (hours * 3600 * 1000);
+        Date expirationDate = new Date(today.getTime() - (time));
+
+        ParseQuery<MapMarker> query = ParseQuery.getQuery(MapMarker.class);
+        query.whereLessThan("createdAt", expirationDate);
+
+        query.findInBackground((mapMarkers, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with getting Old MapMarkers", e);
+                return;
+            }
+
+            try {
+                ParseObject.deleteAll(mapMarkers);
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+            addMarkersFromBackend();
+        });
     }
 
     private void showAlertDialogForPoint(final LatLng latLng) {
@@ -339,7 +365,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
             // save received MapMarkers
             allMarkers.addAll(mapMarkers);
-            addMarkersFromBackend();
             removeOldMarkersFromBackend();
         });
     }
