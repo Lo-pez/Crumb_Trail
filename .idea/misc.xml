@@ -9,14 +9,25 @@
         <entry key="app/src/main/res/drawable-v24/ic_world.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/photo_camera-48px.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/public-48px.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/animation_list.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/blue_circle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/button_bg.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/button_disabled.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_enabled.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_pressed.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/circle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color2.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color3.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color4.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/comment-48px.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_star_liked.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/login_gradient_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/share-48px.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/star_liked.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/star_unliked.xml" value="0.1" />
@@ -32,7 +43,7 @@
         <entry key="app/src/main/res/layout/fragment_search_results.xml" value="0.15555555555555556" />
         <entry key="app/src/main/res/layout/info_window.xml" value="0.11944444444444445" />
         <entry key="app/src/main/res/layout/item_food.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/item_review.xml" value="0.39398998330550916" />
+        <entry key="app/src/main/res/layout/item_review.xml" value="0.34375" />
         <entry key="app/src/main/res/layout/item_reviews.xml" value="0.2564056396484374" />
         <entry key="app/src/main/res/layout/message_item.xml" value="0.29010416666666666" />
         <entry key="app/src/main/res/layout/splash_activity.xml" value="0.175" />

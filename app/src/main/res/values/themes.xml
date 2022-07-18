@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.CrumbTrail" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimary">@color/ct_yellow</item>
         <item name="colorPrimaryVariant">@color/ct_blue</item>
         <item name="colorOnPrimary">@color/ct_blue</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/ct_blue</item>
+        <item name="colorSecondary">@color/ct_yellow</item>
         <item name="colorSecondaryVariant">@color/black</item>
         <item name="colorOnSecondary">@color/black</item>
 
@@ -19,17 +19,17 @@
 
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <!-- android:textColorPrimary is the color of the title text in the Toolbar  -->
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@color/ct_blue</item>
         <!-- actionMenuTextColor is the color of the text of action (menu) items  -->
-        <item name="actionMenuTextColor">@color/black</item>
+        <item name="actionMenuTextColor">@color/ct_blue</item>
         <!-- Tints the input fields like checkboxes and text fields -->
-        <item name="colorAccent">@color/black</item>
+        <item name="colorAccent">@color/ct_blue</item>
         <!-- Applies to views in their normal state. -->
-        <item name="colorControlNormal">@color/black</item>
+        <item name="colorControlNormal">@color/ct_blue</item>
         <!-- Applies to views in their activated state (i.e checked or switches) -->
-        <item name="colorControlActivated">@color/black</item>
+        <item name="colorControlActivated">@color/ct_blue</item>
         <!-- Applied to framework control highlights (i.e ripples or list selectors) -->
-        <item name="colorControlHighlight">@color/black</item>
+        <item name="colorControlHighlight">@color/ct_blue</item>
 
         <!-- Enable these below if you want clicking icons to trigger a ripple effect -->
         <!--

@@ -8,7 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -30,8 +33,8 @@ import com.parse.ParseUser;
 import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
-    private TextInputEditText username;
-    private TextInputEditText password;
+    private EditText username;
+    private EditText password;
     private Button login;
     private ProgressDialog progressDialog;
     public static final int RC_SIGN_IN = 7;
@@ -41,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         progressDialog = new ProgressDialog(LoginActivity.this);
 
@@ -57,9 +63,9 @@ public class LoginActivity extends AppCompatActivity {
 
 //        if (ParseUser.getCurrentUser() != null) goMainActivity();
 
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
+        username = findViewById(R.id.usernameEt);
+        password = findViewById(R.id.passwordEt);
+        login = findViewById(R.id.loginBtn);
         Button navigateSignup = findViewById(R.id.navigatesignup);
         SignInButton btnGoogleSignIn = findViewById(R.id.sign_in_button);
 

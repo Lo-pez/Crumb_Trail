@@ -162,5 +162,9 @@
     <!-- Strings for segmentation preference. -->
     <string name="pref_title_segmentation_raw_size_mask" translatable="false">Enable raw size mask</string>
     <string name="pref_key_segmentation_raw_size_mask" translatable="false">srsm</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="forgot_your_login_details">Forgot your login details?</string>
 
 </resources>

@@ -50,6 +50,8 @@ public class ReviewFeedActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = ActivityReviewFeedBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
