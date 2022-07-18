@@ -74,11 +74,11 @@
         app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv">
 
         <ImageView
+            android:id="@+id/favoriteIv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/transparent_circle"
-            android:padding="0dp"
-            android:src="@drawable/ic_star_unliked" />
+            android:padding="0dp" />
 
     </FrameLayout>
 

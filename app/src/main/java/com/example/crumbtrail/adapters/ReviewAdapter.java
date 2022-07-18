@@ -2,6 +2,7 @@ package com.example.crumbtrail.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.crumbtrail.FoodReviewActivity;
@@ -22,6 +24,7 @@ import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -29,6 +32,7 @@ import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
+    private static final String TAG = "ReviewAdapter";
     Context context;
     List<Review> Reviews;
     TextView userNameTv;
@@ -40,6 +44,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     EditText composeEt;
     TextView favoriteCountTv;
     ConstraintLayout composeCl;
+    ImageView favoriteIv;
 
     public void clear() {
         Reviews.clear();
@@ -89,6 +94,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             commentFl = itemView.findViewById(R.id.commentFl);
             composeEt = itemView.findViewById(R.id.composeEt);
             favoriteFl = itemView.findViewById(R.id.favoriteFl);
+            favoriteIv = itemView.findViewById(R.id.favoriteIv);
             shareFl = itemView.findViewById(R.id.shareFl);
             favoriteCountTv = itemView.findViewById(R.id.favoriteCountTv);
             composeCl = itemView.findViewById(R.id.composeCl);
@@ -113,10 +119,27 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                         else { composeCl.setVisibility(View.VISIBLE); }
                 }
             });
-            favoriteFl.setOnClickListener(new View.OnClickListener() {
+            Drawable unliked = ContextCompat.getDrawable(context, R.drawable.ic_star_unliked);
+            Drawable liked = ContextCompat.getDrawable(context, R.drawable.ic_star_liked);
+            if (review.isLikedBy(ParseUser.getCurrentUser())){
+                Log.i(TAG, "Changing favoriteIv to liked");
+                favoriteIv.setImageDrawable(liked);
+            }
+            else {
+                Log.i(TAG, "Changing favoriteIv to unliked");
+                favoriteIv.setImageDrawable(unliked);
+            }
+            favoriteIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    if (((ImageView)v).getDrawable()==unliked) {
+                        Log.i(TAG, "Changing favoriteIv to liked");
+                        ((ImageView)v).setImageDrawable(liked);
+                    }
+                    else {
+                        Log.i(TAG, "Changing favoriteIv to unliked");
+                        ((ImageView)v).setImageDrawable(unliked);
+                    }
                 }
             });
             shareFl.setOnClickListener(new View.OnClickListener() {
