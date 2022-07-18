@@ -108,6 +108,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         public void bind(Review review) {
             userNameTv.setText(review.getUser().getUsername());
             reviewBodyTv.setText(review.getBody());
+            favoriteCountTv.setText(review.getLikesCount());
             displayRatingBar.setRating(review.getRating().floatValue());
             displayRatingBar.setIsIndicator(true);
             commentFl.setOnClickListener(new View.OnClickListener() {
@@ -135,11 +136,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                     if (((ImageView)v).getDrawable()==unliked) {
                         Log.i(TAG, "Changing favoriteIv to liked");
                         ((ImageView)v).setImageDrawable(liked);
+                        likePost(true, review);
                     }
                     else {
                         Log.i(TAG, "Changing favoriteIv to unliked");
                         ((ImageView)v).setImageDrawable(unliked);
+                        likePost(false, review);
                     }
+                    review.saveInBackground(); // uploads new value back to parse
                 }
             });
             shareFl.setOnClickListener(new View.OnClickListener() {
@@ -154,5 +158,19 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         public void onClick(View v) {
 
         }
+    }
+
+    private void likePost(boolean like, Review review) {
+        List<ParseUser> likes = review.getLikedBy();
+        if (like) {
+            Log.i(TAG, "Adding user " + ParseUser.getCurrentUser().getUsername() + " To review " + review.getUser().getUsername());
+            likes.add(ParseUser.getCurrentUser());
+        }
+        else {
+            Log.i(TAG, "Removing user " + ParseUser.getCurrentUser().getUsername() + " To review " + review.getUser().getUsername());
+            likes.remove(ParseUser.getCurrentUser());
+        }
+        review.setLikedBy(likes);
+        favoriteCountTv.setText(review.getLikesCount());
     }
 }

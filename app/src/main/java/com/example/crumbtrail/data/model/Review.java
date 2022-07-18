@@ -54,14 +54,6 @@ public class Review extends ParseObject {
         put(KEY_RATING, rating);
     }
 
-//    public ParseUser getParseUser() {
-//        return (ParseUser) getParseObject(KEY_AUTHOR);
-//    }
-
-//    public void setParseUser(ParseUser ParseUser) {
-//        put(KEY_AUTHOR, ParseUser);
-//    }
-
     public ParseFile getImage(){
         return getParseFile(KEY_IMAGE);
     }
