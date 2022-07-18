@@ -39,6 +39,7 @@ ext {
     googlePlayVersion = "17.0.0"
     nav_version = "2.3.5"
     camerax_version = "1.1.0-beta01"
+    materialDesignVersion = "1.6.1";
 }
 
 dependencies {
@@ -121,4 +122,10 @@ dependencies {
     // Google maps
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
-    }
+
+    // Material design
+    implementation "com.google.android.material:material:$materialDesignVersion"
+
+    // Material dialogs
+    implementation 'com.afollestad.material-dialogs:core:3.3.0'
+}

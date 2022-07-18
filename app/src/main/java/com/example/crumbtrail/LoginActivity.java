@@ -46,10 +46,21 @@ public class LoginActivity extends AppCompatActivity {
 
         setUpGoogleSignIn();
 
+//        if(ParseUser.getCurrentUser()!=null){
+//            Toast.makeText(this,"yes not null",Toast.LENGTH_SHORT).show();
+//            ParseUser.logOut();
+//        }
+//        else{
+//            Toast.makeText(this," null",Toast.LENGTH_SHORT).show();
+//        }
+
+
+//        if (ParseUser.getCurrentUser() != null) goMainActivity();
+
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
         login = findViewById(R.id.login);
-        Button navigatesignup = findViewById(R.id.navigatesignup);
+        Button navigateSignup = findViewById(R.id.navigatesignup);
         SignInButton btnGoogleSignIn = findViewById(R.id.sign_in_button);
 
 
@@ -60,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        navigatesignup.setOnClickListener(v -> {
+        navigateSignup.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
         });
 

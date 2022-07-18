@@ -46,8 +46,8 @@ public class Review extends ParseObject {
         put(KEY_FCDID, String.valueOf(fcdId));
     }
 
-    public Float getRating() {
-        return (Float) getNumber(KEY_RATING);
+    public Number getRating() {
+        return getNumber(KEY_RATING);
     }
 
     public void setRating(Float rating) {

@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +33,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     List<Review> Reviews;
     TextView userNameTv;
     TextView reviewBodyTv;
-    FloatingActionButton commentBtn;
-    FloatingActionButton favoriteBtn;
-    FloatingActionButton shareBtn;
+    RatingBar displayRatingBar;
+    FrameLayout commentFl;
+    FrameLayout favoriteFl;
+    FrameLayout shareFl;
     EditText composeEt;
     TextView favoriteCountTv;
     ConstraintLayout composeCl;
@@ -83,12 +86,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             super(itemView);
             userNameTv = itemView.findViewById(R.id.userNameTv);
             reviewBodyTv = itemView.findViewById(R.id.reviewBodyTv);
-            commentBtn = itemView.findViewById(R.id.commentBtn);
+            commentFl = itemView.findViewById(R.id.commentFl);
             composeEt = itemView.findViewById(R.id.composeEt);
-            favoriteBtn = itemView.findViewById(R.id.favoriteBtn);
-            shareBtn = itemView.findViewById(R.id.shareBtn);
+            favoriteFl = itemView.findViewById(R.id.favoriteFl);
+            shareFl = itemView.findViewById(R.id.shareFl);
             favoriteCountTv = itemView.findViewById(R.id.favoriteCountTv);
             composeCl = itemView.findViewById(R.id.composeCl);
+            displayRatingBar = itemView.findViewById(R.id.displayRatingBar);
 
             // itemView's onclick listener
             itemView.setOnClickListener(this);
@@ -98,7 +102,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         public void bind(Review review) {
             userNameTv.setText(review.getUser().getUsername());
             reviewBodyTv.setText(review.getBody());
-            commentBtn.setOnClickListener(new View.OnClickListener() {
+            displayRatingBar.setRating(review.getRating().floatValue());
+            displayRatingBar.setIsIndicator(true);
+            commentFl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                         if (composeCl.getVisibility() == View.VISIBLE) {
@@ -107,13 +113,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                         else { composeCl.setVisibility(View.VISIBLE); }
                 }
             });
-            favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            favoriteFl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                 }
             });
-            shareBtn.setOnClickListener(new View.OnClickListener() {
+            shareFl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

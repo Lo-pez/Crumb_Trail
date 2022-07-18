@@ -14,10 +14,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 
 import com.example.crumbtrail.adapters.FragmentPageAdapter;
 import com.example.crumbtrail.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Objects;
 
 // import statements
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -81,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         mainBottomNav.getMenu().findItem(R.id.action_search).setChecked(true);
                         break;
-                    case 3:
-                        mainBottomNav.getMenu().findItem(R.id.action_profile).setChecked(true);
                 }
             }
 
@@ -149,8 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_search:
                     viewPager.setCurrentItem(2);
                     break;
-                case R.id.action_profile:
-                    viewPager.setCurrentItem(3);
             }
             return true;
         });

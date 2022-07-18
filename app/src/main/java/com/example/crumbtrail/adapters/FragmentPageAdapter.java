@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.crumbtrail.MainActivity;
 import com.example.crumbtrail.fragments.CameraFragment;
 import com.example.crumbtrail.fragments.HomeFragment;
-import com.example.crumbtrail.fragments.ProfileFragment;
 import com.example.crumbtrail.fragments.SearchFragment;
 
 public class FragmentPageAdapter extends FragmentPagerAdapter {
@@ -28,15 +27,13 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
                 return new CameraFragment();
             case 2:
                 return new SearchFragment();
-            case 3:
-                return new ProfileFragment();
         }
-        return null;
+        return new Fragment();
     }
 
     @Override
     public int getCount()
     {
-        return 4;
+        return 3;
     }
 }

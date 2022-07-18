@@ -16,19 +16,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnOpenReview"
+            <FrameLayout
+                android:id="@+id/flOpenReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:layout_marginBottom="5dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/ic_vector_write"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:maxImageSize="48dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:translationZ="90dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/yellow_circle"
+                    android:padding="15dp"
+                    android:src="@drawable/ic_vector_write" />
+
+            </FrameLayout>
 
             <include
                 android:id="@+id/include"

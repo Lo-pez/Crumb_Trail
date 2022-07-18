@@ -2,6 +2,7 @@ package com.example.crumbtrail;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -15,12 +16,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
+import com.example.crumbtrail.fragments.ComposeReviewDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -46,6 +50,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         binding = ActivityReviewFeedBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -75,22 +80,30 @@ public class ReviewFeedActivity extends AppCompatActivity{
         Log.i(TAG, Long.toString(fdcId));
         queryReviews(food);
 
-        FloatingActionButton btnOpenReview = binding.btnOpenReview;
+        FrameLayout flOpenReview = binding.flOpenReview;
 
-        btnOpenReview.setOnClickListener(new View.OnClickListener() {
+        flOpenReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.btnOpenReview) {
-                    // Compose icon has been selected
-                    // Navigate to the compose activity
-                    Intent intent = new Intent(ReviewFeedActivity.this, ComposeActivity.class);
-                    intent.putExtra("food", Parcels.wrap(food));
-                    startActivityForResult(intent, REQUEST_CODE);
-                }
+                // Compose icon has been selected
+                // Navigate to the compose activity
+//                Intent intent = new Intent(ReviewFeedActivity.this, ComposeActivity.class);
+//                intent.putExtra("food", Parcels.wrap(food));
+//                startActivityForResult(intent, REQUEST_CODE);
+                showReviewDialog(food);
             }
         });
 
         setUpEndlessScrolling(food);
+    }
+
+    private void showReviewDialog(Food food) {
+        FragmentManager fm = getSupportFragmentManager();
+        ComposeReviewDialogFragment composeReviewDialogFragment = ComposeReviewDialogFragment.newInstance("Fragment Review");
+        Bundle args = new Bundle();
+        args.putParcelable("food", Parcels.wrap(food));
+        composeReviewDialogFragment.setArguments(args);
+        composeReviewDialogFragment.show(fm, "fragment_compose_review");
     }
 
     // Menu icons are inflated just as they were with actionbar

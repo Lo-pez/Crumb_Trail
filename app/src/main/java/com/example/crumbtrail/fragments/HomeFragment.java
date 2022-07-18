@@ -120,9 +120,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             LatLng UnitedStates = new LatLng(38.20888835170237 , -101.71670772135258);
             map.moveCamera(CameraUpdateFactory.newLatLng(UnitedStates));
             //zoom to position with level 5
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(UnitedStates, 5);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(UnitedStates, 3);
             googleMap.animateCamera(cameraUpdate);
-            Toast.makeText(getActivity(), "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "Map Fragment was loaded properly!");
             map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                 @Override
                 public void onMapLongClick(LatLng latLng) {

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,19 +26,17 @@ import java.util.ArrayList;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE = 42;
     public static final String TAG = "ComposeActivity";
-    public static final int MAX_REVIEW_LENGTH = 200;
+    public static final int MAX_REVIEW_LENGTH = 100;
 
     EditText etComposeScr;
     Button btnReview;
     RatingBar ratingBar;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         ActivityComposeBinding binding = ActivityComposeBinding.inflate(getLayoutInflater());
 
         View view = binding.getRoot();
@@ -49,8 +48,7 @@ public class ComposeActivity extends AppCompatActivity {
         btnReview = binding.btnReview;
         etComposeScr = binding.etComposeScr;
         ratingBar = binding.ratingBar;
-
-        etComposeScr.setText(food.getBrandName());
+//        etComposeScr.setText(food.getBrandName());
 
         btnReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +63,7 @@ public class ComposeActivity extends AppCompatActivity {
                     return;
                 }
 
-                float rating = ratingBar.getRating();
+                Float rating = ratingBar.getRating();
                 ProgressBar progressBar = binding.load;
                 progressBar.setVisibility(View.VISIBLE);
                 Review review = new Review();
