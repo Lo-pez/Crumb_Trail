@@ -57,6 +57,8 @@ import java.nio.ByteBuffer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import es.dmoral.toasty.Toasty;
+
 /**
  * Abstract base class for vision frame processors. Subclasses need to implement {@link
  * #onSuccess(Object, GraphicOverlay)} to define what they want to with the detection results and
@@ -352,7 +354,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
               graphicOverlay.clear();
               graphicOverlay.postInvalidate();
               String error = "Failed to process. Error: " + e.getLocalizedMessage();
-              Toast.makeText(
+              Toasty.error(
                       graphicOverlay.getContext(),
                       error + "\nCause: " + e.getCause(),
                       Toast.LENGTH_SHORT)

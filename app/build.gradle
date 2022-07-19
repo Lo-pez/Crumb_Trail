@@ -128,4 +128,7 @@ dependencies {
 
     // Material dialogs
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
+
+    // Toastyy
+    implementation 'com.github.GrenderG:Toasty:1.5.2'
 }

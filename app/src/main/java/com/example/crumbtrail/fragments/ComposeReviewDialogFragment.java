@@ -26,6 +26,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 // ...
 
 public class ComposeReviewDialogFragment extends DialogFragment {
@@ -73,11 +75,11 @@ public class ComposeReviewDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 String reviewContent = etComposeScr.getText().toString();
                 if (reviewContent.isEmpty()) {
-                    Toast.makeText(getContext(), "Sorry, your review cannot be empty.",Toast.LENGTH_LONG).show();
+                    Toasty.success(requireContext(), "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (reviewContent.length() > MAX_REVIEW_LENGTH) {
-                    Toast.makeText(getContext(), "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
+                    Toasty.error(requireContext(), "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -94,7 +96,7 @@ public class ComposeReviewDialogFragment extends DialogFragment {
                 review.saveInBackground(e -> {
                     if (e != null) {
                         Log.e(TAG, "Error while saving new post!", e);
-                        Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(requireContext(), "Error while saving!", Toasty.LENGTH_SHORT).show();
                     }
                     Log.i(TAG, "Post save was successful!");
                 });

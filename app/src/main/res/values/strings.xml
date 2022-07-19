@@ -127,7 +127,7 @@
     <string name="pref_title_face_detector_min_face_size" translatable="false">Minimum face size</string>
     <string name="pref_key_live_preview_face_detection_min_face_size" translatable="false">lpfdmfs</string>
     <string name="pref_dialog_message_face_detector_min_face_size" translatable="false">Proportion of the head width to the image width, and the valid value range is [0.0, 1.0]</string>
-    <string name="pref_toast_invalid_min_face_size" translatable="false">Minimum face size must be a float value and in the range [0.0, 1.0]</string>
+    <string name="pref_Toasty_invalid_min_face_size" translatable="false">Minimum face size must be a float value and in the range [0.0, 1.0]</string>
 
     <!-- Strings for pose detector performance mode preference. -->
     <string name="pref_title_pose_detector_performance_mode" translatable="false">Performance mode</string>

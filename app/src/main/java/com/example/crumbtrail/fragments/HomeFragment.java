@@ -63,6 +63,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     public static final String TAG = "HomeFragment";
@@ -131,7 +133,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             });
             map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
         } else {
-            Toast.makeText(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -236,7 +238,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mapMarker.saveInBackground(e -> {
             if (e != null) {
                 Log.e(TAG, "Error while saving new map marker!", e);
-                Toast.makeText(getActivity(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                Toasty.error(getActivity(), "Error while saving!", Toast.LENGTH_SHORT).show();
             }
             Log.i(TAG, "MapMarker save was successful!");
         });
@@ -309,19 +311,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show();
+        Toasty.success(requireActivity(), msg, Toast.LENGTH_SHORT).show();
         displayLocation();
     }
 
     private LatLng displayLocation() {
         if (mCurrentLocation != null) {
-            Toast.makeText(requireActivity(), "GPS location was found!", Toast.LENGTH_SHORT).show();
+            Toasty.success(requireActivity(), "GPS location was found!", Toast.LENGTH_SHORT).show();
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
             return latLng;
         } else {
-            Toast.makeText(requireActivity(), "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
+            Toasty.error(requireActivity(), "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
             return null;
         }
     }

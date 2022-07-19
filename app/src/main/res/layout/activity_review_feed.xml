@@ -30,8 +30,8 @@
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:background="@drawable/yellow_circle"
-                    android:padding="15dp"
-                    android:src="@drawable/ic_vector_write" />
+                    android:padding="5dp"
+                    android:src="@drawable/add" />
 
             </FrameLayout>
 

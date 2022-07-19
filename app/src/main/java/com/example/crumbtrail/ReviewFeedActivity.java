@@ -87,11 +87,6 @@ public class ReviewFeedActivity extends AppCompatActivity{
         flOpenReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Compose icon has been selected
-                // Navigate to the compose activity
-//                Intent intent = new Intent(ReviewFeedActivity.this, ComposeActivity.class);
-//                intent.putExtra("food", Parcels.wrap(food));
-//                startActivityForResult(intent, REQUEST_CODE);
                 showReviewDialog(food);
             }
         });

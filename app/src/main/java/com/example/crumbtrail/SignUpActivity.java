@@ -20,6 +20,8 @@ import com.parse.ParseUser;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private ImageView back;
@@ -57,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (Objects.requireNonNull(password.getText()).toString().equals(Objects.requireNonNull(passwordagain.getText()).toString()) && !TextUtils.isEmpty(username.getText().toString()))
                 signUp(username.getText().toString(), password.getText().toString(), googleSignInAccount);
             else
-                Toast.makeText(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
+                Toasty.warning(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
         });
 
         back.setOnClickListener(v -> finish());
@@ -82,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
                 showAlert("Welcome " + username + " !");
             } else {
                 ParseUser.logOut();
-                Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

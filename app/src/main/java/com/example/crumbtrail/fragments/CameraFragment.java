@@ -29,6 +29,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 public class CameraFragment extends Fragment
         implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
     private static final String TEXT_RECOGNITION_LATIN = "Text Recognition Latin";
@@ -117,7 +119,7 @@ public class CameraFragment extends Fragment
             }
         } catch (RuntimeException e) {
             Log.e(TAG, "Can not create image processor: " + model, e);
-            Toast.makeText(
+            Toasty.error(
                             getContext(),
                             "Can not create image processor: " + e.getMessage(),
                             Toast.LENGTH_LONG)

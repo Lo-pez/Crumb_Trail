@@ -1,13 +1,11 @@
 package com.example.crumbtrail.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -19,14 +17,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.crumbtrail.FoodReviewActivity;
 import com.example.crumbtrail.R;
-import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.parse.ParseUser;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 

@@ -24,6 +24,8 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class ComposeActivity extends AppCompatActivity {
 
@@ -59,11 +61,11 @@ public class ComposeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String reviewContent = etComposeScr.getText().toString();
                 if (reviewContent.isEmpty()) {
-                    Toast.makeText(ComposeActivity.this, "Sorry, your review cannot be empty.",Toast.LENGTH_LONG).show();
+                    Toasty.warning(ComposeActivity.this, "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (reviewContent.length() > MAX_REVIEW_LENGTH) {
-                    Toast.makeText(ComposeActivity.this, "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
+                    Toasty.warning(ComposeActivity.this, "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -80,7 +82,7 @@ public class ComposeActivity extends AppCompatActivity {
                 review.saveInBackground(e -> {
                     if (e != null) {
                         Log.e(TAG, "Error while saving new post!", e);
-                        Toast.makeText(ComposeActivity.this, "Error while saving!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(ComposeActivity.this, "Error while saving!", Toasty.LENGTH_SHORT).show();
                     }
                     Log.i(TAG, "Post save was successful!");
                 });

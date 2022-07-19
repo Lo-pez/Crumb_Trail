@@ -32,6 +32,8 @@ import com.parse.ParseUser;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
@@ -50,18 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         progressDialog = new ProgressDialog(LoginActivity.this);
 
+        if (ParseUser.getCurrentUser() != null) goMainActivity();
         setUpGoogleSignIn();
-
-//        if(ParseUser.getCurrentUser()!=null){
-//            Toast.makeText(this,"yes not null",Toast.LENGTH_SHORT).show();
-//            ParseUser.logOut();
-//        }
-//        else{
-//            Toast.makeText(this," null",Toast.LENGTH_SHORT).show();
-//        }
-
-
-//        if (ParseUser.getCurrentUser() != null) goMainActivity();
 
         username = findViewById(R.id.usernameEt);
         password = findViewById(R.id.passwordEt);
@@ -98,13 +90,13 @@ public class LoginActivity extends AppCompatActivity {
                         if(count==0){
                             if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
                             if (account.getIdToken() == null) Log.i(TAG, "Token is null");
-                            ParseUser.logInInBackground(account.getEmail(), account.getIdToken(), (parseUser, parseException) -> {
+                            ParseUser.logInInBackground(Objects.requireNonNull(account.getEmail()), account.getIdToken(), (parseUser, parseException) -> {
                                 progressDialog.dismiss();
                                 if (parseUser != null) {
-                                    showAlert("Successful Login", "Welcome back " + username + " !");
+                                    Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
                                 } else {
                                     ParseUser.logOut();
-                                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                                    Toasty.error(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
                                 }
                             });
 //                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
@@ -119,30 +111,12 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, (parseUser, e) -> {
             progressDialog.dismiss();
             if (parseUser != null) {
-                showAlert("Successful Login", "Welcome back " + username + " !");
+                Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
             } else {
                 ParseUser.logOut();
-                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void showAlert(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // don't forget to change the line below with the names of your Activities
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
-        AlertDialog ok = builder.create();
-        ok.show();
     }
 
     private void setUpGoogleSignIn() {

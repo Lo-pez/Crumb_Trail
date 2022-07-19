@@ -44,9 +44,6 @@
             android:name=".ReviewFeedActivity"
             android:exported="false" />
         <activity
-            android:name=".FoodReviewActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
