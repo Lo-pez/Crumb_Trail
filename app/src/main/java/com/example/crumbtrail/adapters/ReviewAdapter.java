@@ -23,6 +23,10 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+/**
+ * Adapter for each review displayed when a user clicks on a queried
+ * food item.
+ */
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
     private static final String TAG = "ReviewAdapter";

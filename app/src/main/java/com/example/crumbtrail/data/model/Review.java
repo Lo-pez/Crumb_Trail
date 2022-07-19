@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Model for the review objects. The data used here is obtained from Parse.
+ */
 @ParseClassName("Review")
 public class Review extends ParseObject {
     public static final String KEY_USER = "user";

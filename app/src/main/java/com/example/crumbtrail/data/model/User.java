@@ -4,6 +4,9 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+/**
+ * Model for the User objects. The data used here is obtained from Parse.
+ */
 public class User extends ParseUser {
     public static final String KEY_USERNAME = "username";
     public static final String KEY_EMAIL = "email";

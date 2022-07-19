@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Model for the MapMarker objects. The data used here is obtained from Parse.
+ */
 @ParseClassName("MapMarker")
 public class MapMarker extends ParseObject {
     public static final String KEY_NAME = "name";

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model for the food object. The data used here is obtained from the FCD API.
+ */
 @Parcel
 public class Food {
     private static final String TAG = "Food";

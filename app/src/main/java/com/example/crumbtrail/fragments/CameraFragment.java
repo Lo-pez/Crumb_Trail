@@ -31,6 +31,9 @@ import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
+/**
+ * Handles the logic for displaying text scans from MLKIT.
+ */
 public class CameraFragment extends Fragment
         implements AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
     private static final String TEXT_RECOGNITION_LATIN = "Text Recognition Latin";

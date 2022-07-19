@@ -62,6 +62,7 @@ public class ComposeReviewDialogFragment extends DialogFragment {
         EditText etComposeScr = view.findViewById(R.id.etComposeScr);
         Button btnReview = view.findViewById(R.id.btnReview);
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        ProgressBar progressBar = view.findViewById(R.id.load);
         Food food = Parcels.unwrap(getArguments().getParcelable("food"));
 
 //        Objects.requireNonNull(getDialog()).setTitle(title);
@@ -84,8 +85,7 @@ public class ComposeReviewDialogFragment extends DialogFragment {
                 }
 
                 Float rating =  ratingBar.getRating();
-//                ProgressBar progressBar = view.findViewById(R.id.load); //TODO: Add progress bar
-//                progressBar.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 Review review = new Review();
                 review.setBody(reviewContent);
                 review.setUser(ParseUser.getCurrentUser());
@@ -100,7 +100,7 @@ public class ComposeReviewDialogFragment extends DialogFragment {
                     }
                     Log.i(TAG, "Post save was successful!");
                 });
-//                progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
                 dismiss();
             }
         });

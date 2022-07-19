@@ -7,6 +7,9 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Model for the comment objects. The data used here is obtained from Parse.
+ */
 @ParseClassName("Comment")
 public class Comment extends ParseObject {
     public static final String KEY_AUTHOR = "author";

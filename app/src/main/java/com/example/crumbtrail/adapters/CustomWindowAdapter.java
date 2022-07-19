@@ -8,6 +8,10 @@ import com.example.crumbtrail.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 
+/**
+ * Sets the values for the custom window using the info
+ * from the map markers.
+ */
 public class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
     LayoutInflater mInflater;
 

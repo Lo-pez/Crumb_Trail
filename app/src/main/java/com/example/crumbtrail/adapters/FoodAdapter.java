@@ -20,6 +20,10 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
+/**
+ * Adapter for each food item displayed from a users search query or
+ * camera scan.
+ */
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     Context context;

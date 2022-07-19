@@ -9,6 +9,10 @@ import com.example.crumbtrail.fragments.CameraFragment;
 import com.example.crumbtrail.fragments.HomeFragment;
 import com.example.crumbtrail.fragments.SearchFragment;
 
+/**
+ * Handles the logic for switching through fragments using a simple
+ * switch case statement.
+ */
 public class FragmentPageAdapter extends FragmentPagerAdapter {
 
     public FragmentPageAdapter(
