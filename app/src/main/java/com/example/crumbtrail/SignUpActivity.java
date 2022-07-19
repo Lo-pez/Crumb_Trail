@@ -24,8 +24,6 @@ import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private ImageView back;
-    private Button signUp;
     private TextInputEditText username;
     private TextInputEditText password;
     private TextInputEditText passwordagain;
@@ -41,8 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         username = findViewById(R.id.username);
-        back = findViewById(R.id.back);
-        signUp = findViewById(R.id.signup);
+        ImageView back = findViewById(R.id.back);
+        Button signUp = findViewById(R.id.signup);
         password = findViewById(R.id.password);
         passwordagain = findViewById(R.id.passwordagain);
 
@@ -56,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(SignUpActivity.this);
 
         signUp.setOnClickListener(v -> {
-            if (Objects.requireNonNull(password.getText()).toString().equals(Objects.requireNonNull(passwordagain.getText()).toString()) && !TextUtils.isEmpty(username.getText().toString()))
+            if (Objects.requireNonNull(password.getText()).toString().equals(Objects.requireNonNull(passwordagain.getText()).toString()) && !TextUtils.isEmpty(Objects.requireNonNull(username.getText()).toString()))
                 signUp(username.getText().toString(), password.getText().toString(), googleSignInAccount);
             else
                 Toasty.warning(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
@@ -84,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
                 showAlert("Welcome " + username + " !");
             } else {
                 ParseUser.logOut();
-                Toasty.error(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(SignUpActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -94,15 +92,12 @@ public class SignUpActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this)
                 .setTitle("Successful Sign Up ! You logged in...\n")
                 .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // don't forget to change the line below with the names of your Activities
-                        Intent intent = new Intent(SignUpActivity.this, LogoutActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.cancel();
+                    // don't forget to change the line below with the names of your Activities
+                    Intent intent = new Intent(SignUpActivity.this, LogoutActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 });
         AlertDialog ok = builder.create();
         ok.show();

@@ -101,7 +101,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void setUpSwipeContainer(View v) {
-        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        swipeContainer = v.findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
             // Your code to refresh the list here.
@@ -127,7 +127,7 @@ public class SearchFragment extends Fragment {
                 JSONObject jsonObject = json.jsonObject;
                 try {
                     JSONArray results = jsonObject.getJSONArray("foods");
-                    Log.i(TAG, "Results: " + results.toString());
+                    Log.i(TAG, "Results: " + results);
                     foods.clear();
                     foodAdapter.clear();
                     searchRv.getRecycledViewPool().clear(); // Clearing RV cache
@@ -146,13 +146,4 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }

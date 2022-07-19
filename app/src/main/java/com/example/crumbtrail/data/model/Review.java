@@ -91,10 +91,7 @@ public class Review extends ParseObject {
 
     public boolean isLikedBy(ParseUser user) {
         List<ParseUser> likedBy = getLikedBy();
-        if (likedBy.contains(user)) {
-            return true;
-        }
-        return false;
+        return likedBy.contains(user);
     }
 
     public String getLikesCount() {

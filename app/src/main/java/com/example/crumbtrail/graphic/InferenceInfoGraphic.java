@@ -28,26 +28,14 @@ public class InferenceInfoGraphic extends GraphicOverlay.Graphic {
   private static final int TEXT_COLOR = Color.WHITE;
   private static final float TEXT_SIZE = 60.0f;
 
-  private final Paint textPaint;
-  private final GraphicOverlay overlay;
-  private final long frameLatency;
-  private final long detectorLatency;
-
-  // Only valid when a stream of input images is being processed. Null for single image mode.
-  @Nullable private final Integer framesPerSecond;
-  private boolean showLatencyInfo = true;
-
-  public InferenceInfoGraphic(
+    public InferenceInfoGraphic(
       GraphicOverlay overlay,
       long frameLatency,
       long detectorLatency,
       @Nullable Integer framesPerSecond) {
     super(overlay);
-    this.overlay = overlay;
-    this.frameLatency = frameLatency;
-    this.detectorLatency = detectorLatency;
-    this.framesPerSecond = framesPerSecond;
-    textPaint = new Paint();
+        // Only valid when a stream of input images is being processed. Null for single image mode.
+        Paint textPaint = new Paint();
     textPaint.setColor(TEXT_COLOR);
     textPaint.setTextSize(TEXT_SIZE);
     textPaint.setShadowLayer(5.0f, 0f, 0f, Color.BLACK);
@@ -57,7 +45,7 @@ public class InferenceInfoGraphic extends GraphicOverlay.Graphic {
   /** Creates an {@link InferenceInfoGraphic} to only display image size. */
   public InferenceInfoGraphic(GraphicOverlay overlay) {
     this(overlay, 0, 0, null);
-    showLatencyInfo = false;
+      boolean showLatencyInfo = false;
   }
 
   @Override

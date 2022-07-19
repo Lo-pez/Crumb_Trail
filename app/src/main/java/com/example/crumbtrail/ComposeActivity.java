@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityComposeBinding;
-import com.parse.ParseFile;
 import com.parse.ParseUser;
 
 import org.parceler.Parcels;
@@ -56,39 +55,36 @@ public class ComposeActivity extends AppCompatActivity {
         ratingBar = binding.ratingBar;
 //        etComposeScr.setText(food.getBrandName());
 
-        btnReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String reviewContent = etComposeScr.getText().toString();
-                if (reviewContent.isEmpty()) {
-                    Toasty.warning(ComposeActivity.this, "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (reviewContent.length() > MAX_REVIEW_LENGTH) {
-                    Toasty.warning(ComposeActivity.this, "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                Float rating = ratingBar.getRating();
-                ProgressBar progressBar = binding.load;
-                progressBar.setVisibility(View.VISIBLE);
-                Review review = new Review();
-                review.setBody(reviewContent);
-                review.setUser(ParseUser.getCurrentUser());
-                review.setLikedBy(new ArrayList<>());
-                review.setComments(new ArrayList<>());
-                review.setRating(rating);
-                review.setFCDId(food.getFCDID());
-                review.saveInBackground(e -> {
-                    if (e != null) {
-                        Log.e(TAG, "Error while saving new post!", e);
-                        Toasty.error(ComposeActivity.this, "Error while saving!", Toasty.LENGTH_SHORT).show();
-                    }
-                    Log.i(TAG, "Post save was successful!");
-                });
-                progressBar.setVisibility(View.GONE);
-                finish();
+        btnReview.setOnClickListener(view1 -> {
+            String reviewContent = etComposeScr.getText().toString();
+            if (reviewContent.isEmpty()) {
+                Toasty.warning(ComposeActivity.this, "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
+                return;
             }
+            if (reviewContent.length() > MAX_REVIEW_LENGTH) {
+                Toasty.warning(ComposeActivity.this, "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Float rating = ratingBar.getRating();
+            ProgressBar progressBar = binding.load;
+            progressBar.setVisibility(View.VISIBLE);
+            Review review = new Review();
+            review.setBody(reviewContent);
+            review.setUser(ParseUser.getCurrentUser());
+            review.setLikedBy(new ArrayList<>());
+            review.setComments(new ArrayList<>());
+            review.setRating(rating);
+            review.setFCDId(food.getFCDID());
+            review.saveInBackground(e -> {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving new post!", e);
+                    Toasty.error(ComposeActivity.this, "Error while saving!", Toasty.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post save was successful!");
+            });
+            progressBar.setVisibility(View.GONE);
+            finish();
         });
     }
 }

@@ -18,9 +18,7 @@ package com.example.crumbtrail.textdetector;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
-import android.view.MotionEvent;
 
 import androidx.annotation.NonNull;
 
@@ -37,6 +35,7 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.TextRecognizerOptionsInterface;
 
 import java.util.List;
+import java.util.Objects;
 
 /** Processor for the text detector demo. */
 public class TextRecognitionProcessor extends VisionProcessorBase<Text> {
@@ -97,11 +96,11 @@ public class TextRecognitionProcessor extends VisionProcessorBase<Text> {
                 MANUAL_TESTING_LOG,
                 String.format(
                     "Detected text element %d has a bounding box: %s",
-                    k, element.getBoundingBox().flattenToString()));
+                    k, Objects.requireNonNull(element.getBoundingBox()).flattenToString()));
             Log.v(
                 MANUAL_TESTING_LOG,
                 String.format(
-                    "Expected corner point size is 4, get %d", element.getCornerPoints().length));
+                    "Expected corner point size is 4, get %d", Objects.requireNonNull(element.getCornerPoints()).length));
             for (Point point : element.getCornerPoints()) {
               Log.v(
                   MANUAL_TESTING_LOG,

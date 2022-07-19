@@ -1,10 +1,8 @@
 package com.example.crumbtrail;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,11 +19,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.parse.CountCallback;
-import com.parse.LogInCallback;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -37,7 +32,6 @@ import es.dmoral.toasty.Toasty;
 public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
-    private Button login;
     private ProgressDialog progressDialog;
     public static final int RC_SIGN_IN = 7;
     GoogleSignInClient mGoogleSignInClient;
@@ -57,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         username = findViewById(R.id.usernameEt);
         password = findViewById(R.id.passwordEt);
-        login = findViewById(R.id.loginBtn);
+        Button login = findViewById(R.id.loginBtn);
         Button navigateSignup = findViewById(R.id.navigatesignup);
         SignInButton btnGoogleSignIn = findViewById(R.id.sign_in_button);
 
@@ -69,9 +63,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        navigateSignup.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-        });
+        navigateSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));
 
     }
 
@@ -83,29 +75,22 @@ public class LoginActivity extends AppCompatActivity {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereEqualTo("username", account.getEmail());
 
-            query.countInBackground(new CountCallback(){
-                @Override
-                public void done(int count, ParseException e) {
-                    if (e == null) {
-                        if(count==0){
-                            if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
-                            if (account.getIdToken() == null) Log.i(TAG, "Token is null");
-                            ParseUser.logInInBackground(Objects.requireNonNull(account.getEmail()), account.getIdToken(), (parseUser, parseException) -> {
-                                progressDialog.dismiss();
-                                if (parseUser != null) {
-                                    Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
-                                } else {
-                                    ParseUser.logOut();
-                                    Toasty.error(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
-                                }
-                            });
-//                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-//                            intent.putExtra("account", account);
-//                            startActivity(intent);
-                        }
+            query.countInBackground((count, e) -> {
+                if (e == null) {
+                    if(count==0){
+                        if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
+                        if (account.getIdToken() == null) Log.i(TAG, "Token is null");
+                        ParseUser.logInInBackground(Objects.requireNonNull(account.getEmail()), account.getIdToken(), (parseUser, parseException) -> {
+                            progressDialog.dismiss();
+                            if (parseUser != null) {
+                                Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
+                            } else {
+                                ParseUser.logOut();
+                                Toasty.error(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 }
-
             });
         }
         ParseUser.logInInBackground(username, password, (parseUser, e) -> {
@@ -114,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
             } else {
                 ParseUser.logOut();
-                Toasty.error(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(LoginActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }

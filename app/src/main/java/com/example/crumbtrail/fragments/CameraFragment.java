@@ -1,7 +1,5 @@
 package com.example.crumbtrail.fragments;
 
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,7 +20,6 @@ import com.example.crumbtrail.graphic.GraphicOverlay;
 import com.example.crumbtrail.R;
 
 import com.example.crumbtrail.textdetector.TextRecognitionProcessor;
-import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import java.io.IOException;
@@ -113,17 +110,15 @@ public class CameraFragment extends Fragment
         }
 
         try {
-            switch (model) {
-                case TEXT_RECOGNITION_LATIN:
-                    Log.i(TAG, "Using on-device Text recognition Processor for Latin.");
-                    cameraSource.setMachineLearningFrameProcessor(
-                            new TextRecognitionProcessor(getContext(), new TextRecognizerOptions.Builder().build()));
-                    break;
+            if (TEXT_RECOGNITION_LATIN.equals(model)) {
+                Log.i(TAG, "Using on-device Text recognition Processor for Latin.");
+                cameraSource.setMachineLearningFrameProcessor(
+                        new TextRecognitionProcessor(getContext(), new TextRecognizerOptions.Builder().build()));
             }
         } catch (RuntimeException e) {
             Log.e(TAG, "Can not create image processor: " + model, e);
             Toasty.error(
-                            getContext(),
+                            requireContext(),
                             "Can not create image processor: " + e.getMessage(),
                             Toast.LENGTH_LONG)
                     .show();
@@ -151,27 +146,6 @@ public class CameraFragment extends Fragment
                 cameraSource = null;
             }
         }
-    }
-
-    private void processTextBlock(Text result) {
-        // [START mlkit_process_text_block]
-        String resultText = result.getText();
-        for (Text.TextBlock block : result.getTextBlocks()) {
-            String blockText = block.getText();
-            Point[] blockCornerPoints = block.getCornerPoints();
-            Rect blockFrame = block.getBoundingBox();
-            for (Text.Line line : block.getLines()) {
-                String lineText = line.getText();
-                Point[] lineCornerPoints = line.getCornerPoints();
-                Rect lineFrame = line.getBoundingBox();
-                for (Text.Element element : line.getElements()) {
-                    String elementText = element.getText();
-                    Point[] elementCornerPoints = element.getCornerPoints();
-                    Rect elementFrame = element.getBoundingBox();
-                }
-            }
-        }
-        // [END mlkit_process_text_block]
     }
 
     @Override

@@ -71,7 +71,7 @@ public class TextGraphic extends GraphicOverlay.Graphic {
     this.shouldGroupTextInBlocks = shouldGroupTextInBlocks;
     this.showLanguageTag = showLanguageTag;
 
-    rectangles = new HashMap<RectF, String>();
+    rectangles = new HashMap<>();
 
     rectPaint = new Paint();
     rectPaint.setColor(MARKER_COLOR);
@@ -85,26 +85,23 @@ public class TextGraphic extends GraphicOverlay.Graphic {
     labelPaint = new Paint();
     labelPaint.setColor(MARKER_COLOR);
     labelPaint.setStyle(Paint.Style.FILL);
-    overlay.setOnTouchListener(new View.OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        float touchX = event.getX();
-        float touchY = event.getY();
-        if (event.getAction() == (0)) {
-          System.out.println("Touching down!");
-          for (RectF rect : rectangles.keySet()) {
-            if (rect.contains(touchX, touchY)) {
-              MainActivity.viewPager.setCurrentItem(2);
-              SearchFragment.setQuery(rectangles.get(rect));
-            }
+    overlay.setOnTouchListener((v, event) -> {
+      float touchX = event.getX();
+      float touchY = event.getY();
+      if (event.getAction() == (0)) {
+        System.out.println("Touching down!");
+        for (RectF rect : rectangles.keySet()) {
+          if (rect.contains(touchX, touchY)) {
+            MainActivity.viewPager.setCurrentItem(2);
+            SearchFragment.setQuery(rectangles.get(rect));
           }
-        } else if (event.getAction() == (1)) {
-          System.out.println("Touching up!");
-        } else if (event.getAction() == (2)) {
-          System.out.println("Sliding your finger around on the screen.");
         }
-        return true;
+      } else if (event.getAction() == (1)) {
+        System.out.println("Touching up!");
+      } else if (event.getAction() == (2)) {
+        System.out.println("Sliding your finger around on the screen.");
       }
+      return true;
     });
     // Redraw the overlay, as this graphic has been added.
     postInvalidate();

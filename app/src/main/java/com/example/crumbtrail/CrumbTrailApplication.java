@@ -5,7 +5,6 @@ import android.app.Application;
 import com.example.crumbtrail.data.model.Comment;
 import com.example.crumbtrail.data.model.MapMarker;
 import com.example.crumbtrail.data.model.Review;
-import com.example.crumbtrail.data.model.User;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

@@ -30,8 +30,8 @@ import java.util.List;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
     private static final String TAG = "ReviewAdapter";
-    Context context;
-    List<Review> Reviews;
+    final Context context;
+    final List<Review> Reviews;
     TextView userNameTv;
     TextView reviewBodyTv;
     RatingBar displayRatingBar;
@@ -108,14 +108,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             favoriteCountTv.setText(review.getLikesCount());
             displayRatingBar.setRating(review.getRating().floatValue());
             displayRatingBar.setIsIndicator(true);
-            commentFl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                        if (composeCl.getVisibility() == View.VISIBLE) {
-                            composeCl.setVisibility(View.GONE);
-                        }
-                        else { composeCl.setVisibility(View.VISIBLE); }
-                }
+            commentFl.setOnClickListener(v -> {
+                    if (composeCl.getVisibility() == View.VISIBLE) {
+                        composeCl.setVisibility(View.GONE);
+                    }
+                    else { composeCl.setVisibility(View.VISIBLE); }
             });
             Drawable unliked = ContextCompat.getDrawable(context, R.drawable.ic_star_unliked);
             Drawable liked = ContextCompat.getDrawable(context, R.drawable.ic_star_liked);
@@ -127,27 +124,21 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                 Log.i(TAG, "Changing favoriteIv to unliked");
                 favoriteIv.setImageDrawable(unliked);
             }
-            favoriteIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (((ImageView)v).getDrawable()==unliked) {
-                        Log.i(TAG, "Changing favoriteIv to liked");
-                        ((ImageView)v).setImageDrawable(liked);
-                        likePost(true, review);
-                    }
-                    else {
-                        Log.i(TAG, "Changing favoriteIv to unliked");
-                        ((ImageView)v).setImageDrawable(unliked);
-                        likePost(false, review);
-                    }
-                    review.saveInBackground(); // uploads new value back to parse
+            favoriteIv.setOnClickListener(v -> {
+                if (((ImageView)v).getDrawable()==unliked) {
+                    Log.i(TAG, "Changing favoriteIv to liked");
+                    ((ImageView)v).setImageDrawable(liked);
+                    likePost(true, review);
                 }
+                else {
+                    Log.i(TAG, "Changing favoriteIv to unliked");
+                    ((ImageView)v).setImageDrawable(unliked);
+                    likePost(false, review);
+                }
+                review.saveInBackground(); // uploads new value back to parse
             });
-            shareFl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            shareFl.setOnClickListener(v -> {
 
-                }
             });
         }
 

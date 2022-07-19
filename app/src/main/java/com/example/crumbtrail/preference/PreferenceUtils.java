@@ -99,8 +99,8 @@ public class PreferenceUtils {
     int performanceMode =
         getModeTypePreferenceValue(
             context,
-            R.string.pref_key_live_preview_pose_detection_performance_mode,
-            POSE_DETECTOR_PERFORMANCE_MODE_FAST);
+            R.string.pref_key_live_preview_pose_detection_performance_mode
+        );
     boolean preferGPU = preferGPUForPoseDetection(context);
     if (performanceMode == POSE_DETECTOR_PERFORMANCE_MODE_FAST) {
       PoseDetectorOptions.Builder builder =
@@ -124,8 +124,8 @@ public class PreferenceUtils {
     int performanceMode =
         getModeTypePreferenceValue(
             context,
-            R.string.pref_key_still_image_pose_detection_performance_mode,
-            POSE_DETECTOR_PERFORMANCE_MODE_FAST);
+            R.string.pref_key_still_image_pose_detection_performance_mode
+        );
     boolean preferGPU = preferGPUForPoseDetection(context);
     if (performanceMode == POSE_DETECTOR_PERFORMANCE_MODE_FAST) {
       PoseDetectorOptions.Builder builder =
@@ -207,10 +207,10 @@ public class PreferenceUtils {
    * integer.
    */
   private static int getModeTypePreferenceValue(
-      Context context, @StringRes int prefKeyResId, int defaultValue) {
+          Context context, @StringRes int prefKeyResId) {
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     String prefKey = context.getString(prefKeyResId);
-    return Integer.parseInt(sharedPreferences.getString(prefKey, String.valueOf(defaultValue)));
+    return Integer.parseInt(sharedPreferences.getString(prefKey, String.valueOf(PreferenceUtils.POSE_DETECTOR_PERFORMANCE_MODE_FAST)));
   }
 
   public static boolean isCameraLiveViewportEnabled(Context context) {

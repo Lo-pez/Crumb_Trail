@@ -4,15 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,8 +17,6 @@ import android.view.WindowManager;
 import com.example.crumbtrail.adapters.FragmentPageAdapter;
 import com.example.crumbtrail.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Objects;
 
 // import statements
 
@@ -68,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
      * Sets up the viewpager and connects it to the bottom view navigation.
      */
     private void setUpViewPager() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = findViewById(R.id.viewPager);
         viewPager.setCurrentItem(1); //Setting first screen to camera
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -101,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
             private static final float MIN_SCALE = 0.75f;
 
-            public void transformPage( View page, float position ) {
+            public void transformPage(@NonNull View page, float position ) {
                 int pageWidth = page.getWidth();
 
                 if ( position < -1 ) { // [ -Infinity,-1 )

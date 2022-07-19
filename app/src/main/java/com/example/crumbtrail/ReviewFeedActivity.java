@@ -15,20 +15,13 @@ import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.crumbtrail.adapters.ReviewAdapter;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
 import com.example.crumbtrail.databinding.ActivityReviewFeedBinding;
 import com.example.crumbtrail.fragments.ComposeReviewDialogFragment;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import org.parceler.Parcels;
@@ -60,7 +53,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
         Food food = Parcels.unwrap(intent.getParcelableExtra("Food"));
         setUpSwipeContainer(food);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.include);
+        Toolbar toolbar = findViewById(R.id.include);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
@@ -84,12 +77,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
 
         FrameLayout flOpenReview = binding.flOpenReview;
 
-        flOpenReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showReviewDialog(food);
-            }
-        });
+        flOpenReview.setOnClickListener(view1 -> showReviewDialog(food));
 
         setUpEndlessScrolling(food);
     }
@@ -128,7 +116,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
     }
 
     private void setUpSwipeContainer(Food food) {
-        swipeContainer = (SwipeRefreshLayout) binding.reviewSwipeContainer;
+        swipeContainer = binding.reviewSwipeContainer;
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(() -> {
             // Your code to refresh the list here.

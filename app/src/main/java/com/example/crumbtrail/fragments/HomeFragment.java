@@ -4,7 +4,6 @@ import static com.google.android.gms.location.LocationServices.getFusedLocationP
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -23,15 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.BounceInterpolator;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.crumbtrail.ComposeActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.adapters.CustomWindowAdapter;
-import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.MapMarker;
-import com.example.crumbtrail.data.model.Review;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -42,7 +37,6 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.LocationSource;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -52,12 +46,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,13 +60,8 @@ import es.dmoral.toasty.Toasty;
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     public static final String TAG = "HomeFragment";
-    private SupportMapFragment mapFragment;
     private GoogleMap map;
-    private LocationRequest mLocationRequest;
     Location mCurrentLocation;
-    private long UPDATE_INTERVAL = 60000;  /* 60 secs */
-    private long FASTEST_INTERVAL = 5000; /* 5 secs */
-    private FusedLocationProviderClient fusedLocationClient;
     private final static String KEY_LOCATION = "location";
     private List<MapMarker> allMarkers;
 
@@ -104,9 +91,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         queryMapMarkers();
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
-        mapFragment = (SupportMapFragment) getChildFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
             mapFragment.getMapAsync(this);
@@ -125,15 +112,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(UnitedStates, 3);
             googleMap.animateCamera(cameraUpdate);
             Log.i(TAG, "Map Fragment was loaded properly!");
-            map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                @Override
-                public void onMapLongClick(LatLng latLng) {
-                    showAlertDialogForPoint(latLng);
-                }
-            });
+            map.setOnMapLongClickListener(latLng -> showAlertDialogForPoint(latLng));
             map.setInfoWindowAdapter(new CustomWindowAdapter(getLayoutInflater()));
         } else {
-            Toasty.error(getActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            Toasty.error(requireActivity(), "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -191,40 +173,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 // Create alert dialog
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Define color of marker icon
-                        // Define custom marker
-                        BitmapDescriptor defaultMarker = BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
-                        // Extract content from alert dialog
-                        String title = ((EditText) alertDialog.findViewById(R.id.etTitle))
-                                .getText().toString();
-                        String food = ((EditText) alertDialog.findViewById(R.id.etFood))
-                                .getText().toString();
-                        String discount = ((EditText) alertDialog.findViewById(R.id.etDiscount))
-                                .getText().toString();
-                        // Creates and adds marker to the map
-                        Marker marker = map.addMarker(new MarkerOptions().position(latLng)
-                                .title(title).snippet(food).snippet(discount).icon(defaultMarker));
+                (dialog, which) -> {
+                    // Define color of marker icon
+                    // Define custom marker
+                    BitmapDescriptor defaultMarker = BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
+                    // Extract content from alert dialog
+                    String title = ((EditText) alertDialog.findViewById(R.id.etTitle))
+                            .getText().toString();
+                    String food = ((EditText) alertDialog.findViewById(R.id.etFood))
+                            .getText().toString();
+                    String discount = ((EditText) alertDialog.findViewById(R.id.etDiscount))
+                            .getText().toString();
+                    // Creates and adds marker to the map
+                    Marker marker = map.addMarker(new MarkerOptions().position(latLng)
+                            .title(title).snippet(food).snippet(discount).icon(defaultMarker));
 
-                        createMarker(title, food, discount, latLng);
+                    createMarker(title, food, discount, latLng);
 
-                        marker.setDraggable(true);
+                    marker.setDraggable(true);
 
-                        // Animate marker using drop effect
-                        // --> Call the dropPinEffect method here
-                        dropPinEffect(marker);
-                    }
+                    // Animate marker using drop effect
+                    // --> Call the dropPinEffect method here
+                    dropPinEffect(marker);
                 });
         alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "CANCEL",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, which) -> dialog.cancel());
         alertDialog.show();
     }
 
@@ -238,7 +212,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mapMarker.saveInBackground(e -> {
             if (e != null) {
                 Log.e(TAG, "Error while saving new map marker!", e);
-                Toasty.error(getActivity(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                Toasty.error(requireActivity(), "Error while saving!", Toast.LENGTH_SHORT).show();
             }
             Log.i(TAG, "MapMarker save was successful!");
         });
@@ -285,20 +259,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         FusedLocationProviderClient locationClient = getFusedLocationProviderClient(requireContext());
         locationClient.getLastLocation()
-                .addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null) {
-                            onLocationChanged(location);
-                        }
+                .addOnSuccessListener(location -> {
+                    if (location != null) {
+                        onLocationChanged(location);
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Error trying to get last GPS location");
-                        e.printStackTrace();
-                    }
+                .addOnFailureListener(e -> {
+                    Log.d(TAG, "Error trying to get last GPS location");
+                    e.printStackTrace();
                 });
     }
     public void onLocationChanged(Location location) {
@@ -309,28 +277,30 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         mCurrentLocation = location;
         String msg = "Updated Location: " +
-                Double.toString(location.getLatitude()) + "," +
-                Double.toString(location.getLongitude());
+                location.getLatitude() + "," +
+                location.getLongitude();
         Toasty.success(requireActivity(), msg, Toast.LENGTH_SHORT).show();
         displayLocation();
     }
 
-    private LatLng displayLocation() {
+    private void displayLocation() {
         if (mCurrentLocation != null) {
             Toasty.success(requireActivity(), "GPS location was found!", Toast.LENGTH_SHORT).show();
             LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             map.animateCamera(cameraUpdate);
-            return latLng;
         } else {
             Toasty.error(requireActivity(), "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-            return null;
         }
     }
     protected void startLocationUpdates() {
-        mLocationRequest = new LocationRequest();
+        LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        /* 60 secs */
+        long UPDATE_INTERVAL = 60000;
         mLocationRequest.setInterval(UPDATE_INTERVAL);
+        /* 5 secs */
+        long FASTEST_INTERVAL = 5000;
         mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
 
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();

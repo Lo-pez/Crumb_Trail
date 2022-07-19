@@ -24,19 +24,17 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.Headers;
 
 public class SearchResultsFragment extends DialogFragment {
     public String FOOD_URL;
     List<Food> foods;
-    private LinearLayoutManager linearLayoutManager;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        String mQuery = getArguments().getString("query");
+        String mQuery = requireArguments().getString("query");
         FOOD_URL = String.format("https://api.nal.usda.gov/fdc/v1/foods/search?api_key=%s" , getString(R.string.food_api_key)) + "&query=" + mQuery + "&dataType=Branded&pageSize=3&pageNumber=1&sortBy=dataType.keyword&sortOrder=asc";
         Log.i(TAG, FOOD_URL);
         View view = requireActivity().getLayoutInflater().inflate(R.layout.fragment_search_results, null);
@@ -44,7 +42,7 @@ public class SearchResultsFragment extends DialogFragment {
         builder.setView(view);
         RecyclerView foodRv = view.findViewById(R.id.foodRv);
         foods = new ArrayList<>();
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
         foodRv.setLayoutManager(linearLayoutManager);
         FoodAdapter foodAdapter = new FoodAdapter(getContext(), foods);
@@ -58,7 +56,7 @@ public class SearchResultsFragment extends DialogFragment {
                 JSONObject jsonObject = json.jsonObject;
                 try {
                     JSONArray results = jsonObject.getJSONArray("foods");
-                    Log.i(TAG, "Results: " + results.toString());
+                    Log.i(TAG, "Results: " + results);
                     foods.clear();
                     foods.addAll(Food.fromJsonArray(results));
                     foodAdapter.notifyDataSetChanged();
@@ -76,5 +74,5 @@ public class SearchResultsFragment extends DialogFragment {
 
         return builder.create();
     }
-    public static String TAG = "SearchFragment";
+    public static final String TAG = "SearchFragment";
 }

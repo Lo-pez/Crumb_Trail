@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,10 +12,10 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.crumbtrail.ComposeActivity;
 import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Food;
 import com.example.crumbtrail.data.model.Review;
@@ -56,53 +55,50 @@ public class ComposeReviewDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Get field from view
         EditText etComposeScr = view.findViewById(R.id.etComposeScr);
         Button btnReview = view.findViewById(R.id.btnReview);
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
         ProgressBar progressBar = view.findViewById(R.id.load);
-        Food food = Parcels.unwrap(getArguments().getParcelable("food"));
+        Food food = Parcels.unwrap(requireArguments().getParcelable("food"));
 
 //        Objects.requireNonNull(getDialog()).setTitle(title);
         // Show soft keyboard automatically and request focus to field
         etComposeScr.requestFocus();
-        getDialog().getWindow().setSoftInputMode(
+        Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
-        btnReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String reviewContent = etComposeScr.getText().toString();
-                if (reviewContent.isEmpty()) {
-                    Toasty.success(requireContext(), "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if (reviewContent.length() > MAX_REVIEW_LENGTH) {
-                    Toasty.error(requireContext(), "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                Float rating =  ratingBar.getRating();
-                progressBar.setVisibility(View.VISIBLE);
-                Review review = new Review();
-                review.setBody(reviewContent);
-                review.setUser(ParseUser.getCurrentUser());
-                review.setLikedBy(new ArrayList<>());
-                review.setComments(new ArrayList<>());
-                review.setRating(rating);
-                review.setFCDId(food.getFCDID());
-                review.saveInBackground(e -> {
-                    if (e != null) {
-                        Log.e(TAG, "Error while saving new post!", e);
-                        Toasty.error(requireContext(), "Error while saving!", Toasty.LENGTH_SHORT).show();
-                    }
-                    Log.i(TAG, "Post save was successful!");
-                });
-                progressBar.setVisibility(View.GONE);
-                dismiss();
+        btnReview.setOnClickListener(view1 -> {
+            String reviewContent = etComposeScr.getText().toString();
+            if (reviewContent.isEmpty()) {
+                Toasty.success(requireContext(), "Sorry, your review cannot be empty.", Toast.LENGTH_LONG).show();
+                return;
             }
+            if (reviewContent.length() > MAX_REVIEW_LENGTH) {
+                Toasty.error(requireContext(), "Sorry, your review is too long.",Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            Float rating =  ratingBar.getRating();
+            progressBar.setVisibility(View.VISIBLE);
+            Review review = new Review();
+            review.setBody(reviewContent);
+            review.setUser(ParseUser.getCurrentUser());
+            review.setLikedBy(new ArrayList<>());
+            review.setComments(new ArrayList<>());
+            review.setRating(rating);
+            review.setFCDId(food.getFCDID());
+            review.saveInBackground(e -> {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving new post!", e);
+                    Toasty.error(requireContext(), "Error while saving!", Toasty.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Post save was successful!");
+            });
+            progressBar.setVisibility(View.GONE);
+            dismiss();
         });
     }
 }

@@ -1,17 +1,8 @@
 package com.example.crumbtrail.data.model;
 
-import android.util.Log;
-
-import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseClassName;
-import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Model for the MapMarker objects. The data used here is obtained from Parse.

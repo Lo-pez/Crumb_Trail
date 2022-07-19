@@ -1,7 +1,6 @@
 package com.example.crumbtrail.data.model;
 
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 /**

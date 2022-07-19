@@ -75,7 +75,7 @@ public class CameraSource {
    */
   private static final float ASPECT_RATIO_TOLERANCE = 0.01f;
 
-  protected Activity activity;
+  protected final Activity activity;
 
   private Camera camera;
 
@@ -148,9 +148,9 @@ public class CameraSource {
    * @throws IOException if the camera's preview texture or display could not be initialized
    */
   @RequiresPermission(Manifest.permission.CAMERA)
-  public synchronized CameraSource start() throws IOException {
+  public synchronized void start() throws IOException {
     if (camera != null) {
-      return this;
+      return;
     }
 
     camera = createCamera();
@@ -161,7 +161,6 @@ public class CameraSource {
     processingThread = new Thread(processingRunnable);
     processingRunnable.setActive(true);
     processingThread.start();
-    return this;
   }
 
   /**
@@ -172,9 +171,9 @@ public class CameraSource {
    * @throws IOException if the supplied surface holder could not be used as the preview display
    */
   @RequiresPermission(Manifest.permission.CAMERA)
-  public synchronized CameraSource start(SurfaceHolder surfaceHolder) throws IOException {
+  public synchronized void start(SurfaceHolder surfaceHolder) throws IOException {
     if (camera != null) {
-      return this;
+      return;
     }
 
     camera = createCamera();
@@ -184,7 +183,6 @@ public class CameraSource {
     processingThread = new Thread(processingRunnable);
     processingRunnable.setActive(true);
     processingThread.start();
-    return this;
   }
 
   /**
@@ -278,7 +276,7 @@ public class CameraSource {
     previewSize = sizePair.preview;
     Log.v(TAG, "Camera preview size: " + previewSize);
 
-    int[] previewFpsRange = selectPreviewFpsRange(camera, REQUESTED_FPS);
+    int[] previewFpsRange = selectPreviewFpsRange(camera);
     if (previewFpsRange == null) {
       throw new IOException("Could not find suitable preview frames per second range.");
     }
@@ -451,14 +449,13 @@ public class CameraSource {
    * Selects the most suitable preview frames per second range, given the desired frames per second.
    *
    * @param camera the camera to select a frames per second range from
-   * @param desiredPreviewFps the desired frames per second for the camera preview frames
    * @return the selected preview frames per second range
    */
   @SuppressLint("InlinedApi")
-  private static int[] selectPreviewFpsRange(Camera camera, float desiredPreviewFps) {
+  private static int[] selectPreviewFpsRange(Camera camera) {
     // The camera API uses integers scaled by a factor of 1000 instead of floating-point frame
     // rates.
-    int desiredPreviewFpsScaled = (int) (desiredPreviewFps * 1000.0f);
+    int desiredPreviewFpsScaled = (int) (CameraSource.REQUESTED_FPS * 1000.0f);
 
     // Selects a range with whose upper bound is as close as possible to the desired fps while its
     // lower bound is as small as possible to properly expose frames in low light conditions. Note
@@ -494,7 +491,6 @@ public class CameraSource {
     int rotation = windowManager.getDefaultDisplay().getRotation();
     switch (rotation) {
       case Surface.ROTATION_0:
-        degrees = 0;
         break;
       case Surface.ROTATION_90:
         degrees = 90;

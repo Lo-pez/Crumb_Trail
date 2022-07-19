@@ -26,8 +26,8 @@ import java.util.List;
  */
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
-    Context context;
-    List<Food> Foods;
+    final Context context;
+    final List<Food> Foods;
     TextView brandNameTv;
     TextView foodCategoryTv;
     TextView foodDescriptionTv;
@@ -85,13 +85,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             brandNameTv.setText(food.getBrandName());
             foodCategoryTv.setText(food.getFoodCategory());
             foodDescriptionTv.setText(food.getDescription());
-            foodItemCl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ReviewFeedActivity.class);
-                    intent.putExtra("Food", Parcels.wrap(food));
-                    context.startActivity(intent);
-                }
+            foodItemCl.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ReviewFeedActivity.class);
+                intent.putExtra("Food", Parcels.wrap(food));
+                context.startActivity(intent);
             });
         }
 

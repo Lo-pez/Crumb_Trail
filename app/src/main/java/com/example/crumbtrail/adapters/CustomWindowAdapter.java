@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.Marker;
  * from the map markers.
  */
 public class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
-    LayoutInflater mInflater;
+    final LayoutInflater mInflater;
 
     public CustomWindowAdapter(LayoutInflater i){
         mInflater = i;
@@ -25,10 +25,10 @@ public class CustomWindowAdapter implements GoogleMap.InfoWindowAdapter {
         // Getting view from the layout file
         View v = mInflater.inflate(R.layout.info_window, null);
         // Populate fields
-        TextView title = (TextView) v.findViewById(R.id.tv_info_window_title);
+        TextView title = v.findViewById(R.id.tv_info_window_title);
         title.setText(marker.getTitle());
 
-        TextView description = (TextView) v.findViewById(R.id.tv_info_window_description);
+        TextView description = v.findViewById(R.id.tv_info_window_description);
         description.setText(marker.getSnippet());
         // Return info window contents
         return v;
