@@ -147,7 +147,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
             ? null
             : BitmapUtils.getBitmap(data, frameMetadata);
 
-    if (isMlImageEnabled(graphicOverlay.getContext())) {
+    if (isMlImageEnabled()) {
       MlImage mlImage =
           new ByteBufferMlImageBuilder(
                   data,
@@ -197,7 +197,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
       boolean shouldShowFps,
       long frameStartMs) {
     return setUpListener(
-        detectInImage(image), graphicOverlay, originalCameraImage, shouldShowFps, frameStartMs);
+        detectInImage(), graphicOverlay, originalCameraImage, shouldShowFps, frameStartMs);
   }
 
   private Task<T> setUpListener(
@@ -305,7 +305,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
   protected abstract Task<T> detectInImage(InputImage image);
 
-  protected Task<T> detectInImage(MlImage image) {
+  protected Task<T> detectInImage() {
     return Tasks.forException(
         new MlKitException(
             "MlImage is currently not demonstrated for this feature",
@@ -316,7 +316,7 @@ public abstract class VisionProcessorBase<T> implements VisionImageProcessor {
 
   protected abstract void onFailure(@NonNull Exception e);
 
-  protected boolean isMlImageEnabled(Context context) {
+  protected boolean isMlImageEnabled() {
     return false;
   }
 }

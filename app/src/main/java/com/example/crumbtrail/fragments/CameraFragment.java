@@ -66,9 +66,6 @@ public class CameraFragment extends Fragment
             Log.d(TAG, "graphicOverlay is null");
         }
 
-        List<String> options = new ArrayList<>();
-        options.add(TEXT_RECOGNITION_LATIN);
-
         createCameraSource(selectedModel);
 
     }
@@ -76,7 +73,6 @@ public class CameraFragment extends Fragment
     @Override
     public synchronized void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
         selectedModel = parent.getItemAtPosition(pos).toString();
         Log.d(TAG, "Selected model: " + selectedModel);
         preview.stop();

@@ -141,7 +141,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
                     ((ImageView)v).setImageDrawable(unliked);
                     likePost(false, review);
                 }
-                review.saveInBackground(); // uploads new value back to parse
+                review.saveInBackground(); // Uploads new value back to parse
             });
             shareFl.setOnClickListener(v -> {
 

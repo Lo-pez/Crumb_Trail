@@ -53,7 +53,6 @@ public class ComposeActivity extends AppCompatActivity {
         btnReview = binding.btnReview;
         etComposeScr = binding.etComposeScr;
         ratingBar = binding.ratingBar;
-//        etComposeScr.setText(food.getBrandName());
 
         btnReview.setOnClickListener(view1 -> {
             String reviewContent = etComposeScr.getText().toString();
@@ -73,7 +72,6 @@ public class ComposeActivity extends AppCompatActivity {
             review.setBody(reviewContent);
             review.setUser(ParseUser.getCurrentUser());
             review.setLikedBy(new ArrayList<>());
-            review.setComments(new ArrayList<>());
             review.setRating(rating);
             review.setFCDId(food.getFCDID());
             review.saveInBackground(e -> {

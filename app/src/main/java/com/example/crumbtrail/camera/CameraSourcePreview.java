@@ -120,6 +120,7 @@ public class CameraSourcePreview extends ViewGroup {
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
         if (isPortraitMode()) {
             int tmp = width;
+            //noinspection SuspiciousNameCombination
             width = height;
             height = tmp;
         }

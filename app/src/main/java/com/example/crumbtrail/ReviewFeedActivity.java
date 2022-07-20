@@ -32,7 +32,6 @@ import java.util.Objects;
 
 public class ReviewFeedActivity extends AppCompatActivity{
     public static final String TAG = "FeedActivity";
-    private static final int REQUEST_CODE = 42;
     protected ReviewAdapter adapter;
     protected List<Review> allReviews;
     private ActivityReviewFeedBinding binding;
@@ -62,7 +61,7 @@ public class ReviewFeedActivity extends AppCompatActivity{
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow(); // in Activity's onCreate() for instance
+            Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
 

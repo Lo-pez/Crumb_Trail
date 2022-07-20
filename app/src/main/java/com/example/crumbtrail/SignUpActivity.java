@@ -102,10 +102,4 @@ public class SignUpActivity extends AppCompatActivity {
         AlertDialog ok = builder.create();
         ok.show();
     }
-
-    private void goMainActivity() {
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-
 }

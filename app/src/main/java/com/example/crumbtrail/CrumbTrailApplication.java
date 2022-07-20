@@ -2,7 +2,6 @@ package com.example.crumbtrail;
 
 import android.app.Application;
 
-import com.example.crumbtrail.data.model.Comment;
 import com.example.crumbtrail.data.model.MapMarker;
 import com.example.crumbtrail.data.model.Review;
 import com.parse.Parse;
@@ -29,7 +28,6 @@ public class CrumbTrailApplication extends Application {
 
         // set applicationId, and server server based on the values in the back4app settings.
         // any network interceptors must be added with the Configuration Builder given this syntax
-        ParseObject.registerSubclass(Comment.class);
         ParseObject.registerSubclass(Review.class);
         ParseObject.registerSubclass(MapMarker.class);
         Parse.initialize(new Parse.Configuration.Builder(this)

@@ -91,8 +91,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         queryMapMarkers();
 
-        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         if (mapFragment != null) {
@@ -248,75 +246,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-    }
-
-    void getMyLocation() {
-        if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        map.setMyLocationEnabled(true);
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-
-        FusedLocationProviderClient locationClient = getFusedLocationProviderClient(requireContext());
-        locationClient.getLastLocation()
-                .addOnSuccessListener(location -> {
-                    if (location != null) {
-                        onLocationChanged(location);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.d(TAG, "Error trying to get last GPS location");
-                    e.printStackTrace();
-                });
-    }
-    public void onLocationChanged(Location location) {
-        // GPS may be turned off
-        if (location == null) {
-            return;
-        }
-
-        mCurrentLocation = location;
-        String msg = "Updated Location: " +
-                location.getLatitude() + "," +
-                location.getLongitude();
-        Toasty.success(requireActivity(), msg, Toast.LENGTH_SHORT).show();
-        displayLocation();
-    }
-
-    private void displayLocation() {
-        if (mCurrentLocation != null) {
-            Toasty.success(requireActivity(), "GPS location was found!", Toast.LENGTH_SHORT).show();
-            LatLng latLng = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
-            map.animateCamera(cameraUpdate);
-        } else {
-            Toasty.error(requireActivity(), "Current location was null, enable GPS on emulator!", Toast.LENGTH_SHORT).show();
-        }
-    }
-    protected void startLocationUpdates() {
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        /* 60 secs */
-        long UPDATE_INTERVAL = 60000;
-        mLocationRequest.setInterval(UPDATE_INTERVAL);
-        /* 5 secs */
-        long FASTEST_INTERVAL = 5000;
-        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
-        builder.addLocationRequest(mLocationRequest);
-        LocationSettingsRequest locationSettingsRequest = builder.build();
-
-        SettingsClient settingsClient = LocationServices.getSettingsClient(requireContext());
-        settingsClient.checkLocationSettings(locationSettingsRequest);
-        //noinspection MissingPermission
-        getFusedLocationProviderClient(requireContext()).requestLocationUpdates(mLocationRequest, new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult locationResult) {
-                        // onLocationChanged(locationResult.getLastLocation());
-                    }
-                },
-                Looper.myLooper());
     }
 
     private void queryMapMarkers() {

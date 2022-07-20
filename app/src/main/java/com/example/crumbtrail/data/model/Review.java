@@ -41,10 +41,6 @@ public class Review extends ParseObject {
         put(KEY_BODY, body);
     }
 
-    public Long getFCDId() {
-        return getLong(KEY_FCDID);
-    }
-
     public void setFCDId(Long fcdId) {
         put(KEY_FCDID, String.valueOf(fcdId));
     }
@@ -65,17 +61,6 @@ public class Review extends ParseObject {
         put(KEY_IMAGE, parseFile);
     }
 
-    public void setComments(List<Comment> newCommentsList) {
-        put(KEY_COMMENTS, newCommentsList);
-    }
-
-    public List<Comment> getComments() {
-        List<Comment> comments = getList(KEY_COMMENTS);
-        if (comments == null) {
-            return new ArrayList<>();
-        }
-        return comments;
-    }
 
     public void setLikedBy(List<ParseUser> newLikeBy) {
         put(KEY_LIKES, newLikeBy);

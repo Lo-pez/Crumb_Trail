@@ -39,13 +39,6 @@ public class PreferenceUtils {
 
   private static final int POSE_DETECTOR_PERFORMANCE_MODE_FAST = 1;
 
-  static void saveString(Context context, @StringRes int prefKeyId, @Nullable String value) {
-    PreferenceManager.getDefaultSharedPreferences(context)
-        .edit()
-        .putString(context.getString(prefKeyId), value)
-        .apply();
-  }
-
   @Nullable
   public static com.example.crumbtrail.camera.CameraSource.SizePair getCameraPreviewSizePair(Context context, int cameraId) {
     Preconditions.checkArgument(
@@ -161,44 +154,6 @@ public class PreferenceUtils {
     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
     String prefKey = context.getString(R.string.pref_key_pose_detector_prefer_gpu);
     return sharedPreferences.getBoolean(prefKey, true);
-  }
-
-  public static boolean shouldShowPoseDetectionInFrameLikelihoodLivePreview(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey =
-        context.getString(R.string.pref_key_live_preview_pose_detector_show_in_frame_likelihood);
-    return sharedPreferences.getBoolean(prefKey, true);
-  }
-
-  public static boolean shouldShowPoseDetectionInFrameLikelihoodStillImage(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey =
-        context.getString(R.string.pref_key_still_image_pose_detector_show_in_frame_likelihood);
-    return sharedPreferences.getBoolean(prefKey, true);
-  }
-
-  public static boolean shouldPoseDetectionVisualizeZ(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey = context.getString(R.string.pref_key_pose_detector_visualize_z);
-    return sharedPreferences.getBoolean(prefKey, true);
-  }
-
-  public static boolean shouldPoseDetectionRescaleZForVisualization(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey = context.getString(R.string.pref_key_pose_detector_rescale_z);
-    return sharedPreferences.getBoolean(prefKey, true);
-  }
-
-  public static boolean shouldPoseDetectionRunClassification(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey = context.getString(R.string.pref_key_pose_detector_run_classification);
-    return sharedPreferences.getBoolean(prefKey, false);
-  }
-
-  public static boolean shouldSegmentationEnableRawSizeMask(Context context) {
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-    String prefKey = context.getString(R.string.pref_key_segmentation_raw_size_mask);
-    return sharedPreferences.getBoolean(prefKey, false);
   }
 
   /**

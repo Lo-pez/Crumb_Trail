@@ -64,7 +64,6 @@ public class ComposeReviewDialogFragment extends DialogFragment {
         ProgressBar progressBar = view.findViewById(R.id.load);
         Food food = Parcels.unwrap(requireArguments().getParcelable("food"));
 
-//        Objects.requireNonNull(getDialog()).setTitle(title);
         // Show soft keyboard automatically and request focus to field
         etComposeScr.requestFocus();
         Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(
@@ -87,7 +86,6 @@ public class ComposeReviewDialogFragment extends DialogFragment {
             review.setBody(reviewContent);
             review.setUser(ParseUser.getCurrentUser());
             review.setLikedBy(new ArrayList<>());
-            review.setComments(new ArrayList<>());
             review.setRating(rating);
             review.setFCDId(food.getFCDID());
             review.saveInBackground(e -> {

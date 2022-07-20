@@ -18,7 +18,6 @@ public class SplashActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.splash_activity);
 
-        // Letter color: #ffdf2b
         final Handler handler = new Handler();
         handler.postDelayed(() -> {
             Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
