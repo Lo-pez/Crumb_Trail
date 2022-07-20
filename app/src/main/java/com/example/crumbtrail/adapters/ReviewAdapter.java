@@ -21,6 +21,7 @@ import com.example.crumbtrail.R;
 import com.example.crumbtrail.data.model.Review;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,12 +35,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     final List<Review> Reviews;
     TextView userNameTv;
     TextView reviewBodyTv;
+    TextView favoriteCountTv;
+    TextView timeStampTv;
     RatingBar displayRatingBar;
     FrameLayout commentFl;
     FrameLayout favoriteFl;
     FrameLayout shareFl;
     EditText composeEt;
-    TextView favoriteCountTv;
     ConstraintLayout composeCl;
     ImageView favoriteIv;
 
@@ -96,6 +98,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             favoriteCountTv = itemView.findViewById(R.id.favoriteCountTv);
             composeCl = itemView.findViewById(R.id.composeCl);
             displayRatingBar = itemView.findViewById(R.id.displayRatingBar);
+            timeStampTv = itemView.findViewById(R.id.timeStampTv);
 
             // itemView's onclick listener
             itemView.setOnClickListener(this);
@@ -108,14 +111,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             favoriteCountTv.setText(review.getLikesCount());
             displayRatingBar.setRating(review.getRating().floatValue());
             displayRatingBar.setIsIndicator(true);
+            Date createdAt = review.getCreatedAt();
+            String timeAgo = Review.calculateTimeAgo(createdAt);
+            timeStampTv.setText(timeAgo);
             commentFl.setOnClickListener(v -> {
                     if (composeCl.getVisibility() == View.VISIBLE) {
                         composeCl.setVisibility(View.GONE);
                     }
                     else { composeCl.setVisibility(View.VISIBLE); }
             });
-            Drawable unliked = ContextCompat.getDrawable(context, R.drawable.ic_star_unliked);
-            Drawable liked = ContextCompat.getDrawable(context, R.drawable.ic_star_liked);
+            Drawable unliked = ContextCompat.getDrawable(context, R.drawable.thumb);
+            Drawable liked = ContextCompat.getDrawable(context, R.drawable.recommend);
             if (review.isLikedBy(ParseUser.getCurrentUser())){
                 Log.i(TAG, "Changing favoriteIv to liked");
                 favoriteIv.setImageDrawable(liked);
