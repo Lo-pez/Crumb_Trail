@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Model for the review objects. The data used here is obtained from Parse.
+ */
 @ParseClassName("Review")
 public class Review extends ParseObject {
-    public static final String KEY_AUTHOR = "author";
+    public static final String KEY_USER = "user";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_LIKES = "likes";
     public static final String KEY_BODY = "body";
@@ -25,32 +28,29 @@ public class Review extends ParseObject {
         return getString(KEY_BODY);
     }
 
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser parseUser) {
+        put(KEY_USER, parseUser);
+    }
+
+
     public void setBody(String body) {
         put(KEY_BODY, body);
     }
 
-    public String getFCDId() {
-        return getString(KEY_FCDID);
+    public void setFCDId(Long fcdId) {
+        put(KEY_FCDID, String.valueOf(fcdId));
     }
 
-    public void setFCDId(String fcdId) {
-        put(KEY_FCDID, fcdId);
-    }
-
-    public Float getRating() {
-        return (Float) getNumber(KEY_RATING);
+    public Number getRating() {
+        return getNumber(KEY_RATING);
     }
 
     public void setRating(Float rating) {
         put(KEY_RATING, rating);
-    }
-
-    public ParseUser getParseUser() {
-        return (ParseUser) getParseObject(KEY_AUTHOR);
-    }
-
-    public void setParseUser(ParseUser ParseUser) {
-        put(KEY_AUTHOR, ParseUser);
     }
 
     public ParseFile getImage(){
@@ -61,17 +61,6 @@ public class Review extends ParseObject {
         put(KEY_IMAGE, parseFile);
     }
 
-    public void setComments(List<Comment> newCommentsList) {
-        put(KEY_COMMENTS, newCommentsList);
-    }
-
-    public List<Comment> getComments() {
-        List<Comment> comments = getList(KEY_COMMENTS);
-        if (comments == null) {
-            return new ArrayList<>();
-        }
-        return comments;
-    }
 
     public void setLikedBy(List<ParseUser> newLikeBy) {
         put(KEY_LIKES, newLikeBy);
@@ -83,6 +72,11 @@ public class Review extends ParseObject {
             return new ArrayList<>();
         }
         return likedBy;
+    }
+
+    public boolean isLikedBy(ParseUser user) {
+        List<ParseUser> likedBy = getLikedBy();
+        return likedBy.contains(user);
     }
 
     public String getLikesCount() {

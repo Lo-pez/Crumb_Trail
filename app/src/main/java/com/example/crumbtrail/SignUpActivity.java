@@ -8,26 +8,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.crumbtrail.data.model.User;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.textfield.TextInputEditText;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import com.parse.SignUpCallback;
+import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private ImageView back;
-    private Button signUp;
     private TextInputEditText username;
     private TextInputEditText password;
     private TextInputEditText passwordagain;
@@ -37,11 +33,14 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_signup);
 
         username = findViewById(R.id.username);
-        back = findViewById(R.id.back);
-        signUp = findViewById(R.id.signup);
+        ImageView back = findViewById(R.id.back);
+        Button signUp = findViewById(R.id.signup);
         password = findViewById(R.id.password);
         passwordagain = findViewById(R.id.passwordagain);
 
@@ -55,10 +54,10 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(SignUpActivity.this);
 
         signUp.setOnClickListener(v -> {
-            if (password.getText().toString().equals(passwordagain.getText().toString()) && !TextUtils.isEmpty(username.getText().toString()))
+            if (Objects.requireNonNull(password.getText()).toString().equals(Objects.requireNonNull(passwordagain.getText()).toString()) && !TextUtils.isEmpty(Objects.requireNonNull(username.getText()).toString()))
                 signUp(username.getText().toString(), password.getText().toString(), googleSignInAccount);
             else
-                Toast.makeText(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
+                Toasty.warning(this, "Make sure that the values you entered are correct.", Toast.LENGTH_SHORT).show();
         });
 
         back.setOnClickListener(v -> finish());
@@ -80,36 +79,27 @@ public class SignUpActivity extends AppCompatActivity {
         user.signUpInBackground(e -> {
             progressDialog.dismiss();
             if (e == null) {
-                showAlert("Successful Sign Up ! You logged in...\n", "Welcome " + username + " !");
+                showAlert("Welcome " + username + " !");
             } else {
                 ParseUser.logOut();
-                Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(SignUpActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     // TODO: Find a way to abstract showAlert
-    private void showAlert(String title, String message) {
+    private void showAlert(String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this)
-                .setTitle(title)
+                .setTitle("Successful Sign Up ! You logged in...\n")
                 .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // don't forget to change the line below with the names of your Activities
-                        Intent intent = new Intent(SignUpActivity.this, LogoutActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.cancel();
+                    // don't forget to change the line below with the names of your Activities
+                    Intent intent = new Intent(SignUpActivity.this, LogoutActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 });
         AlertDialog ok = builder.create();
         ok.show();
     }
-
-    private void goMainActivity() {
-        Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-
 }

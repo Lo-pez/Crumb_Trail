@@ -1,14 +1,15 @@
 package com.example.crumbtrail;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -18,21 +19,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.parse.CountCallback;
-import com.parse.LogInCallback;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class LoginActivity extends AppCompatActivity {
-    private TextInputEditText username;
-    private TextInputEditText password;
-    private Button login;
+    private EditText username;
+    private EditText password;
     private ProgressDialog progressDialog;
     public static final int RC_SIGN_IN = 7;
     GoogleSignInClient mGoogleSignInClient;
@@ -41,28 +40,30 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         progressDialog = new ProgressDialog(LoginActivity.this);
 
+        if (ParseUser.getCurrentUser() != null) goMainActivity();
         setUpGoogleSignIn();
 
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        login = findViewById(R.id.login);
-        Button navigatesignup = findViewById(R.id.navigatesignup);
+        username = findViewById(R.id.usernameEt);
+        password = findViewById(R.id.passwordEt);
+        Button login = findViewById(R.id.loginBtn);
+        Button navigateSignup = findViewById(R.id.navigatesignup);
         SignInButton btnGoogleSignIn = findViewById(R.id.sign_in_button);
 
 
-        login.setOnClickListener(v -> login(username.getText().toString(), password.getText().toString()));
+        login.setOnClickListener(v -> login(Objects.requireNonNull(username.getText()).toString(), Objects.requireNonNull(password.getText()).toString()));
         Objects.requireNonNull(btnGoogleSignIn).setOnClickListener(v -> {
             if (v.getId() == R.id.sign_in_button) {
                 signIn();
             }
         });
 
-        navigatesignup.setOnClickListener(v -> {
-            startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-        });
+        navigateSignup.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));
 
     }
 
@@ -74,58 +75,33 @@ public class LoginActivity extends AppCompatActivity {
             ParseQuery<ParseUser> query = ParseUser.getQuery();
             query.whereEqualTo("username", account.getEmail());
 
-            query.countInBackground(new CountCallback(){
-                @Override
-                public void done(int count, ParseException e) {
-                    if (e == null) {
-                        if(count==0){
-                            if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
-                            if (account.getIdToken() == null) Log.i(TAG, "Token is null");
-                            ParseUser.logInInBackground(account.getEmail(), account.getIdToken(), (parseUser, parseException) -> {
-                                progressDialog.dismiss();
-                                if (parseUser != null) {
-                                    showAlert("Successful Login", "Welcome back " + username + " !");
-                                } else {
-                                    ParseUser.logOut();
-                                    Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
-                                }
-                            });
-//                            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-//                            intent.putExtra("account", account);
-//                            startActivity(intent);
-                        }
+            query.countInBackground((count, e) -> {
+                if (e == null) {
+                    if(count==0){
+                        if (account.getDisplayName() == null) Log.i(TAG, "Display name is null");
+                        if (account.getIdToken() == null) Log.i(TAG, "Token is null");
+                        ParseUser.logInInBackground(Objects.requireNonNull(account.getEmail()), account.getIdToken(), (parseUser, parseException) -> {
+                            progressDialog.dismiss();
+                            if (parseUser != null) {
+                                Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
+                            } else {
+                                ParseUser.logOut();
+                                Toasty.error(LoginActivity.this, "Error", Toast.LENGTH_LONG).show();
+                            }
+                        });
                     }
                 }
-
             });
         }
         ParseUser.logInInBackground(username, password, (parseUser, e) -> {
             progressDialog.dismiss();
             if (parseUser != null) {
-                showAlert("Successful Login", "Welcome back " + username + " !");
+                Toasty.success(LoginActivity.this, "Successful login", Toast.LENGTH_LONG).show();
             } else {
                 ParseUser.logOut();
-                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(LoginActivity.this, Objects.requireNonNull(e.getMessage()), Toast.LENGTH_LONG).show();
             }
         });
-    }
-
-    private void showAlert(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        // don't forget to change the line below with the names of your Activities
-                        Intent intent = new Intent(LoginActivity.this, LogoutActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-                });
-        AlertDialog ok = builder.create();
-        ok.show();
     }
 
     private void setUpGoogleSignIn() {
@@ -169,7 +145,6 @@ public class LoginActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-//            login(account.getDisplayName(), account.getId());
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             intent.putExtra("account", account);
             startActivity(intent);

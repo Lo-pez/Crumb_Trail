@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/constraintLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <TextView
+        android:id="@+id/userNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="rpandey923" />
+
+    <RatingBar
+        android:id="@+id/displayRatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        app:layout_constraintBottom_toTopOf="@+id/reviewBodyTv"
+        app:layout_constraintEnd_toStartOf="@+id/timeStampTv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/reviewBodyTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:autoLink="all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userNameTv"
+        tools:text="Hello this is my sample review" />
+
+
+    <FrameLayout
+        android:id="@+id/commentFl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/transparent_circle"
+            android:padding="0dp"
+            android:src="@drawable/ic_comment" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/favoriteFl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/favoriteCountTv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv">
+
+        <ImageView
+            android:id="@+id/favoriteIv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/transparent_circle"
+            android:padding="0dp" />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/shareFl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="90dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/commentFl"
+        app:layout_constraintStart_toEndOf="@+id/favoriteCountTv"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/transparent_circle"
+            android:padding="0dp"
+            android:src="@drawable/ic_share" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeStampTv" />
+
+    <TextView
+        android:id="@+id/favoriteCountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/_8213"
+        app:layout_constraintEnd_toStartOf="@+id/shareFl"
+        app:layout_constraintStart_toEndOf="@+id/favoriteFl"
+        app:layout_constraintTop_toBottomOf="@+id/reviewBodyTv"
+        tools:text="8213" />
+
+    <TextView
+        android:id="@+id/timeStampTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="timestamp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/composeCl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shareFl"
+        tools:visibility="visible">
+
+        <EditText
+            android:id="@+id/composeEt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/leave_a_comment"
+            android:inputType="textMultiLine"
+            android:minLines="5"
+            android:visibility="visible"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible"
+            android:autofillHints="" />
+
+        <Button
+            android:id="@+id/reviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:textColor="@color/ct_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/composeEt"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"
+        app:layout_constraintTop_toBottomOf="@+id/composeCl"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

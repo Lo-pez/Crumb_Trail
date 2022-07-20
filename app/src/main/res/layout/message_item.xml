@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Where?" />
+
+    <EditText
+        android:id="@+id/etFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Product..." />
+
+    <EditText
+        android:id="@+id/etDiscount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Discount..." />
+</LinearLayout>

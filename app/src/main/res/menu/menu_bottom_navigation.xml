@@ -5,19 +5,18 @@
     <item
         android:id="@+id/action_home"
         android:checkable="true"
-        android:icon="@drawable/home"
-        android:iconTint="#000000"
+        android:icon="@drawable/ic_world"
         android:title=""
         android:visible="true"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_camera"
-        android:icon="@drawable/camera"
+        android:icon="@drawable/ic_photo_camera"
         android:title=""
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_profile"
-        android:icon="@drawable/profile"
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
         android:title=""
         app:showAsAction="always" />
 </menu>

@@ -5,13 +5,56 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.33016304347826086" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1845" />
+        <entry key="app/src/main/res/drawable-v24/ic_search.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/ic_world.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/photo_camera-48px.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/public-48px.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/add-48px.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/add.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/animation_list.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/blue_circle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/button_bg.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/button_disabled.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_enabled.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/button_pressed.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/circle.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color1.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color2.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color3.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color4.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/color5.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/comment-48px.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable/ic_share.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_star_liked.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/login_gradient_background.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/share-48px.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/star_liked.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/star_unliked.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/thumb.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/transparent_circle.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_compose.xml" value="0.375543212890625" />
+        <entry key="app/src/main/res/layout/activity_food_review.xml" value="0.2408630371093749" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2791348183935436" />
+        <entry key="app/src/main/res/layout/activity_review_feed.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.3470557582073997" />
+        <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.41788321167883213" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3470557582073997" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.3470557582073997" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.20625" />
+        <entry key="app/src/main/res/layout/fragment_search_results.xml" value="0.15555555555555556" />
+        <entry key="app/src/main/res/layout/info_window.xml" value="0.11944444444444445" />
+        <entry key="app/src/main/res/layout/item_food.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_review.xml" value="0.25282796223958337" />
+        <entry key="app/src/main/res/layout/item_reviews.xml" value="0.2564056396484374" />
+        <entry key="app/src/main/res/layout/message_item.xml" value="0.29010416666666666" />
         <entry key="app/src/main/res/layout/splash_activity.xml" value="0.175" />
+        <entry key="app/src/main/res/layout/toolbar_mail.xml" value="0.2078125" />
+        <entry key="app/src/main/res/layout/toolbar_main.xml" value="0.5192708333333333" />
+        <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.2078125" />
       </map>
     </option>
   </component>
