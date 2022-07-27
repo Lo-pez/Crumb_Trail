@@ -1,6 +1,8 @@
 package com.example.crumbtrail;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,9 +82,21 @@ public class ComposeActivity extends AppCompatActivity {
                     Toasty.error(ComposeActivity.this, "Error while saving!", Toasty.LENGTH_SHORT).show();
                 }
                 Log.i(TAG, "Post save was successful!");
+                notifyUser();
             });
             progressBar.setVisibility(View.GONE);
             finish();
         });
+    }
+
+    private void notifyUser() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ComposeActivity.this, "My notification");
+        builder.setContentTitle("New review!");
+        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setContentText("A new review has been posted on a product you like!");
+        builder.setAutoCancel(true);
+
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(ComposeActivity.this);
+        managerCompat.notify(1, builder.build());
     }
 }
