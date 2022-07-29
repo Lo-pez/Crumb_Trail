@@ -33,7 +33,7 @@ An app for reviewing grocery store products.
 * User can view a feed of reviews
 * User can view a detailed review 
 * User can view reviews for a branded product
-* User can see stores (Using google maps SDK) as well as an average review of their products next to their icon
+* User can see discounts (Using google maps SDK) 
 * User can see latest/nearest deals posted by other users on google map screen
 
 **Optional Nice-to-have Stories**
